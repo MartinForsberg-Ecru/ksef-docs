@@ -4774,7 +4774,8 @@
             "description": "Wartość"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Obsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |\n| FA (3) | 1-0E | FA |\n"
       },
       "GenerateTokenRequest": {
         "type": "object",
@@ -5309,7 +5310,7 @@
                 "$ref": "#/components/schemas/FormCode"
               }
             ],
-            "description": "Struktura dokumentu faktury."
+            "description": "Struktura dokumentu faktury.\n\nObsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |\n| FA (3) | 1-0E | FA |\n"
           },
           "isHidden": {
             "type": "boolean",
@@ -6311,7 +6312,7 @@
                 "$ref": "#/components/schemas/FormCode"
               }
             ],
-            "description": "Schemat faktur wysyłanych w ramach sesji.\n\nObsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |"
+            "description": "Schemat faktur wysyłanych w ramach sesji.\n\nObsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |\n| FA (3) | 1-0E | FA |\n"
           },
           "batchFile": {
             "required": [
@@ -6385,7 +6386,7 @@
                 "$ref": "#/components/schemas/FormCode"
               }
             ],
-            "description": "Schemat faktur wysyłanych w ramach sesji.\n\nObsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |"
+            "description": "Schemat faktur wysyłanych w ramach sesji.\n\nObsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |\n| FA (3) | 1-0E | FA |\n"
           },
           "encryption": {
             "required": [
