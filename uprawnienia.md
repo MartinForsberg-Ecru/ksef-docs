@@ -234,7 +234,7 @@ Lista uprawnień, które mogą zostać nadane osobie fizycznej:
 Przykład w języku C#:
 
 ```csharp
- GrantPermissionsRequest request = GrantPersonPermissionsRequestBuilder
+ var request = GrantPersonPermissionsRequestBuilder
      .Create()
      .WithSubject(subjectIdentifier)
      .WithPermissions(StandardPermissionType.InvoiceRead, StandardPermissionType.InvoiceWrite)
@@ -292,7 +292,7 @@ Przykład w języku C#:
     .WithSubject(subjectIdentifier)
     .WithPermissions(
         Permission.New(StandardPermissionType.InvoiceRead, true),
-        Permission.New(StandardPermissionType.InvoiceRead, false)
+        Permission.New(StandardPermissionType.InvoiceWrite, false)
         )
     .WithDescription("Access for quarterly review")
     .Build();
@@ -457,12 +457,12 @@ POST [/permissions/eu-entities/administration/grants](https://ksef-test.mf.gov.p
 Przykład w języku C#:
 
 ```csharp
-     var request = GrantEUEntityPermissionsRequestBuilder
-         .Create()
-         .WithSubject(grantPermissionsRequest.SubjectIdentifier)
-         .WithContext(grantPermissionsRequest.ContextIdentifier)
-         .WithDescription("Access for quarterly review")
-         .Build();
+ var request = GrantEUEntityRepresentativePermissionsRequestBuilder
+              .Create()
+              .WithSubject(subjectIdentifier)
+              .WithPermissions(StandardPermissionType.InvoiceRead, StandardPermissionType.InvoiceWrite)
+              .WithDescription("Representative access")
+              .Build();
 
  return await ksefClient.GrantsPermissionEUEntityAsync(request, accessToken, cancellationToken);
 ```
@@ -539,6 +539,7 @@ await ksefClient.RevokeCommonPermissionAsync(permissionId, accessToken, cancella
 
 Przykład w języku Java:
 ```java
+ksefClient.revokeCommonPermission(permissionId);
 ```
 ---
 ### Odebranie uprawnień podmiotowych
@@ -560,6 +561,7 @@ await ksefClient.RevokeAuthorizationsPermissionAsync(permissionId, accessToken, 
 
 Przykład w języku Java:
 ```java
+ksefClient.revokeAuthorizationsPermission(permissionId)
 ```
 
 
@@ -581,7 +583,6 @@ POST [/permissions/query/persons/grants](https://ksef-test.mf.gov.pl/docs/v2/ind
 | `targetIdentifier`    | Identyfikator podmiotu docelowego (dla uprawnień pośrednich).  ```Nip```      |
 | `permissionTypes`     | Typy uprawnień do filtrowania.   `"CredentialsManage"`, `"CredentialsRead"`, `"InvoiceWrite"`, `"InvoiceRead"`, `"Introspection"`, `"SubunitManage"`, `"EnforcementOperations"`  |
 | `permissionState`     | Stan uprawnienia.  ```Active``` / ```Inactive```                                                  |
-| `queryType`           | Typ zapytania określający czy pobierana lista uprawnień dotyczy uprawnień obowiązujących lub nadanych w danym kontekście. ```PermissionsInCurrentContext``` / ```PermissionsGrantedInCurrentContext```  |
 
 Przykład w języku C#:
 
@@ -606,7 +607,7 @@ POST [/permissions/query/subunits/grants](https://ksef-test.mf.gov.pl/docs/v2/in
 
 Przykład w języku C#:
 ```csharp
-await ksefClient.SearchSubunitAdminPermissionsAsync(accessToken, request, pageOffset, pageSize);
+await ksefClient.SearchSubunitAdminPermissionsAsync(request, accessToken, pageOffset, pageSize);
 ```
 
 Przykład w języku Java:
@@ -675,6 +676,7 @@ await ksefClient.SearchEntityAuthorizationGrantsAsync(request, accessToken, page
 
 Przykład w języku Java:
 ```java
+ksefClient.searchEntityAuthorizationGrants(request, pageOffset, pageSize)
 ```
 ---
 ### Pobranie listy uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do samofakturowania
