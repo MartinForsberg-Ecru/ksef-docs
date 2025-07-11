@@ -6,6 +6,108 @@
     "version": "v2"
   },
   "paths": {
+    "/api/v2/auth/sessions": {
+      "get": {
+        "tags": [
+          "Aktywne sesje"
+        ],
+        "summary": "Pobranie listy aktywnych sesji",
+        "description": "Zwraca listę aktywnych sesji uwierzytelnienia.",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Rozmiar strony wyników.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/auth/sessions/current": {
+      "delete": {
+        "tags": [
+          "Aktywne sesje"
+        ],
+        "summary": "Unieważnienie aktualnej sesji uwierzytelnienia",
+        "description": "Unieważnia sesję powiązaną z tokenem użytym do wywołania tej operacji.\n\nUnieważnienie sesji sprawia, że powiązany z nią refresh token przestaje działać i nie można już za jego pomocą uzyskać kolejnych access tokenów.\n**Aktywne access tokeny działają do czasu minięcia ich termin ważności.**\n\nSposób uwierzytelnienia: `RefreshToken` lub `AccessToken`.",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/auth/sessions/{referenceNumber}": {
+      "delete": {
+        "tags": [
+          "Aktywne sesje"
+        ],
+        "summary": "Unieważnienie sesji uwierzytelnienia",
+        "description": "Unieważnia sesję o podanym numerze referencyjnym.\n\nUnieważnienie sesji sprawia, że powiązany z nią refresh token przestaje działać i nie można już za jego pomocą uzyskać kolejnych access tokenów.\n**Aktywne access tokeny działają do czasu minięcia ich termin ważności.**",
+        "parameters": [
+          {
+            "name": "referenceNumber",
+            "in": "path",
+            "description": "Numer referencyjny sesji uwierzytelnienia.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/certificates/limits": {
       "get": {
         "tags": [
@@ -2024,7 +2126,7 @@
           "Uwierzytelnianie"
         ],
         "summary": "Pobranie statusu uwierzytelniania",
-        "description": "Sprawdza bieżący status operacji uwierzytelniania dla podanego tokena.\n\nWymagane uprawnienia: `HasAuthenticationToken`",
+        "description": "Sprawdza bieżący status operacji uwierzytelniania dla podanego tokena.\n\nSposób uwierzytelnienia: `AuthenticationToken` otrzymany przy rozpoczęciu operacji uwierzytelniania.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -2046,28 +2148,28 @@
                 },
                 "examples": {
                   "Kod 100 | Uwierzytelnianie w toku": {
-                    "value": {"status":{"code":100,"description":"Uwierzytelnianie w toku"}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":100,"description":"Uwierzytelnianie w toku"}}
                   },
                   "Kod 200 | Uwierzytelnianie zakończone sukcesem": {
-                    "value": {"status":{"code":200,"description":"Uwierzytelnianie zakończone sukcesem"}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":200,"description":"Uwierzytelnianie zakończone sukcesem"}}
                   },
                   "Kod 400 | Uwierzytelnianie zakończone niepowodzeniem | Nieważny certyfikat": {
-                    "value": {"status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Nieważny certyfikat."]}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Nieważny certyfikat."]}}
                   },
                   "Kod 400 | Uwierzytelnianie zakończone niepowodzeniem | Błąd weryfikacji łańcucha certyfikatów": {
-                    "value": {"status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Błąd weryfikacji łańcucha certyfikatów."]}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Błąd weryfikacji łańcucha certyfikatów."]}}
                   },
                   "Kod 400 | Uwierzytelnianie zakończone niepowodzeniem | Niezaufany łańcuch certyfikatów": {
-                    "value": {"status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Niezaufany łańcuch certyfikatów."]}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Niezaufany łańcuch certyfikatów."]}}
                   },
                   "Kod 400 | Uwierzytelnianie zakończone niepowodzeniem | Certyfikat odwołany": {
-                    "value": {"status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Certyfikat odwołany."]}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Certyfikat odwołany."]}}
                   },
                   "Kod 400 | Uwierzytelnianie zakończone niepowodzeniem | Niepoprawny certyfikat": {
-                    "value": {"status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Niepoprawny certyfikat."]}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":400,"description":"Uwierzytelnianie zakończone niepowodzeniem","details":["Niepoprawny certyfikat."]}}
                   },
                   "Kod 500 | Nieznany błąd": {
-                    "value": {"status":{"code":500,"description":"Nieznany błąd ({statusCode})"}}
+                    "value": {"isCurrent":false,"startDate":"0001-01-01T00:00:00+00:00","authenticationMethod":"Token","status":{"code":500,"description":"Nieznany błąd ({statusCode})"}}
                   }
                 }
               }
@@ -2092,7 +2194,7 @@
           "Uwierzytelnianie"
         ],
         "summary": "Pobranie tokenów dostępowych",
-        "description": "Pobiera parę tokenów (access token i refresh token) wygenerowanych w ramach pozytywnie zakończonego procesu uwierzytelniania.\nTokeny można pobrać tylko raz.",
+        "description": "Pobiera parę tokenów (access token i refresh token) wygenerowanych w ramach pozytywnie zakończonego procesu uwierzytelniania.\n**Tokeny można pobrać tylko raz.**\n\nSposób uwierzytelnienia: `AuthenticationToken` otrzymany przy rozpoczęciu operacji uwierzytelniania.",
         "responses": {
           "200": {
             "description": "OK",
@@ -2124,7 +2226,7 @@
           "Uwierzytelnianie"
         ],
         "summary": "Odświeżenie tokena dostępowego",
-        "description": "Generuje nowy token dostępu na podstawie ważnego refresh tokena.\n\nWymagane uprawnienia: `HasRefreshToken`",
+        "description": "Generuje nowy token dostępu na podstawie ważnego refresh tokena.\n\nSposób uwierzytelnienia: `RefreshToken`.",
         "responses": {
           "200": {
             "description": "OK",
@@ -2147,30 +2249,6 @@
               }
             },
             "x-summary": "Bad Request"
-          }
-        }
-      }
-    },
-    "/api/v2/auth/token": {
-      "delete": {
-        "tags": [
-          "Uwierzytelnianie"
-        ],
-        "summary": "[mock] Unieważnienie tokena dostępowego",
-        "description": "Unieważnia token dostępu. Unieważnowny token nie daje dostępu do chronionych zasobów systemu.\n\nWymagane uprawnienia: `HasRefreshToken`",
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
           }
         }
       }
@@ -2917,19 +2995,102 @@
         },
         "additionalProperties": false
       },
+      "AuthenticationListResponse": {
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "continuationToken": {
+            "type": "string",
+            "description": "Token służący do pobrania kolejnej strony wyników. Jeśli jest pusty, to nie ma kolejnych stron.",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthenticationOperationStatusResponse"
+            },
+            "description": "Lista sesji uwierzytelniania."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationMethod": {
+        "enum": [
+          "Token",
+          "TrustedProfile",
+          "InternalCertificate",
+          "QualifiedSignature",
+          "QualifiedSeal",
+          "PersonalSignature"
+        ],
+        "type": "string",
+        "description": "Metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n"
+      },
       "AuthenticationOperationStatusResponse": {
         "required": [
+          "authenticationMethod",
+          "referenceNumber",
+          "startDate",
           "status"
         ],
         "type": "object",
         "properties": {
+          "referenceNumber": {
+            "type": "string",
+            "description": "Numer referencyjny operacji uwierzytelnienia."
+          },
+          "isCurrent": {
+            "type": "boolean",
+            "description": "Czy sesja jest powiązana z aktualnie używanym tokenem.",
+            "readOnly": true
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Data rozpoczęcia operacji uwierzytelnienia.",
+            "format": "date-time"
+          },
+          "authenticationMethod": {
+            "enum": [
+              "Token",
+              "TrustedProfile",
+              "InternalCertificate",
+              "QualifiedSignature",
+              "QualifiedSeal",
+              "PersonalSignature"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthenticationMethod"
+              }
+            ],
+            "description": "Użyta metoda uwierzytelnienia.\n| Wartość | Opis |\n| --- | --- |\n| Token | Token KSeF. |\n| TrustedProfile | Profil Zaufany. |\n| InternalCertificate | Certyfikat KSeF. |\n| QualifiedSignature | Podpis kwalifikowany. |\n| QualifiedSeal | Pieczęć kwalifikowana. |\n| PersonalSignature | Podpis osobisty. |\n"
+          },
           "status": {
             "allOf": [
               {
                 "$ref": "#/components/schemas/StatusInfo"
               }
             ],
-            "description": "Informacje o aktualnym statusie.\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Uwierzytelnianie w toku | - |\n| 200 | Uwierzytelnianie zakończone sukcesem | - |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Nieważny certyfikat |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Błąd weryfikacji łańcucha certyfikatów |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Niezaufany łańcuch certyfikatów |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Certyfikat odwołany |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Niepoprawny certyfikat |\n| 500 | Nieznany błąd | - |"
+            "description": "Informacje o aktualnym statusie.\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Uwierzytelnianie w toku | - |\n| 200 | Uwierzytelnianie zakończone sukcesem | - |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Nieważny certyfikat |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Błąd weryfikacji łańcucha certyfikatów |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Niezaufany łańcuch certyfikatów |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Certyfikat odwołany |\n| 400 | Uwierzytelnianie zakończone niepowodzeniem | Niepoprawny certyfikat |\n| 401 | Uwierzytelnienie unieważnione | Uwierzytelnienie i powiązane refresh tokeny zostały unieważnione przez użytkownika |\n| 500 | Nieznany błąd | - |"
+          },
+          "isTokenRedeemed": {
+            "type": "boolean",
+            "description": "Czy został już wydany refresh token powiązany z danym uwierzytelnieniem.",
+            "nullable": true
+          },
+          "lastTokenRefreshDate": {
+            "type": "string",
+            "description": "Data ostatniego odświeżenia tokena.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "refreshTokenValidUntil": {
+            "type": "string",
+            "description": "Termin ważności refresh tokena (o ile nie zostanie wcześniej unieważniony).",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -7989,8 +8150,11 @@
   },
   "tags": [
     {
-      "name": "Uwierzytelnianie",
+      "name": "Uzyskiwanie dostępu",
       "description": "Uwierzytelnianie w systemie KSeF API 2.0 jest obowiązkowym etapem, który należy wykonać przed dostępem do chronionych zasobów systemu. Proces ten oparty jest na **uzyskaniu tokenu dostępu** (```accessToken```) w formacie ```JWT```, który następnie wykorzystywany jest do autoryzacji operacji API.\n\n> Więcej informacji:\n> - [Uwierzytelnianie](https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md)"
+    },
+    {
+      "name": "Aktywne sesje"
     },
     {
       "name": "Certyfikaty klucza publicznego"
@@ -8037,7 +8201,8 @@
     {
       "name": "Uwierzytelnianie",
       "tags": [
-        "Uwierzytelnianie"
+        "Uzyskiwanie dostępu",
+        "Aktywne sesje"
       ]
     },
     {

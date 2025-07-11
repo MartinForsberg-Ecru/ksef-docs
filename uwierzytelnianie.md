@@ -316,11 +316,14 @@ var accessTokenResponse = ksefClient.getAccessToken(submitAuthTokenResponse.getR
 ```
 
 W odpowiedzi zwracane są:
-* ```accessToken``` – token dostępowy JWT służący do autoryzacji operacji w API (w nagłówku Authorization: Bearer ...),
-* ```refreshToken``` – token umożliwiający odświeżenie ```accessToken``` bez ponownego uwierzytelnienia,		
+* ```accessToken``` – token dostępowy JWT służący do autoryzacji operacji w API (w nagłówku Authorization: Bearer ...), ma ograniczony czas ważności (np. kilkanaście minut, określony w polu exp),
+* ```refreshToken``` – token umożliwiający odświeżenie ```accessToken``` bez ponownego uwierzytelnienia, ma znacznie dłuższy okres ważności (do 7 dni) i może być używany wielokrotnie do odświeżania tokena dostępowego.
 
-## Zarządzanie tokenem dostępowym
-### Odświeżenie tokena dostępowego (```accessToken```)
+**Uwaga!**
+1. ```accessToken``` oraz ```refreshToken``` powinien być traktowany jak dane poufne – jego przechowywanie wymaga odpowiednich zabezpieczeń.
+2. Token dostępu (`accessToken`) pozostaje ważny aż do upływu daty określonej w polu `exp`, nawet jeśli uprawnienia użytkownika ulegną zmianie.
+
+#### 5. Odświeżenie tokena dostępowego (```accessToken```)
 W celu utrzymania ciągłego dostępu do chronionych zasobów API, system KSeF udostępnia mechanizm odświeżania tokena dostępowego (```accessToken```) przy użyciu specjalnego tokena odświeżającego (```refreshToken```). Rozwiązanie to eliminuje konieczność każdorazowego ponawiania pełnego procesu uwierzytelnienia, ale również poprawia bezpieczeństwo systemu – krótki czas życia ```accessToken``` ogranicza ryzyko jego nieautoryzowanego użycia w przypadku przechwycenia.
 
 POST [/auth/token/refresh](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Uwierzytelnianie/paths/~1api~1v2~1auth~1token~1refresh/post) <br>
@@ -329,7 +332,7 @@ POST [/auth/token/refresh](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Uw
 Authorization: Bearer {refreshToken}
 ```
 
-Odpowiedź zawiera nowy accessToken (JWT).
+Odpowiedź zawiera nowy ```accessToken``` (JWT) z aktualnym zestawem uprawnień i ról.
 
  Przykład w języku ```C#```:
 
@@ -341,44 +344,8 @@ var refreshedAccessTokenResponse = await ksefClient
 Przykład w języku ```Java```:
 
 ```java
-var resfreshToken = ksefClient.refreshAccessToken(refreshToken);
+var accessToken = ksefClient.refreshAccessToken(refreshToken);
 ```
 
-Odświeżanie tokena dostępowego (```accessToken```):
-
-* ```accessToken``` ma ograniczony czas ważności (np. kilkanaście minut, określony w polu exp).
-* Po jego wygaśnięciu, zamiast ponownie przechodzić pełny proces uwierzytelnienia, można użyć wcześniej otrzymanego ```refreshToken```.
-* ```refreshToken``` ma znacznie dłuższy okres ważności (do 7 dni) i może być używany wielokrotnie do odświeżania tokena dostępowego.
-
-**Uwaga:** <br>
-```accessToken``` oraz ```refreshToken``` powinien być traktowany jak dane poufne – jego przechowywanie wymaga odpowiednich zabezpieczeń.
-
-### Unieważnienie tokena (```accessToken```)
-
-System KSeF umożliwia ręczne unieważnienie aktywnego tokena dostępowego (```accessToken```). Może to być przydatne w przypadku:
-* zakończenia sesji użytkownika,
-* utraty dostępu do systemu,
-* konieczności wymuszenia ponownego uwierzytelnienia,
-* podejrzenia naruszenia bezpieczeństwa.
-
-Unieważnienie odbywa się przez wywołanie endpointu:
-
-DELETE [/auth/token](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Uwierzytelnianie/paths/~1api~1v2~1auth~1token/delete)
-
-Przykład w języku ```C#```:
-
-```csharp
-await ksefClient
-        .RevokeAccessTokenAsync(accessTokenResult.AccessToken.Token);
-```
-
-Przykład w języku ```Java```:
-
-```java
-var revokeTokenResponse = ksefClient.revokeAccessToken();
-```
-
-**Zachowanie systemu w przypadku zmian uprawnień:**<br>
-* Konieczne jest ponowne przeprowadzenie procesu uwierzytelnienia i użycie nowego tokena dostępowego z aktualnym zestawem uprawnień.
-* Token dostępowy (```accessToken```) zostanie automatycznie unieważniony, jeśli użytkownik utraci choćby jedno uprawnienie, które było przypisane w momencie jego wydania.
-* Addytywna zmiana nie wpływa na wcześniej wydane tokeny dostępowe.
+#### 6. Zarządzanie sesjami uwierzytelniania 
+Szczegółowe informacje o zarządzaniu aktywnymi sesjami uwierzytelniania znajdują się w dokumencie [Zarządzanie sesjami](auth/sesje.md).
