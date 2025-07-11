@@ -68,6 +68,8 @@ POST [sessions/online/{referenceNumber}/invoices/](https://ksef-test.mf.gov.pl/d
 
 Odpowiedź zawiera ```referenceNumber``` dokumentu – używany do identyfikacji faktury w kolejnych operacjach (np. listy dokumentów).
 
+Po prawidłowym przesłaniu faktury rozpoczyna się asynchroniczna weryfikacja faktury ([szczegóły weryfikacji](wysyłka-faktur\weryfikacja-faktury.md)).
+
 Przykład w języku C#:
 ```csharp
 var encryptedInvoice = cryptographyService.EncryptBytesWithAES256(invoice, encryptionData.CipherKey, encryptionData.CipherIv);

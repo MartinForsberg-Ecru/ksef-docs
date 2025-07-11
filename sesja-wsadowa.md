@@ -232,7 +232,7 @@ ksefClient.sendBatchParts(response, encryptedZipParts);
 ```
 
 ### 6. Zamknięcie sesji wsadowej
-Po przesłaniu wszystkich części paczki należy zamknąć sesję wsadową, co inicjuje jej przetwarzanie i generowanie zbiorczego UPO.
+Po przesłaniu wszystkich części paczki należy zamknąć sesję wsadową, co inicjuje asynchronicznie przetwarzanie paczki faktur ([szczegóły weryfikacji](wysyłka-faktur\weryfikacja-faktury.md)), oraz generowanie zbiorczego UPO.
 
 POST [/sessions/batch/\{referenceNumber\}/close](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Wysylka-wsadowa/paths/~1api~1v2~1sessions~1batch~1%7BreferenceNumber%7D~1close/post)}]
 
