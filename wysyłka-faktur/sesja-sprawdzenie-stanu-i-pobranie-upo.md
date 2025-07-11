@@ -12,7 +12,27 @@ Zwraca bieżący status sesji wraz z zagregowanymi danymi o liczbie przesłanych
 
 Przykład w języku C#:
 ```csharp
-//TODO
+// Pobieranie sesji wsadowych
+ var sessions = new List<Session>();
+ const int pageSize = 20;
+ string? continuationToken = null;
+ do
+ {
+     var response = await ksefClient.GetSessionsAsync(SessionType.Batch, accessToken, pageSize, continuationToken, sessionsFilter, cancellationToken);
+     continuationToken = response.ContinuationToken;
+     sessions.AddRange(response.Sessions);
+ } while (!string.IsNullOrEmpty(continuationToken));
+
+// Pobieranie sesji interaktywnych
+ var sessions = new List<Session>();
+ const int pageSize = 20;
+ string? continuationToken = null;
+ do
+ {
+     var response = await ksefClient.GetSessionsAsync(SessionType.Online, accessToken, pageSize, continuationToken, sessionsFilter, cancellationToken);
+     continuationToken = response.ContinuationToken;
+     sessions.AddRange(response.Sessions);
+ } while (!string.IsNullOrEmpty(continuationToken)); 
 ```
 
 Przykład w języku Java:
