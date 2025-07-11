@@ -1348,7 +1348,7 @@
                 ],
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/InvoicesAsynqQueryRequest"
+                    "$ref": "#/components/schemas/InvoicesAsyncQueryRequest"
                   }
                 ]
               }
@@ -5603,7 +5603,7 @@
         },
         "additionalProperties": false
       },
-      "InvoicesAsynqQueryRequest": {
+      "InvoicesAsyncQueryRequest": {
         "required": [
           "dateRange",
           "encryption",
