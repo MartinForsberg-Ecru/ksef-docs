@@ -29,7 +29,7 @@ GET [/certificates/limits](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Ce
 
 Przykład w języku C#:
 ```csharp
-var limits = await ksefClient.GetCertificateLimitsAsync();
+var limits = await ksefClient.GetCertificateLimitsAsync(accessToken, cancellationToken);
 ```
 
 Przykład w języku Java:
@@ -51,14 +51,14 @@ Dane te są zwracane na podstawie certyfikatu użytego w procesie uwierzytelnien
 
 Przykład w języku C#:
 ```csharp
-var enrollmentData = await kSeFClient
+var enrollmentData = await ksefClient
     .GetCertificateEnrollmentDataAsync(accessToken, cancellationToken)
     .ConfigureAwait(false);
 ```
 
 Przykład w języku Java:
 ```java
-CertificateEnrollmentsInfoResponse enrollmentDaa = ksefClient.getCertificateEnrollmentInfo();
+CertificateEnrollmentsInfoResponse enrollmentData = ksefClient.getCertificateEnrollmentInfo();
 ```
 
 Oto pełna lista pól, które mogą być zwrócone, przedstawiona w formie tabeli zawierającej OID:
@@ -87,13 +87,13 @@ Przykład w języku C# (z użyciem ```ICryptographyService```):
 
 
 ```csharp
-(var csrBase64encoded, var privateKeyBase64Encoded) = cryptographyService.GenerateCsr(enrollmentInfo);
+(var csrBase64encoded, var privateKeyBase64Encoded) = cryptographyService.GenerateCsr(enrollmentData);
 ```
 
 
 Przykład w języku Java:
 ```java
-CsrResult csr = cryptographyService.generateCsr(enrollmentInfo);
+CsrResult csr = cryptographyService.generateCsr(enrollmentData);
 ```
 
 * ```csrBase64Encoded``` – zawiera żądanie CSR zakodowane w formacie Base64, gotowe do wysłania do KSeF
@@ -121,7 +121,7 @@ Przykład w języku C#:
             .WithValidFrom(DateTimeOffset.UtcNow.AddDays(1)) // Certyfikat będzie ważny od jutra
             .Build();
 
-  var certificateEnrollmentResponse = await kSeFClient.SendCertificateEnrollmentAsync(request, accessToken, cancellationToken)
+  var certificateEnrollmentResponse = await ksefClient.SendCertificateEnrollmentAsync(request, accessToken, cancellationToken);
 ```
 
 Przykład w języku Java:
@@ -149,7 +149,7 @@ Jeżeli wniosek certyfikacyjny zostanie odrzucony, w odpowiedzi otrzymamy inform
 Przykład w języku C#:
 
 ```csharp
-await kSeFClient.GetCertificateEnrollmentStatusAsync(certificateEnrollmentResponse.ReferenceNumber, accessToken, cancellationToken)
+await ksefClient.GetCertificateEnrollmentStatusAsync(certificateEnrollmentResponse.ReferenceNumber, accessToken, cancellationToken)
 ```
 
 Przykład w języku Java:
@@ -169,8 +169,7 @@ POST [/certificates/retrieve](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag
 Przykład w języku C#:
 
 ```csharp
-var certificates = await kSeFClient.GetCertificateListAsync(accessToken, new CertificateListRequest { CertificateSerialNumbers = certificateSerialNumber}, cancellationToken)
-    .ConfigureAwait(false);
+var certificates = await ksefClient.GetCertificateListAsync(new CertificateListRequest { CertificateSerialNumbers = certificateSerialNumbers}, accessToken, cancellationToken);
 ```
 
 Przykład w języku Java:
@@ -207,15 +206,12 @@ GET [/certificates/query](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Cer
 
 Przykład w języku C#:
 ```csharp
-var request = GetCertificateMetadataListRequestBuilder.Create()
-            .WithCertificateSerialNumber("<certificateSerialNumber>") // Optional filter
-            .WithName("<name>") // Optional filter
-            .WithStatus(CertificateStatusEnum.Active) // Optional filter
-            .WithPageSize(10)
+ var request = GetCertificateMetadataListRequestBuilder
+            .Create()
+            .WithCertificateSerialNumber(serialNumber)
+            .WithName(name)
             .Build();
-
-var metadataList = await kSeFClient.GetCertificateMetadataListAsync(request, accessToken, cancellationToken)
-            .ConfigureAwait(false);
+        var metadataList = await kSeFClient.GetCertificateMetadataListAsync(accessToken, request, 20, 0, cancellationToken);
 ```
 Przykład w języku Java:
 
@@ -260,7 +256,7 @@ var request = RevokeCertificateRequestBuilder.Create()
     .WithRevocationReason(CertificateRevocationReason.KeyCompromise) // optional
     .Build();
 
-await kSeFClient.RevokeCertificateAsync(request, certificateSerialNumber, accessToken, cancellationToken)
+await ksefClient.RevokeCertificateAsync(request, certificateSerialNumber, accessToken, cancellationToken)
      .ConfigureAwait(false);
 ```
 
