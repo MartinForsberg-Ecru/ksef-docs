@@ -8,7 +8,16 @@ GET [/auth/sessions](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Aktywne-
 
 Przykład w języku ```C#```:
 ```csharp
-//TODO
+const int pageSize = 20;
+string? continuactionToken = null;
+var activeSessions = new List<Item>();
+do
+{
+    var response = await ksefClient.GetActiveSessions(accessToken, pageSize, continuactionToken, cancellationToken);
+    continuactionToken = response.ContinuationToken;
+    activeSessions.AddRange(response.Items);
+}
+while (!string.IsNullOrWhiteSpace(continuactionToken));
 ```
 
 Przykład w języku ```Java```:
@@ -26,7 +35,7 @@ Unieważnia sesję związaną z tokenem użytym do wywołania tego endpointu. Po
 
 Przykład w języku ```C#```:
 ```csharp
-//TODO
+await ksefClient.RevokeCurrentSessionAsync(token, cancellationToken);
 ```
 
 Przykład w języku ```Java```:
@@ -44,7 +53,7 @@ Unieważnia sesję o wskazanym numerze referencyjnym. Po operacji:
 
 Przykład w języku ```C#```:
 ```csharp
-//TODO
+await ksefClient.RevokeSessionAsync(referenceNumber, accessToken, cancellationToken);
 ```
 
 Przykład w języku ```Java```:
