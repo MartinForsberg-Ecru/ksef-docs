@@ -151,7 +151,7 @@ Używając ```ISignatureService``` oraz posiadając certyfikat z kluczem prywatn
 ```csharp
  var unsignedXml = AuthTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
 
- var signedXml = signatureService.Sign(unsignedXml, certificate);
+ var signedXml = signatureService.SignAsync(unsignedXml, certificate);
 ```
 
 Przykład w języku ```Java```:
@@ -162,7 +162,7 @@ Dla organizacji
 ```java
 var x500 = new CertificateBuilders()
         .buildForOrganization("Kowalski sp. z o.o", "VATPL-" + context, "Kowalski");
-SelfSignedCertificate cert = new DefaultCertificateGenerator().generateSelfSignedCertificate(x500);
+SelfSignedCertificate cert = new DefaultCertificateGenerator().generateSelfSignedCertificateRsa(x500);
 ```
 
 Lub dla osoby prywatnej
@@ -171,7 +171,7 @@ Lub dla osoby prywatnej
 var x500 = new CertificateBuilders()
         .buildForPerson("Jan", "Kowalski", context, "Kowalski");
 
-SelfSignedCertificate cert = new DefaultCertificateGenerator().generateSelfSignedCertificate(x500);
+SelfSignedCertificate cert = new DefaultCertificateGenerator().generateSelfSignedCertificateRsa(x500);
 ```
 
 Używając SignatureService oraz posiadając certyfikat z kluczem prywatnym można podpisać dokument
@@ -233,6 +233,9 @@ Przykład w języku ```C#```:
 
 Przykład w języku ```Java```:
 ```java
+var challenge = defaultKsefClient.getAuthChallenge();
+var tokenWithTimestamp = ksefToken.getToken() + "|" + challenge.getTimestamp().toInstant().toEpochMilli();
+var encryptedToken = new DefaultCryptographyService(defaultKsefClient).encryptKsefTokenWithRSAUsingPublicKey(tokenWithTimestamp.getBytes(StandardCharsets.UTF_8));
 ```
 
 #### 2. Wysłanie żądania uwierzytelnienia tokenem KSeF
@@ -268,6 +271,17 @@ Przykład w języku ```C#```:
         .SubmitAuthKsefTokenRequestAsync(authKsefTokenRequest, cancellationToken);
 ```
 
+Przykład w języku ```Java```:
+```java
+var authTokenRequest = new AuthKsefTokenRequestBuilder()
+        .withChallenge(challenge.getChallenge())
+        .withContextIdentifier(new ContextIdentifier(ContextIdentifierType.NIP, CONTEXT_NIP))
+        .withEncryptedToken(Base64.getEncoder().encodeToString(encryptedToken))
+        .build();
+
+var response = defaultKsefClient.authorizeByKSeFToken(authTokenRequest);
+```
+
 Ponieważ proces uwierzytelniania jest asynchroniczny, w odpowiedzi zwracany jest tymczasowy token operacyjny (```authenticationToken```) wraz z numerem referencyjnym (```referenceNumber```). Oba identyfikatory służą do:
 * sprawdzenia statusu procesu uwierzytelnienia,
 * pobrania właściwego tokena dostępowego (accessToken) w formacie JWT.
@@ -294,7 +308,7 @@ var authorizationStatus = await ksefClient
 Przykład w języku ```Java```:
 
 ```java
-
+var authStatus = defaultKsefClient.getAuthStatus(response.getReferenceNumber());
 ```
 
 ### 4. Uzyskanie tokena dostępowego (accessToken)
