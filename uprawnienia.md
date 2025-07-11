@@ -2,7 +2,7 @@
 28.06.2025
 
 ### Wprowadzenie – kontekst biznesowy
-System Krajowego Systemu e-Faktur (KSeF) wprowadza zaawansowany mechanizm zarządzania uprawnieniami, który stanowi fundament bezpiecznego i zgodnego z przepisami korzystania z systemu przez różne podmioty. Uprawnienia decydują o tym, kto może wykonywać określone operacje w KSeF – takie jak wystawianie faktur, przeglądanie dokumentów, nadawanie dalszych uprawnień czy zarządzanie jednostkami podrzędnymi.
+System KSeF wprowadza zaawansowany mechanizm zarządzania uprawnieniami, który stanowi fundament bezpiecznego i zgodnego z przepisami korzystania z systemu przez różne podmioty. Uprawnienia decydują o tym, kto może wykonywać określone operacje w KSeF – takie jak wystawianie faktur, przeglądanie dokumentów, nadawanie dalszych uprawnień czy zarządzanie jednostkami podrzędnymi.
 
 ### Cele zarządzania uprawnieniami:
 - Bezpieczeństwo danych – ograniczenie dostępu do informacji tylko do osób i podmiotów, które są do tego formalnie uprawnione.
@@ -12,13 +12,13 @@ System Krajowego Systemu e-Faktur (KSeF) wprowadza zaawansowany mechanizm zarzą
 ### Kto nadaje uprawnienia?
 Uprawnienia mogą być nadawane przez:
 
-- właściciela podmiotu (rola Owner),
+- właściciela podmiotu - rola (Owner),
 - administratora podmiotu podrzędnego,
 - administratora jednostki podrzędnej,
 - administratora podmiotu unijnego,
-- inny podmiot lub osobę posiadającą uprawnienie "CredentialsManage".
+- administratora podmiotu, czyli inny podmiot lub osoba posiadająca uprawnienie CredentialsManage.
 
-W praktyce oznacza to, że każda organizacja musi zarządzać uprawnieniami swoich pracowników np. nadając uprawnienia pracownikowi działu księgowości podczas onboardingu lub też odbierając uprawnienia gdy taki pracownik kończy stosunek pracy.
+W praktyce oznacza to, że każda organizacja musi zarządzać uprawnieniami swoich pracowników np. nadając uprawnienia pracownikowi działu księgowości podczas przyjmowaniu nowego pracownika lub też odbierając uprawnienia gdy taki pracownik kończy stosunek pracy.
 
 ### Kiedy nadaje się uprawnienia?
 #### Przyklady:  
@@ -27,53 +27,66 @@ W praktyce oznacza to, że każda organizacja musi zarządzać uprawnieniami swo
 - w zwiazku ze zmianami relacji pomiedzy podmiotami.
 
 ### Struktura nadanych uprawnień:
-Uprawnienia są przypisywane:
-- osobom fizycznym – identyfikowanym przez PESEL, NIP lub fingerprint certyfikatu,
-- podmiotom gospodarczym – identyfikowanym przez NIP lub NIP VAT UE lub Identyfikatorem wewnętrznym,
-- pośrednikom i reprezentantom – działającym w kontekście innego podmiotu.
+Uprawnienia są nadawane:
+1) osobom fizycznym identyfikowanym przez PESEL, NIP lub odcisk palca certyfikatu – do pracy w KSeF: 
+    - w kontekście podmiotu nadającego uprawnienie (uprawnienia nadawane bezpośrednio) lub 
+    - w kontekście innego podmiotu lub innych podmiotów: 
+        - w kontekście podmiotu podrzędnego identyfikowanego przez NIP (podrzędnej jednostki samorządu terytorialnego lub członka grupy VAT), 
+        - w kontekście jednostki podrzędnej identyfikowanej identyfikatorem wewnętrznym 
+        - w kontekście złożonym NIP- VAT UE łączącym podmiot polski z podmiotem unijnym uprawnionym do samofakturowania w imieniu tego podmiotu polskiego, 
+        - w kontekście wskazanego podmiotu identyfikowanego przez NIP – klienta podmiotu nadającego uprawnienia (uprawnienia selektywne nadawane w sposób pośredni), 
+        - w kontekście wszystkich podmiotów – klientów podmiotu nadającego uprawnienia (uprawnienia generalne nadawane w sposób pośredni).
+2) Innym podmiotom – identyfikowanym przez NIP,  
+    - jako końcowym odbiorcom uprawnień do wystawiania lub przeglądania faktur, 
+    - jako pośrednikom - z włączoną opcją zezwolenia na dalsze przekazywanie uprawnień, aby uprawniony podmiot miał mozliwość nadawania uprawnień w sposób pośredni (patrz p. Iv i v powyzej) 
 
-Dostęp do funkcji systemu zależy od typu nadanego uprawnienia oraz kontekstu, w którym jest ono realizowane (np. podmiot główny, podmiot podrzędny, jednostka unijna).
+3) innym podmiotom do działania w swoim kontekście w imieniu podmiotu uprawniającego (uprawnienia podmiotowe).: 
+    - przedstawicielom podatkowym, 
+    - podmiotom uprawnionym do samofakturowania, 
+    - podmiotom uprawnionym do wystawiania faktur VAT RR. 
 
-##  Słowniczek pojęć (dot. uprawnień KSeF)
+Dostęp do funkcji systemu zależy kontekstu, w którym nastąpiło uwierzytelnienie oraz od zakresu uprawnień, jakie nadano uwierzytelnionemu podmiotowi/osobie w tym kontekście.
+
+##  Słowniczek pojęć (w zakresie uprawnień KSeF)
 
 | Termin                          | Definicja |
 |---------------------------------|-----------|
 | **Uprawnienie**                 | Zezwolenie na wykonanie określonych operacji w KSeF, np. `InvoiceWrite`, `CredentialsManage`. |
-| **Właściciel**                       | Właściciel podmiotu – domyślny pełen dostęp do operacji w ramach danego NIP. |
+| **Właściciel**                       | Właściciel podmiotu – osoba mająca domyślnie pełen dostęp do operacji w kontekście podmiotu mającego taki sam identyfikator NIP, jaki jest zapisany w użytym środku uwierzytelnienia; dla właściciela obowiązuje również powiązanie NIP-PESEL, zatem może uwierzytelnić się również środkiem zawierającym powiązany nr PESEL zachowując wszystkie uprawnienia właściciela. |
 | **Administrator podmiotu podrzędnego**              | Osoba z uprawnieniami do zarządzania uprawnieniami (`CredentialsManage`) w kontekście podmiotu podrzędnego. Może nadawać uprawnienia (np. `InvoiceWrite`). Podmiotem podrzędnym może być np. członek grupy VAT. |
 | **Administrator jednostki podrzędnej**              | Osoba z uprawnieniami do zarządzania uprawnieniami  (`CredentialsManage`) w jednostce podrzędnej. Może nadawać uprawnienia (np. `InvoiceWrite`). |
 | **Administrator podmiotu unijnego**              | Osoba z uprawnieniami do zarządzania uprawnieniami (`CredentialsManage`) w kontekście złożonym identyfikowanym za pomocą NipVatUe. Może nadawać uprawnienia (np. `InvoiceRead`). |
-| **Podmiot pośredniczący**   | Podmiot, który otrzymał uprawnienie z flagą `canDelegate = true` i może przekazać to uprawnienie dalej. Mogą to być tylko uprawnienia `InvoiceWrite` i `InvoiceRead`. |
-| **Podmiot docelowy**  | Podmiot, w którego kontekście obowiązuje dane uprawnienie – np. firma, dla której biuro rachunkowe przegląda faktury. |
+| **Podmiot pośredniczący**   | Podmiot, który otrzymał uprawnienie z flagą `canDelegate = true` i może przekazać to uprawnienie dalej, czyli nadawać uprawnienie w sposób pośredni. Mogą to być tylko uprawnienia `InvoiceWrite` i `InvoiceRead`. |
+| **Podmiot docelowy**  | Podmiot, w którego kontekście obowiązuje dane uprawnienie – np. firma, obsługiwana przez biuro rachunkowe. |
 | **Nadane w sposób bezpośredni**       | Uprawnienie nadane wprost danemu użytkownikowi lub podmiotowi przez właściciela lub administratora. |
-| **Nadanie w sposób pośredni**          | Uprawnienie nadane przez pośrednika w imieniu innego podmiotu – tylko dla `InvoiceRead` i `InvoiceWrite`. |
+| **Nadanie w sposób pośredni**          | Uprawnienie nadane przez pośrednika do obsługi innego podmiotu – tylko dla `InvoiceRead` i `InvoiceWrite`. |
 | **`canDelegate`**              | Flaga techniczna (`true` / `false`) pozwalająca na delegowanie uprawnień. Tylko `InvoiceRead` oraz `InvoiceWrite` mogą mieć `canDelegate = true`. Może być wykorzystana tylko podczas nadawania uprawnienia podmiotowi do obsługi faktur |
 | **`subjectIdentifier`**        | Dane identyfikujące odbiorcę uprawnień (osobę lub podmiot): `Nip`, `Pesel`, `Fingerprint`. |
-| **`targetIdentifier` / `contextIdentifier`** | Dane identyfikujące kontekst, w którym działa uprawnienie – np. NIP klienta, Identyfikator wewnętrzny jednostki organizacyjnej. |
-| **Fingerprint**                | Skrót (hash) liczony algorytmem SHA-256, identyfikujący certyfikat kwalifikowany lub podpis elektroniczny. Używany m.in. w identyfikacji osób lub podmiotów zagranicznych. |
-| **InternalId**                 | Wewnętrzny identyfikator jednostki podrzędnej w systemie KSeF, dwuczłonowy identyfikator składający sie z nr NIP oraz pięciu cyfr `nip-5_cyfr`.  |
-| **NipVatUe**                   | Identyfikator złożony, czyli dwuczłonowy identyfikator składający się z nr NIP podmiotu polskiego oraz nr VAT UE podmiotu unijnego, które są oddzielone za pomocą separatora `nip-vat_ue`. |
-| **Odbieranie**                     | Operacja odebrania wcześniej nadanego uprawnienia (np. przez API `DELETE /permissions/...`). |
-| **`permissionId`**             | Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy operacjach odebrania. |
+| **`targetIdentifier` / `contextIdentifier`** | Dane identyfikujące kontekst, w którym działa nadane uprawnienie – np. NIP klienta, Identyfikator wewnętrzny jednostki organizacyjnej. |
+| **Fingerprint**                | Wynik obliczenia funkcji skrótu SHA-256 na certyfikacie kwalifikowanym. Pozwala na rozpoznanie certyfikatu podmiotu posiadającego uprawnienie nadane na odcisk palca certyfikatu Używany m.in. w identyfikacji osób lub podmiotów zagranicznych. |
+| **InternalId**                 | Wewnętrzny identyfikator jednostki podrzędnej w systemie KSeF - dwuczłonowy identyfikator składający się z numeru NIP oraz pięciu cyfr `nip-5_cyfr`.  |
+| **NipVatUe**                   | Identyfikator złożony, czyli dwuczłonowy identyfikator składający się z nr NIP podmiotu polskiego oraz numeru VAT UE podmiotu unijnego, które są oddzielone za pomocą separatora `nip-vat_ue`. |
+| **Odbieranie**                     | Operacja odebrania wcześniej nadanego uprawnienia. |
+| **`permissionId`**             | Techniczny identyfikator nadanego uprawnienia – wymagany m.in. przy operacjach odbierania. |
 | **`operationReferenceNumber`** | Identyfikator operacji (np. nadania lub odebrania uprawnień), zwracany przez API, wykorzystywany do sprawdzenia statusu. |
 | **Status operacji**            | Bieżący stan procesu nadania/odebrania uprawnień: `100`, `200`, `400` itp. |
 
 ## Model ról i uprawnień (macierz uprawnień)
 
-System KSeF umożliwia przypisywanie uprawnień w sposób precyzyjny, z uwzględnieniem różnych typów użytkowników i ich roli w strukturze organizacyjnej lub procesowej. Uprawnienia mogą być nadawane zarówno bezpośrednio, jak i pośrednio – w zależności od mechanizmu delegowania dostępu.
+System KSeF umożliwia przypisywanie uprawnień w sposób precyzyjny, z uwzględnieniem rodzajów czynności wykonywanych przez użytkowników. Uprawnienia mogą być nadawane zarówno bezpośrednio, jak i pośrednio – w zależności od mechanizmu delegowania dostępu.
 
 ### Przykłady ról do odwzorowania za pomocą uprawnień:
 
 | Rola / podmiot                          | Opis roli                                                                                          | Możliwe uprawnienia                                                                 |
 |----------------------------------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| **Właściciel podmiotu** (`Owner`)      | Rola posiadana domyślnie z automatu przez właściciela. Aby być rozpoznanym przez system jako właściciel należy się uwierzytelnić wektorem z takim samym identyfikatorem NIP jak NIP kontekstu logowania lub powiązanym numerem PESEL           | Wszystkie uprawnienia oprócz `VatUeManage`, w tym `CredentialsManage`, `SubunitManage`, `InvoiceWrite`, `InvoiceRead`, `Introspection`. |
-| **Administrator podmiotu**            | Osoba fizyczna posiadająca prawa do nadawania i odbierania uprawnień innym użytkownikom.           | `CredentialsManage`, `SubunitManage`, `Introspection`.                              |
+| **Właściciel podmiotu**      | Rola posiadana domyślnie z automatu przez właściciela. Aby być rozpoznanym przez system jako właściciel należy się uwierzytelnić wektorem z takim samym identyfikatorem NIP jak NIP kontekstu logowania lub powiązanym numerem PESEL           | Rola `Owner` obejmująca wszystkie uprawnienia fakturowe i administracyjne poza `VatUeManage`. |
+| **Administrator podmiotu**            | Osoba fizyczna posiadająca prawa do nadawania i odbierania uprawnień innym użytkownikom i/lub powoływania administratorów jednostek/podmiotów podrzędnych.           | `CredentialsManage`, `SubunitManage`, `Introspection`.                              |
 | **Operator (księgowość / fakturowanie)** | Osoba odpowiedzialna za wystawianie lub przeglądanie faktur.                                        | `InvoiceWrite`, `InvoiceRead`.                                                      |
-| **Podmiot upoważniony**                | Inny podmiot gospodarczy, któremu nadano określone uprawnienia podmiotowe do obsługi faktur – np. biuro rachunkowe.             | `InvoiceRead`, `InvoiceWrite`, `SelfInvoicing`, itp.                                |
+| **Podmiot upoważniony**                | Inny podmiot gospodarczy, któremu nadano określone uprawnienia do wystawiania faktur w imieniu podmiotu, np. Przedstawiciel podatkowy.             | `SelfInvoicing`, `RRInvoicing`, `TaxRepresentative`                             |
 | **Podmiot pośredniczący**              | Podmiot, który otrzymał uprawnienia z opcją delegacji (`canDelegate`) i może nadać je dalej.       | `InvoiceRead`, `InvoiceWrite` z flagą `canDelegate = true`.   
-| **Administrator podmiotu unijnego**     | Osoba identyfikująca się certyfikatem  posiadająca prawa do nadawania i odbierania uprawnienń innym użytkownikom w ramach podmiotu unijnego (UE).                                     | `InvoiceWrite`, `InvoiceRead`,                                    `VatUeManage`,  `Introspection`.                      |                      |
-| **Reprezentant podmiotu unijnego**     | Osoba identyfikująca się certyfikatem działająca na rzecz podmiotu unijnego (UE).                                     | `InvoiceWrite`, `InvoiceRead`.                                                      |
-| **Administrator jednostki podrzędnej** | Użytkownik zarządzający dostępem w jednostkach i podmiotach podrzędnych.               | `CredentialsManage`.                                                                    |
+| **Administrator podmiotu unijnego**     | Osoba identyfikująca się certyfikatem  posiadająca prawa do nadawania i odbierania uprawnienń innym użytkownikom w ramach podmiotu unijnego powiązanego z danym podmiotem polskim.                                     | `InvoiceWrite`, `InvoiceRead`,                                    `VatUeManage`,  `Introspection`.                      |                      |
+| **Reprezentant podmiotu unijnego**     | Osoba identyfikująca się certyfikatem działająca na rzecz podmiotu unijnego powiązanego z danym podmiotem polskim.                                     | `InvoiceWrite`, `InvoiceRead`.                                                      |
+| **Administrator jednostki podrzędnej** | Użytkownik mający możliwość powoływania administratorów w jednostkach lub podmiotach podrzędnych.               | `CredentialsManage`.                                                                    |
 
 ---
 
@@ -82,8 +95,8 @@ System KSeF umożliwia przypisywanie uprawnień w sposób precyzyjny, z uwzględ
 | Typ uprawnienia           | Przykładowe wartości                                       | Możliwość nadania w sposób pośredni | Opis operacyjny                                                              |
 |--------------------------|------------------------------------------------------------|-------------------------------|------------------------------------------------------------------------------|
 | **Fakturowe**             | `InvoiceWrite`, `InvoiceRead`                              | ✔️ (jeśli `canDelegate=true`) | Operacje na fakturach: wysyłanie, pobieranie                     |
-| **Administracyjne**       | `CredentialsManage`, `SubunitManage`,  `VatUeManage`.                       | ❌                            | Zarządzanie uprawnieniami, jednostkami                       |
-| **Podmiotowe**        | `SelfInvoicing`, `RRInvoicing`, `TaxRepresentative`        | ❌                            | Specjalne typy operacji (np. fakturowanie RR lub w imieniu innych)         |
+| **Administracyjne**       | `CredentialsManage`, `SubunitManage`,  `VatUeManage`.                       | ❌                            | Zarządzanie uprawnieniami, jednostkami podrzędnymi                      |
+| **Podmiotowe**        | `SelfInvoicing`, `RRInvoicing`, `TaxRepresentative`        | ❌                            | Upoważnienie innych podmiotów do działania (wystawiania faktur) we własnym kontekście w imieniu podmiotu uprawniającego         |
 | **Techniczne**            | `Introspection`                                            | ❌                            | Dostęp do historii operacji i sesji                                         |
 
 ---
@@ -131,9 +144,9 @@ Podmiot A posiada uprawnienie `InvoiceRead` z `canDelegate = true` dla wielu kli
 
 ### Struktura przypisywania uprawnień:
 
-1. **Bezpośrednie nadanie** – np. administrator przypisuje użytkownikowi uprawnienie `InvoiceWrite` w kontekście podmiotu A.
-2. **Nadanie z możliwością dalszego przekazania** – np. podmiot A nadaje podmiotowi B uprawnienie `InvoiceRead` z `canDelegate=true`, co umożliwia B nadanie `InvoiceRead` podmiotowi C.
-3. **Nadanie w sposób pośredni** – z użyciem dedykowanego endpointu `/permissions/indirect/grants`, gdzie podmiot pośredniczący nadaje uprawnienia w imieniu podmiotu docelowego.
+1. **Nadanie bezpośrednie** – np. administrator podmiotu A przypisuje użytkownikowi uprawnienie `InvoiceWrite` osobie fizycznej w kontekście podmiotu A.
+2. **Nadanie z możliwością dalszego przekazania** – np. administrator podmiotu A nadaje podmiotowi B (pośrednikowi) uprawnienie `InvoiceRead` z `canDelegate=true`, co umożliwia administratorowi podmiotu B nadanie `InvoiceRead` podmiotowi/osobie C.
+3. **Nadanie w sposób pośredni** – z użyciem dedykowanego endpointu /permissions/indirect/grants, gdzie administrator podmiotu pośrednika B, który otrzymał od podmiotu A uprawnienie z delegacją, nadaje uprawnienia w imieniu do obsługi podmiotu docelowego A podmiotowi/osobie C.
 
 ---
 
@@ -144,51 +157,42 @@ Podmiot A posiada uprawnienie `InvoiceRead` z `canDelegate = true` dla wielu kli
 | Anna Kowalska (PESEL)      | ✅           | ✅          | ❌                 | ❌             | ❌                 |
 | Biuro Rachunkowe XYZ (NIP) | ✅ (z delegacją)          | ✅ (z delegacją) | ❌                 | ❌             | ❌                 |
 | Jan Nowak (Identyfikujacy sie certyfikatem)   | ✅           | ✅          | ❌                 | ❌             | ❌                 |
-| Admin IT (PESEL)           | ❌           | ❌          | ✅                 | ✅             | ❌                 |
+| Admin działu księgowości (PESEL)           | ❌           | ❌          | ✅                 | ✅             | ❌                 |
 | Spółka Matka tj. owner (NIP)         | ✅           | ✅          | ✅                 | ✅             | ✅                 |
-
-## Ograniczenia dotyczące delegowania uprawnień
-
-| Uprawnienie           | Możliwość delegowania (`canDelegate`) | Uwagi                                                                 |
-|-----------------------|----------------------------------------|-----------------------------------------------------------------------|
-| `InvoiceRead`         | ✅ Tak                                 | Uprawnienie, które może być delegowane z `canDelegate = true` |
-| `InvoiceWrite`        | ✅ Tak                           | Uprawnienie, które może być delegowane z `canDelegate = true` |
-| `CredentialsManage`   | ❌ Nie                                  | Uprawnienie do zarządzania uprawnieniami – nie można przekazać                      |
-| `SubunitManage`       | ❌ Nie                                  | Uprawnienie dla administratorów podmiotów podrzędnych i jednostek podrzędnych - nie można przekazać                                        |
-| `SelfInvoicing`, `TaxRepresentative`, `RRInvoicing` | ❌ Nie                        | Tylko bezpośrednie nadanie przez właściciela lub uprawnionego         |
+| Admin grupy VAT (PESEL)          | ❌           | ❌          | ❌                 | ✅             | ❌                 |
+| Przedstawiciel podatkowy (NIP)          | ❌           | ❌          | ❌                 | ❌             | ✅                 |
 
 ---
 
-### Ograniczenia ról nadających uprawnienia
+### Role lub uprawnienia wymagane do nadawania uprawnień 
 
-| Rodzaj operacji                            | Wymagana rola lub uprawnienie                      |
+| Nadanie uprawnień:                        | Wymagana rola lub uprawnienie                      |
 |-------------------------------------------|---------------------------------------------------|
-| Nadanie uprawnienia osobie fizycznej      | `Owner` lub `CredentialsManage`                   |
-| Nadanie uprawnienia podmiotowi            | `Owner` lub `CredentialsManage`                   |
-| Nadanie uprawnienia podmiotowego | `Owner` lub `CredentialsManage`                   |
-| Nadanie uprawnień w sposób pośredni              | `Owner` lub `CredentialsManage` w kontekscie podmiotu ktory otrzymał uprawnienie z flaga  `canDelegate = true`    |
-| Nadanie uprawnień jednostce podrzędnej lub podmiotowi podrzędnemu   | `SubunitManage`                                   |
-| Nadanie uprawnień administratorowi UE      | `Owner` lub `CredentialsManage`    |
-| Nadanie uprawnień reprezentantowi UE      | Tylko administrator VAT UE posiadający `VatUeManage`    |
+| osobie fizycznej do pracy w KSeF      | `Owner` lub `CredentialsManage`                   |
+| podmiotowi do obsługi faktur           | `Owner` lub `CredentialsManage`                   |
+| podmiotowych | `Owner` lub `CredentialsManage`                   |
+| do obsługi faktur  – w sposób pośredni              | `Owner` lub `CredentialsManage`    |
+| administratorowi jednostki podrzędnej   | `SubunitManage`                                   |
+| administratorowi podmiotu unijnego      | `Owner` lub `CredentialsManage`    |
+| reprezentantowi podmiotu unijnego     | `VatUeManage`    |
 ---
 
 ### Ograniczenia identyfikatorów (`subjectIdentifier`, `contextIdentifier`)
 
 | Typ identyfikatora | Identyfikowany | Uwagi |
 |--------------------|---------------------|-------|
-| `Nip`              | Podmioty krajowe     | Dla firm zarejestrowanych w Polsce oraz osób fizycznych |
-| `Pesel`            | Osoby fizyczne       | Wymagane m.in. przy nadaniu uprawnień pracownikom |
-| `Fingerprint`      | Podmiot lub osoba fizyczna      | Wykorzystywany w przypadku gdy certyfikat nie posiada atrybutu NIP/PESEL oraz podczas nadawania uprawnień administratora podmiotu unijnego.   |
-| `NipVatUe`         | Podmioty unijne      | Wymagane np. przy nadaniu administratora UE |
-| `InternalId`       | Jednostki podrzędne  | - |
+| `Nip`              | Podmiot krajowy     | Dla podmiotów zarejestrowanych w Polsce oraz osób fizycznych |
+| `Pesel`            | Osoba fizyczna       | Wymagane m.in. przy nadaniu uprawnień pracownikom posługującym się profilem zaufanym lub certyfikatem kwalifikowanym z numerem PESEL  |
+| `Fingerprint`      | Właściciel certyfikatu      | Wykorzystywane w sytuacji, gdy certyfikat kwalifikowany nie zawiera identyfikatora NIP ani PESEL oraz przy identyfikowaniu administratorów lub reprezentantów podmiotów unijnych   |
+| `NipVatUe`         | Podmioty unijne powiązane z podmiotami polskimi       | Wymagane przy nadawaniu uprawnieńniu administratorom i przedstawicielom podmiotów unijnych |
+| `InternalId`       | Jednostki podrzędne  | Wykorzystywane w podmiotach o strukturze złożonej z jednostek podrzędnych |
 
 ---
 
 ### Ograniczenia funkcjonalne API
 
 - Nie można nadać tego samego uprawnienia dwukrotnie – API może zwrócić błąd lub zignorować duplikat.
-- Nadanie uprawnienia nie skutkuje natychmiastowym dostępem – operacja musi zostać przetworzona przez system (sprawdź status operacji).
-- Odebranie uprawnienia nie cofa skutków wykonanych wcześniej operacji (np. wystawione faktury pozostają w systemie).
+- Wykonanie operacji nadania uprawnienia nie skutkuje natychmiastowym dostępem – operacja jest asynchroniczna musi zostać poprawnie przetworzona przez system (należy sprawdzić status operacji).
 
 ---
 
@@ -320,11 +324,12 @@ Dla wybranych procesów fakturowania KSeF przewiduje tzw. uprawnienia podmiotowe
 
 POST [/permissions/authorizations/grants](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Nadawanie-uprawnien/paths/~1api~1v2~1permissions~1authorizations~1grants/post)
 
-Służy do nadawania uprawnień podmiotowych, takich jak `SelfInvoicing` (samofakturowanie), `RRInvoicing` (samofakturowanie RR) czy `TaxRepresentative` (operacje przedstawiciela podatkowego).
+Służy do nadawania tzw. uprawnień podmiotowych, takich jak `SelfInvoicing` (samofakturowanie), `RRInvoicing` (samofakturowanie RR) czy `TaxRepresentative` (operacje przedstawiciela podatkowego).
 
 Charakter uprawnień:
 
-Są to uprawnienia podmiotowe, co oznacza, że są istotne przy wysyłaniu plików faktur i weryfikowane w procesie ich walidacji. Mogą być modyfikowane w trakcie sesji.
+Są to uprawnienia podmiotowe, co oznacza, że są istotne przy wysyłaniu przez podmiot plików faktur i weryfikowane w procesie ich walidacji. Weryfikowana jest zależność pomiędzy podmiotem, a danymi na fakturach. Mogą być zmieniane w trakcie sesji. 
+
 Wymagane uprawnienia do nadawania uprawnień: ```CredentialsManage``` lub ```Owner```.
 
 | Pole                                       | Wartość                                         |
@@ -442,7 +447,7 @@ return ksefClient.grantsPermissionSubUnit(request);
 ---
 ### Nadanie uprawnień administratora podmiotu unijnego
 
-W przypadku organizacji zagranicznych zarejestrowanych w UE, które uczestniczą w polskim obrocie fakturowym, możliwe jest ustanowienie administratora odpowiedzialnego za zarządzanie dostępem w kontekście podmiotu złożonego, czyli pary polskiego NIPu i identyfikatora VAT UE. (`NipVatUe`). Sekcja przedstawia wymagania oraz format danych wymaganych do nadania takich uprawnień.
+Nadanie uprawnień administratora podmiotu unijnego w KSeF pozwala na uprawnienie podmiotu lub osoby wyznaczonej przez podmiot unijny mający prawo do samofakturowania w imieniu podmiotu polskiego nadającego uprawnienie. Wykonanie tej operacji powoduje, że uprawniona w ten sposób osoba uzyskuje możliwość logowania się w kontekście złożonym: `NipVatUe`, wiążącym podmiot polski nadający uprawnienie z podmiotem unijnym mającym prawo do samofakturowania. Po nadaniu uprawnień administratora podmiotu unijnego osoba taka będzie mogła wykonywać operacje na fakturach, a także zarządzać uprawnieniami innych osób (tzw. reprezentantów podmiotu unijnego) w ramach tego kontekstu złożonego.
 
 POST [/permissions/eu-entities/administration/grants](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Nadawanie-uprawnien/paths/~1api~1v2~1permissions~1eu-entities~1administration~1grants/post)
 
@@ -567,7 +572,7 @@ ksefClient.revokeAuthorizationsPermission(permissionId)
 
 ## Wyszukiwanie nadanych uprawnień
 
-KSeF udostępnia zestaw endpointów pozwalających na odpytywanie listy aktywnych  uprawnień nadanych użytkownikom i podmiotom. Mechanizmy te są niezbędne do audytu, przeglądu stanu dostępu, a także przy budowie interfejsów administracyjnych (np. do zarządzania strukturą dostępu w organizacji). Sekcja zawiera przegląd metod wyszukiwania z podziałem na kategorie nadanych uprawnień.
+KSeF udostępnia zestaw endpointów pozwalających na odpytywanie listy aktywnych uprawnień nadanych użytkownikom i podmiotom. Mechanizmy te są niezbędne do audytu, przeglądu stanu dostępu, a także przy budowie interfejsów administracyjnych (np. do zarządzania strukturą dostępu w organizacji). Sekcja zawiera przegląd metod wyszukiwania z podziałem na kategorie nadanych uprawnień.
 
 ---
 ### Pobranie listy uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom
@@ -711,7 +716,7 @@ Po nadaniu lub odebraniu uprawnienia, system zwraca numer referencyjny operacji 
 
 GET [/permissions/operations/{operationReferenceNumber}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Operacje/paths/~1api~1v2~1permissions~1operations~1%7BoperationReferenceNumber%7D/get)
 
-Każda operacja nadania uprawnienia zwraca identyfikator operacji, który można wykorzystać do sprawdzenia statusu tej operacji.
+Każda operacja nadania uprawnienia zwraca identyfikator operacji, który należy wykorzystać do sprawdzenia statusu tej operacji.
 
 Przykład w języku C#:
 ```csharp
