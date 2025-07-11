@@ -16,6 +16,7 @@ Przewodnik został podzielony na tematyczne sekcje, odpowiadające kluczowym fun
 * [Uprawnienia](uprawnienia.md)
 * [Certyfikaty KSeF](certyfikaty-KSeF.md)
 * [Tryby offline](tryby-offline.md)
+* [Kody QR](kody-qr.md)
 * [Sesja interaktywna](sesja-interaktywna.md)
 * [Sesja wsadowa](sesja-wsadowa.md)
 * [Pobieranie faktur](pobieranie-faktur.md)
