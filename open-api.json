@@ -2669,13 +2669,16 @@
           "content": {
             "application/json": {
               "schema": {
+                "required": [
+                  "queryType"
+                ],
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/PersonPermissionsQueryRequest"
                   }
                 ]
               },
-              "example": {"authorIdentifier":{"type":"Nip","value":"7762811692"},"permissionTypes":["CredentialsManage","CredentialsRead","InvoiceWrite"],"permissionState":"Active"}
+              "example": {"authorIdentifier":{"type":"Nip","value":"7762811692"},"permissionTypes":["CredentialsManage","CredentialsRead","InvoiceWrite"],"permissionState":"Active","queryType":"PermissionsInCurrentContext"}
             }
           }
         },
@@ -6911,6 +6914,9 @@
         "additionalProperties": false
       },
       "PersonPermissionsQueryRequest": {
+        "required": [
+          "queryType"
+        ],
         "type": "object",
         "properties": {
           "authorIdentifier": {
@@ -6970,10 +6976,30 @@
                 "$ref": "#/components/schemas/PermissionState"
               }
             ],
-            "description": "Stan uprawnienia. \n| Type | Value |\n| --- | --- |\n| Active | Uprawnienia aktywne |\n| Inactive | Uprawnienia nieaktywne, nadane w sposób poœredni |"
+            "description": "Stan uprawnienia. \n| Type | Value |\n| --- | --- |\n| Active | Uprawnienia aktywne |\n| Inactive | Uprawnienia nieaktywne, nadane w sposób poœredni |",
+            "nullable": true
+          },
+          "queryType": {
+            "enum": [
+              "PermissionsInCurrentContext",
+              "PermissionsGrantedInCurrentContext"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonPermissionsQueryType"
+              }
+            ],
+            "description": "Typ zapytania.\n| Type | Value |\n| --- | --- |\n| PermissionsInCurrentContext | Uprawnienia posiadane w aktualnym kontekście |\n| PermissionsGrantedInCurrentContext | Uprawnienia nadane w aktualnym kontekście |"
           }
         },
         "additionalProperties": false
+      },
+      "PersonPermissionsQueryType": {
+        "enum": [
+          "PermissionsInCurrentContext",
+          "PermissionsGrantedInCurrentContext"
+        ],
+        "type": "string"
       },
       "PersonPermissionsSubjectIdentifier": {
         "required": [

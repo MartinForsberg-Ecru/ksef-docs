@@ -581,6 +581,7 @@ POST [/permissions/query/persons/grants](https://ksef-test.mf.gov.pl/docs/v2/ind
 | `targetIdentifier`    | Identyfikator podmiotu docelowego (dla uprawnień pośrednich).  ```Nip```      |
 | `permissionTypes`     | Typy uprawnień do filtrowania.   `"CredentialsManage"`, `"CredentialsRead"`, `"InvoiceWrite"`, `"InvoiceRead"`, `"Introspection"`, `"SubunitManage"`, `"EnforcementOperations"`  |
 | `permissionState`     | Stan uprawnienia.  ```Active``` / ```Inactive```                                                  |
+| `queryType`           | Typ zapytania określający czy pobierana lista uprawnień dotyczy uprawnień obowiązujących lub nadanych w danym kontekście. ```PermissionsInCurrentContext``` / ```PermissionsGrantedInCurrentContext```  |
 
 Przykład w języku C#:
 
