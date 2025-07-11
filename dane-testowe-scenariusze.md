@@ -50,61 +50,61 @@ Przykładowy JSON:
   "subunits": [
     {
       "subjectNip": "4972530874",
-      "description": "Członek grupy nr 1"
+      "description": "NIP 4972530874: członek grupy VAT dla 3755747347"
     },
     {
       "subjectNip": "8225900795",
-      "description": "Członek grupy nr 2"
+      "description": "NIP 8225900795: członek grupy VAT dla 3755747347"
     }
   ]
 }
 ```
 
-W wyniku tej operacji w systemie zostaną utworzone wskazane podmioty oraz powiązania między nimi. Następnie należy nadać uprawnienia właścicielskie w kontekście NIP-ów należących do członków grupy oraz całej grupy VAT, zgodnie z zasadami ZAW-FA. Operację tę można wykonać za pomocą metody `/v2/testdata/permissions`.
+W wyniku tej operacji w systemie zostaną utworzone wskazane podmioty oraz powiązania między nimi. Następnie należy jakiejś osobie nadać uprawnienia w kontekście NIPu grupy VAT, zgodnie z zasadami ZAW-FA. Operację tę można wykonać za pomocą metody `/v2/testdata/permissions`.
 
-Przykładowy JSON dla członka grupy:
+Przykładowy JSON dla osoby uprawnionej w kontekście grupy VAT:
 ```json
 {
   "contextIdentifier": {
-    "value": "4972530874",
+    "value": "3755747347",
     "type": "nip"
   },
   "authorizedIdentifier": {
-    "value": "60137010667054276304203484",
-    "type": "fingerprint"
+    "value": "38092277125",
+    "type": "pesel"
   },
   "permissions": [
     {
       "permissionType": "InvoiceRead",
-      "description": "Odczyt faktur"
+      "description": "praca w kontekście 3755747347: uprawniony PESEL: 38092277125, Adam Abacki"
     },
     {
       "permissionType": "InvoiceWrite",
-      "description": "Wysyłanie faktur"
+      "description": "praca w kontekście 3755747347: uprawniony PESEL: 38092277125, Adam Abacki"
     },
     {
       "permissionType": "Introspection",
-      "description": "Przeglądanie historii"
+      "description": "praca w kontekście 3755747347: uprawniony PESEL: 38092277125, Adam Abacki"
     },
     {
       "permissionType": "CredentialsRead",
-      "description": "Odczyt uprawnień"
+      "description": "praca w kontekście 3755747347: uprawniony PESEL: 38092277125, Adam Abacki"
     },
     {
       "permissionType": "CredentialsManage",
-      "description": "Zarządzanie uprawnieniami"
+      "description": "praca w kontekście 3755747347: uprawniony PESEL: 38092277125, Adam Abacki"
     },
     {
       "permissionType": "SubunitManage",
-      "description": "Zarządzanie jednostkami podrzędnymi"
+      "description": "praca w kontekście 3755747347: uprawniony PESEL: 38092277125, Adam Abacki"
     }
   ]
 }
 ```
 
-Taką operację można wykonać zarówno dla członków grupy VAT, jak i dla całej grupy VAT.
+Taką operację można wykonać zarówno grupy VAT (jak wyżej), jak i dla członków grupy VAT. Należy zauważyć, że o ile dla grupy VAT jest to jedyna możliwość nadania inicjalnych uprawnień, o tyle dla członków grupy nie ma takiej konieczności. Można to już zrobić przy użyciu standardowego endpointu /v2/permissions/subunit/grants powołując administratorów członków grupy VAT. 
 
-Przykładowy JSON dla nadania uprawnienia **CredentialsManage** przedstawicielowi członka grupy:
+Alternatywnie można posłużyć się opisanym wyżej endpointem do tworzenia danych testowych. Przykładowy JSON dla nadania uprawnienia `CredentialsManage` administratorowi członka grupy:
 ```json
 {
   "contextIdentifier": {
@@ -112,16 +112,16 @@ Przykładowy JSON dla nadania uprawnienia **CredentialsManage** przedstawicielow
     "type": "nip"
   },
   "authorizedIdentifier": {
-    "value": "98943410705538041801748826",
-    "type": "fingerprint"
+    "value": "3388912629",
+    "type": "nip"
   },
   "permissions": [
     {
       "permissionType": "CredentialsManage",
-      "description": "Zarządzanie uprawnieniami"
+      "description": "praca w kontekście 4972530874: uprawniony NIP: 3388912629, Bogdan Babacki"
     }
   ]
 }
 ```
 
-Dzięki tej operacji przedstawiciel członka grupy VAT (lub całej grupy VAT) uzyskuje możliwość nadawania uprawnień sobie lub innym osobom (np. pracownikom) w standardowy sposób, za pośrednictwem systemu KSeF.
+Dzięki tej operacji przedstawiciel członka grupy VAT uzyskuje możliwość nadawania uprawnień sobie lub innym osobom (np. pracownikom) w standardowy sposób, za pośrednictwem systemu KSeF.
