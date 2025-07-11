@@ -5584,6 +5584,10 @@
             "type": "string",
             "nullable": true
           },
+          "invoiceFileName": {
+            "type": "string",
+            "nullable": true
+          },
           "receiveDate": {
             "type": "string",
             "format": "date-time"
@@ -7364,6 +7368,11 @@
           "invoiceHash": {
             "type": "string",
             "description": "Skrót SHA256 faktury, zakodowany w formacie Base64.",
+            "nullable": true
+          },
+          "invoiceFileName": {
+            "type": "string",
+            "description": "Nazwa pliku faktury (zwracana dla faktur wysyłanych wsadowo).",
             "nullable": true
           },
           "receiveDate": {
