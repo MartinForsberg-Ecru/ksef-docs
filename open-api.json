@@ -2020,7 +2020,7 @@
           "Uwierzytelnianie"
         ],
         "summary": "Uwierzytelnienie z wykorzystaniem podpisu XAdES",
-        "description": "Rozpoczyna operację uwierzytelniania za pomocą dokumentu XML podpisanego podpisem elektroniczny XAdES.\n\n> Więcej informacji:\n> - [Przygotowanie dokumentu XML](https://github.com/CIRFMF/ksef-docs/blob/docs/online-session-update/uwierzytelnianie.md#2-przygotowanie-dokumentu-xml-authtokenrequest)\n> - [Podpis dokumentu XML](https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md#3-podpis-dokumentu-xml-authtokenreqeust)\n> - [Schemat XSD](/docs/v2/schemas/authv2.xsd)",
+        "description": "Rozpoczyna operację uwierzytelniania za pomocą dokumentu XML podpisanego podpisem elektroniczny XAdES.\n\n> Więcej informacji:\n> - [Przygotowanie dokumentu XML](https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)\n> - [Podpis dokumentu XML](https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md#2-podpisanie-dokumentu-xades)\n> - [Schemat XSD](/docs/v2/schemas/authv2.xsd)",
         "parameters": [
           {
             "name": "verifyCertificateChain",
@@ -2050,7 +2050,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationInitResponse"
                 },
-                "example": {"referenceNumber":"20250514-AU-2DFC46C000-3AC6D5877F-D4","authenticationToken":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbi10eXBlIjoiT3BlcmF0aW9uVG9rZW4iLCJvcGVyYXRpb24tcmVmZXJlbmNlLW51bWJlciI6IjIwMjUwNTE0LUFVLTJERkM0NkMwMDAtM0FDNkQ1ODc3Ri1ENCIsImV4cCI6MTc0NzIzMTcxOSwiaWF0IjoxNzQ3MjI5MDE5LCJpc3MiOiJrc2VmLWFwaS10aSIsImF1ZCI6ImtzZWYtYXBpLXRpIn0.rtRcV2mR9SiuJwpQaQHsbAXvvVsdNKG4DJsdiJctIeU","validUntil":"2025-07-10T14:19:30.7368609+00:00"}}
+                "example": {"referenceNumber":"20250514-AU-2DFC46C000-3AC6D5877F-D4","authenticationToken":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbi10eXBlIjoiT3BlcmF0aW9uVG9rZW4iLCJvcGVyYXRpb24tcmVmZXJlbmNlLW51bWJlciI6IjIwMjUwNTE0LUFVLTJERkM0NkMwMDAtM0FDNkQ1ODc3Ri1ENCIsImV4cCI6MTc0NzIzMTcxOSwiaWF0IjoxNzQ3MjI5MDE5LCJpc3MiOiJrc2VmLWFwaS10aSIsImF1ZCI6ImtzZWYtYXBpLXRpIn0.rtRcV2mR9SiuJwpQaQHsbAXvvVsdNKG4DJsdiJctIeU","validUntil":"2025-07-10T17:25:31.4784812+00:00"}}
               }
             }
           },
@@ -2060,8 +2060,7 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
-                },
-                "example": {"exception":{"exceptionDetailList":[{"exceptionCode":12345,"exceptionDescription":"Opis błędu.","details":["Opcjonalne dodatkowe szczegóły błędu."]}],"serviceCode":"00-c02cc3747020c605be02159bf3324f0e-eee7647dc67aa74a-00","serviceName":"Undefined","timestamp":"2025-07-10T14:16:30.7370973Z"}}
+                }
               }
             },
             "x-summary": "Bad Request"
@@ -3255,7 +3254,7 @@
             "items": {
               "$ref": "#/components/schemas/BatchFilePartInfo"
             },
-            "description": "Informacje o cząstkach pliku paczki."
+            "description": "Informacje o częściach pliku paczki."
           }
         },
         "additionalProperties": false
@@ -3271,21 +3270,21 @@
         "properties": {
           "ordinalNumber": {
             "type": "integer",
-            "description": "Numer sekwencyjny cząstki pliku paczki.",
+            "description": "Numer sekwencyjny części pliku paczki.",
             "format": "int32"
           },
           "fileName": {
             "type": "string",
-            "description": "Nazwa cząstki pliku paczki."
+            "description": "Nazwa części pliku paczki."
           },
           "fileSize": {
             "type": "integer",
-            "description": "Rozmiar cząstki pliku paczki.",
+            "description": "Rozmiar części pliku paczki.",
             "format": "int64"
           },
           "fileHash": {
             "type": "string",
-            "description": "Skrót SHA256 cząstki pliku paczki, zakodowany w formacie Base64."
+            "description": "Skrót SHA256 części pliku paczki, zakodowany w formacie Base64."
           }
         },
         "additionalProperties": false
@@ -6359,7 +6358,7 @@
             "items": {
               "$ref": "#/components/schemas/PartUploadRequest"
             },
-            "description": "Dane wymagane do poprawnego przesłania poszczególnych cząstkek paczki faktur."
+            "description": "Dane wymagane do poprawnego przesłania poszczególnych części pliku paczki faktur."
           }
         },
         "additionalProperties": false
@@ -6417,17 +6416,17 @@
         "properties": {
           "ordinalNumber": {
             "type": "integer",
-            "description": "Numer sekwencyjny cząstki pliku paczki.",
+            "description": "Numer sekwencyjny części pliku paczki.",
             "format": "int32"
           },
           "method": {
             "type": "string",
-            "description": "Metoda HTTP, której należy użyć przy wysyłce cząstki pliku paczki.",
+            "description": "Metoda HTTP, której należy użyć przy wysyłce części pliku paczki.",
             "nullable": true
           },
           "url": {
             "type": "string",
-            "description": "Adres pod który należy wysłać cząstkę pliku paczki.",
+            "description": "Adres pod który należy wysłać część pliku paczki.",
             "format": "uri",
             "nullable": true
           },
@@ -6437,7 +6436,7 @@
               "type": "string",
               "nullable": true
             },
-            "description": "Nagłówki, których należy użyć przy wysyłce cząstki pliku paczki.",
+            "description": "Nagłówki, których należy użyć przy wysyłce części pliku paczki.",
             "nullable": true
           }
         },
