@@ -1421,6 +1421,151 @@
         }
       }
     },
+    "/api/v2/sessions": {
+      "get": {
+        "tags": [
+          "Status wysyłki i UPO"
+        ],
+        "summary": "Pobranie listy sesji",
+        "description": "Zwraca listę sesji spełniających podane kryteria wyszukiwania.",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Rozmiar strony.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sessionType",
+            "in": "query",
+            "description": "Typ sesji.\n| Wartość | Opis |\n| --- | --- |\n| Online | Wysyłka interaktywna (pojedyncze faktury). |\n| Batch | Wysyłka wsadowa (paczka faktur). |\n",
+            "required": true,
+            "schema": {
+              "enum": [
+                "Online",
+                "Batch"
+              ],
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SessionType"
+                }
+              ]
+            }
+          },
+          {
+            "name": "referenceNumber",
+            "in": "query",
+            "description": "Numer referencyjny sesji.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dateCreatedFrom",
+            "in": "query",
+            "description": "Data utworzenia sesji (od).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateCreatedTo",
+            "in": "query",
+            "description": "Data utworzenia sesji (do).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateClosedFrom",
+            "in": "query",
+            "description": "Data zamknięcia sesji (od).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateClosedTo",
+            "in": "query",
+            "description": "Data zamknięcia sesji (do).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateModifiedFrom",
+            "in": "query",
+            "description": "Data ostatniej aktywności (wysyłka faktury lub zmiana statusu) w ramach sesji (od).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateModifiedTo",
+            "in": "query",
+            "description": "Data ostatniej aktywności (wysyłka faktury lub zmiana statusu) w ramach sesji (do).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "statuses",
+            "in": "query",
+            "description": "Statusy sesji.\n| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n",
+            "schema": {
+              "enum": [
+                "Succeeded",
+                "InProgress",
+                "Failed"
+              ],
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CommonSessionStatus"
+              }
+            }
+          },
+          {
+            "name": "x-continuation-token",
+            "in": "header",
+            "description": "Token służący do pobrania kolejnej strony wyników.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionsQueryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/sessions/{referenceNumber}": {
       "get": {
         "tags": [
@@ -3522,6 +3667,15 @@
         ],
         "type": "string",
         "description": "| Wartość | Opis |\n| --- | --- |\n| Unspecified | Nieokreślony. |\n| Superseded | Certyfikat został zastąpiony przez inny. |\n| KeyCompromise | Klucz prywatny powiązany z certyfikatem został skompromitowany. |\n"
+      },
+      "CommonSessionStatus": {
+        "enum": [
+          "Succeeded",
+          "InProgress",
+          "Failed"
+        ],
+        "type": "string",
+        "description": "| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n"
       },
       "ContextIdentifier": {
         "required": [
@@ -7461,6 +7615,87 @@
             "description": "Ilość faktur przeprocesowanych w ramach sesji z błędem.",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionType": {
+        "enum": [
+          "Online",
+          "Batch"
+        ],
+        "type": "string",
+        "description": "| Wartość | Opis |\n| --- | --- |\n| Online | Wysyłka interaktywna (pojedyncze faktury). |\n| Batch | Wysyłka wsadowa (paczka faktur). |\n"
+      },
+      "SessionsQueryResponse": {
+        "required": [
+          "sessions"
+        ],
+        "type": "object",
+        "properties": {
+          "continuationToken": {
+            "type": "string",
+            "description": "Token służący do pobrania kolejnej strony wyników. Jeśli jest pusty, to nie ma kolejnych stron.",
+            "nullable": true
+          },
+          "sessions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionsQueryResponseItem"
+            },
+            "description": "Lista sesji."
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionsQueryResponseItem": {
+        "required": [
+          "dateCreated",
+          "dateUpdated",
+          "failedInvoiceCount",
+          "referenceNumber",
+          "status",
+          "successfulInvoiceCount",
+          "totalInvoiceCount"
+        ],
+        "type": "object",
+        "properties": {
+          "referenceNumber": {
+            "type": "string",
+            "description": "Numer referencyjny sesji."
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusInfo"
+              }
+            ],
+            "description": "Status sesji."
+          },
+          "dateCreated": {
+            "type": "string",
+            "description": "Data utowrzenia sesji.",
+            "format": "date-time"
+          },
+          "dateUpdated": {
+            "type": "string",
+            "description": "Data ostatniej aktywności w ramach sesji.",
+            "format": "date-time"
+          },
+          "totalInvoiceCount": {
+            "type": "integer",
+            "description": "Łączna liczba faktur (uwzględnia również te w trakcie przetwarzania).",
+            "format": "int32"
+          },
+          "successfulInvoiceCount": {
+            "type": "integer",
+            "description": "Liczba poprawnie przetworzonych faktur.",
+            "format": "int32"
+          },
+          "failedInvoiceCount": {
+            "type": "integer",
+            "description": "Liczba błędnie przetworzonych faktur.",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -1,9 +1,26 @@
 ## Sesja – sprawdzenie stanu i pobranie UPO
-26.06.2025
+10.07.2025
 
-Niniejszy rozdział opisuje operacje służące do monitorowania stanu sesji (interaktywnej lub wsadowej) oraz pobierania UPO dla faktur i całej sesji.
+Niniejszy dokument opisuje operacje służące do monitorowania stanu sesji (interaktywnej lub wsadowej) oraz pobierania UPO dla faktur i całej sesji.
 
-### 1. Sprawdzenie stanu sesji
+### 1. Pobranie listy sesji
+Zwraca listę sesji spełniających podane kryteria wyszukiwania.
+
+GET [sessions](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions/get)
+
+Zwraca bieżący status sesji wraz z zagregowanymi danymi o liczbie przesłanych, poprawnie i niepoprawnie przetworzonych faktur; po zamknięciu sesji udostępnia dodatkowo listę referencji do zbiorczego UPO.
+
+Przykład w języku C#:
+```csharp
+//TODO
+```
+
+Przykład w języku Java:
+```java
+//TODO
+```
+
+### 2. Sprawdzenie stanu sesji
 Sprawdza bieżący stan sesji.
 
 GET [sessions/\{referenceNumber\}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D/get)
@@ -27,7 +44,7 @@ var failedInvoiceCount = openSessionResult.getFailedInvoiceCount();
 ```
 
 
-### 2. Pobranie informacji na temat przesłanych faktur
+### 3. Pobranie informacji na temat przesłanych faktur
 
 GET [sessions/\{referenceNumber\}/invoices](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices/get)
 
@@ -68,7 +85,7 @@ sessionInvoices.getInvoices().forEach(invoice -> {
     log.info(invoice.getInvoiceNumber() + " " + invoice.getKsefNumber() + " " + invoice.getStatus());
 });
 ```
-### 3. Pobranie informcji o pojedynczej fakturze
+### 4. Pobranie informcji o pojedynczej fakturze
 
 Umożliwia pobranie szczegółowych informacji o pojedynczej fakturze w sesji, w tym jej statusu i metadanych.
 
@@ -91,11 +108,11 @@ Przykład w języku Java:
 SessionInvoice sessionInvoiceStatus = ksefClient.getSessionInvoiceStatus(referenceNumber, invoiceReferenceNumber);
 ```
 
-### 4. Pobranie UPO dla faktury
+### 5. Pobranie UPO dla faktury
 
 Umożliwia pobranie UPO dla pojedynczej, poprawnie przyjętej faktury.
 
-#### 4.1 Na podstawie numery referencyjnego faktury
+#### 5.1 Na podstawie numery referencyjnego faktury
 
 GET [sessions/\{referenceNumber\}/invoices/\{invoiceReferenceNumber\}/upo](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1%7BinvoiceReferenceNumber%7D~1upo/get)
 
@@ -114,7 +131,7 @@ Przykład w języku Java:
 var upo = ksefClient.getSessionInvoiceUpoByReferenceNumber(referenceNumber, invoiceReferenceNumber);
 ```
 
-#### 4.2 Na podstawie numeru KSeF faktury
+#### 5.2 Na podstawie numeru KSeF faktury
 
 GET [sessions/\{referenceNumber\}/invoices/\{ksefNumber\}/upo](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1ksef~1%7BksefNumber%7D~1upo/get)
 
@@ -137,7 +154,7 @@ Otrzymany dokument XML jest:
 * podpisany w formacie XADES przez Ministerstwo Finansów
 * zgodny ze schematem [XSD](/wysyłka-faktur/upo-faktura.xsd) dla pojedynczej faktury.
 
-### 5. Pobranie listy niepoprawnie przyjętych faktur
+### 6. Pobranie listy niepoprawnie przyjętych faktur
 
 GET [sessions/\{referenceNumber\}/invoices/failed](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1failed/get)
 
@@ -174,7 +191,7 @@ sessionFailedInvoices.getInvoices().forEach(invoice->{
 
 Endpoint umożliwia selektywne pobranie wyłącznie odrzuconych faktur, co ułatwia analizę błędów w sesjach zawierających dużą liczbę faktur.
 
-### 6. Pobranie UPO sesji
+### 7. Pobranie UPO sesji
 
 Udostępnia zbiorcze UPO potwierdzające przyjęcie wszystkich faktur przesłanych w danej sesji.
 
