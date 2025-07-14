@@ -113,7 +113,6 @@ Po przygotowaniu dokumentu ```AuthTokenRequest``` należy go podpisać cyfrowo w
 * Certyfikat kwalifikowany osoby fizycznej – zawierający numer PESEL lub NIP osoby posiadającej uprawnienia do działania w imieniu firmy,
 * Certyfikat kwalifikowany organizacji (tzw. pieczęć firmowa) - zawierający numer NIP.
 * Profil Zaufany (ePUAP) – umożliwia podpisanie dokumentu; wykorzystywany przez osoby fizyczne, które mogą go złożyć za pośrednictwem [gov.pl](https://www.gov.pl/web/gov/podpisz-dokument-elektronicznie-wykorzystaj-podpis-zaufany).
-* TpSigning - dla instytucji publicznych.
 * [Certyfikat KSeF](certyfikaty-KSeF.md) – wystawiany przez system KSeF. Certyfikat ten nie jest certyfikatem kwalifikowanym, ale jest honorowany w procesie uwierzytelniania. Certyfikat KSeF jesy wyłącznie wykorzystywany na potrzeby systemu KSeF.
 
 Na środowisku testowym dopuszcza się użycie samodzielnie wygenerowanego certyfikatu będącego odpowiednikiem certyfikatów kwalifikowanych, co umożliwia wygodne testowanie podpisu bez potrzeby posiadania certyfikatu kwalifikowanego.
