@@ -1,5 +1,5 @@
 ## Sesja wsadowa
-26.06.2025
+10.07.2025
 
 Wysyłka wsadowa umożliwia jednorazowe przesłanie wielu faktur w pojedynczym pliku ZIP, zamiast wysyłać każdą fakturę oddzielnie.
 

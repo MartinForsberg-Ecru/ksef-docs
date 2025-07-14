@@ -1,5 +1,5 @@
 ## Uwierzytelnianie
-26.06.2025
+10.07.2025
 
 ## Wstęp
 Uwierzytelnianie w systemie KSeF API 2.0 jest obowiązkowym etapem, który należy wykonać przed dostępem do chronionych zasobów systemu. Proces ten oparty jest na **uzyskaniu tokena dostępowego** (```accessToken```) w formacie ```JWT```, który następnie wykorzystywany jest do autoryzacji operacji API.

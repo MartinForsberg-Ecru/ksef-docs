@@ -1,4 +1,5 @@
 ## Zarządzanie sesjami uwierzytelniania
+10.07.2025
 
 ### Pobranie listy aktywnych sesji uwierzytelniania
 

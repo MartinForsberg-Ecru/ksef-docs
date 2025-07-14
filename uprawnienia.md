@@ -1,5 +1,5 @@
 ## Uprawnienia
-28.06.2025
+10.07.2025
 
 ### Wprowadzenie – kontekst biznesowy
 System KSeF wprowadza zaawansowany mechanizm zarządzania uprawnieniami, który stanowi fundament bezpiecznego i zgodnego z przepisami korzystania z systemu przez różne podmioty. Uprawnienia decydują o tym, kto może wykonywać określone operacje w KSeF – takie jak wystawianie faktur, przeglądanie dokumentów, nadawanie dalszych uprawnień czy zarządzanie jednostkami podrzędnymi.

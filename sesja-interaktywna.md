@@ -1,5 +1,5 @@
 ## Sesja interaktywna
-26.06.2025
+10.07.2025
 
 Sesja interaktywna służy do przesyłania pojedynczych faktur ustrukturyzowanych do API KSeF. Każda faktura musi być przygotowana w formacie XML zgodnie z aktualnym schematem opublikowanym przez Ministerstwo Finansów.
 
