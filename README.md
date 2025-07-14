@@ -36,9 +36,4 @@ Obie biblioteki są utrzymywane i rozwijane przez zespoły Ministerstwa Finansó
 
 
 ## Środowiska Systemu
-* **Środowisko produkcyjne (prod):**
-  * Służy do wystawiania i odbierania faktur mających pełne skutki prawne.  
-* **Środowisko przedprodukcyjne (demo):** 
-  * Środowisko testowe oparte o faktyczne dane uwierzytelniające, wymaga posiadania rzeczywistych uprawnień. Faktury nie mają skutków prawnych.
-* **Środowisko testowe (test):** https://ksef-test.mf.gov.pl/api/v2 (```dostępne od 30 września 2025```)
-  * Przeznaczone do testów funkcjonalności, faktury wystawione w tym środowisku nie mają skutków prawnych. Można używać samodzielnie wygenerowanych podpisów i pieczęci.
+Zestawienie środowisk KSeF API 2.0 zostało opisane w dokumencie [Środowiska KSeF API 2.0](srodowiska.md)
