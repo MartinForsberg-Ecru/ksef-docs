@@ -7,7 +7,7 @@ Wersja 2.0.0 RC2
 
 - **Nowy endpoint do pobierania listy sesji wysyłki faktur**\
   `/sessions` – umożliwia pobranie metadanych dla sesji wysyłkowych (interaktywnych i wsadowych), z możliwością filtrowania m.in. po statusie, dacie zamknięcia i typie sesji.\
-  [Pobieranie listy sesji](wysyłka-faktur/sesja-sprawdzenie-stanu-i-pobranie-upo.md#1-pobranie-listy-sesji)
+  [Pobieranie listy sesji](faktury/sesja-sprawdzenie-stanu-i-pobranie-upo.md#1-pobranie-listy-sesji)
   
 
 - **Zmiana w listowaniu uprawnień**  
@@ -18,4 +18,4 @@ Wersja 2.0.0 RC2
 
 -  **Dodanie pola invoiceFileName w odpowiedzi dla sesji wsadowej**\
   `/sessions/{referenceNumber}/invoices` – dodano pole invoiceFileName zawierające nazwę pliku faktury. Pole występuje tylko dla sesji wsadowych.
-   [Pobranie informacji na temat przesłanych faktur](wysyłka-faktur/sesja-sprawdzenie-stanu-i-pobranie-upo.md#3-pobranie-informacji-na-temat-przesłanych-faktur)
+   [Pobranie informacji na temat przesłanych faktur](faktury/sesja-sprawdzenie-stanu-i-pobranie-upo.md#3-pobranie-informacji-na-temat-przesłanych-faktur)

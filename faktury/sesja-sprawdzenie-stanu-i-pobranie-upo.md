@@ -172,7 +172,7 @@ var upo = ksefClient.getSessionInvoiceUpoByKsefNumber(referenceNumber, ksefNumbe
 
 Otrzymany dokument XML jest: 
 * podpisany w formacie XADES przez Ministerstwo Finansów
-* zgodny ze schematem [XSD](/wysyłka-faktur/upo-faktura.xsd) dla pojedynczej faktury.
+* zgodny ze schematem [XSD](/faktury/upo-faktura.xsd) dla pojedynczej faktury.
 
 ### 6. Pobranie listy niepoprawnie przyjętych faktur
 
@@ -217,7 +217,7 @@ Udostępnia zbiorcze UPO potwierdzające przyjęcie wszystkich faktur przesłany
 
 GET [/sessions/\{referenceNumber\}/upo/\{upoReferenceNumber\}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1upo~1%7BupoReferenceNumber%7D/get)
 
-Otrzymany dokument XML jest zgodny ze schematem [XSD](/wysyłka-faktur/upo-sesja.xsd).
+Otrzymany dokument XML jest zgodny ze schematem [XSD](/faktury/upo-sesja.xsd).
 
 Przyklad w języku C#:
 

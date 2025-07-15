@@ -27,7 +27,7 @@ EncryptionData encryptionData = cryptographyService.getEncryptionData();
 ### 1. Otwarcie sesji
 
 Inicjalizacja nowej sesji interaktywnej z podaniem:
-* wersji schematu faktury: [FA(2)](wysyłka-faktur/schemat-FA(2)-v1-0E.xsd), [FA(3)](wysyłka-faktur/schemat-FA(3)-v1-0E.xsd) <br>
+* wersji schematu faktury: [FA(2)](faktury/schemat-FA(2)-v1-0E.xsd), [FA(3)](faktury/schemat-FA(3)-v1-0E.xsd) <br>
 określa, którą wersję XSD system będzie stosować do walidacji przesyłanych faktur.
 * zaszyfrowanego klucza symetrycznego<br>
 symetryczny klucz szyfrujący pliki XML, zaszyfrowany kluczem publicznym Ministerstwa Finansów; rekomendowane jest użycie nowo wygenerowanego klucza dla każdej sesji.
@@ -68,7 +68,7 @@ POST [sessions/online/{referenceNumber}/invoices/](https://ksef-test.mf.gov.pl/d
 
 Odpowiedź zawiera ```referenceNumber``` dokumentu – używany do identyfikacji faktury w kolejnych operacjach (np. listy dokumentów).
 
-Po prawidłowym przesłaniu faktury rozpoczyna się asynchroniczna weryfikacja faktury ([szczegóły weryfikacji](wysyłka-faktur\weryfikacja-faktury.md)).
+Po prawidłowym przesłaniu faktury rozpoczyna się asynchroniczna weryfikacja faktury ([szczegóły weryfikacji](faktury\weryfikacja-faktury.md)).
 
 Przykład w języku C#:
 ```csharp
@@ -128,4 +128,4 @@ Przykład w języku Java:
 ksefClient.closeOnlineSession(referenceNumber);
 ```
 
-Zobacz [Sprawdzenie stanu i pobranie UPO](wysyłka-faktur/sesja-sprawdzenie-stanu-i-pobranie-upo.md)
+Zobacz [Sprawdzenie stanu i pobranie UPO](faktury/sesja-sprawdzenie-stanu-i-pobranie-upo.md)

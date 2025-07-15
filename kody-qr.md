@@ -60,7 +60,7 @@ byte[] qrCode = qrSvc.generateQrCode(url);
 ```
 
 #### Oznaczenie pod kodem QR
-Proces przyjęcia faktury przez KSeF zazwyczaj przebiega natychmiastowo — numer KSeF generowany jest niezłwocznie po przesłaniu dokumentu. W wyjątkowych przypadkach (np. wysokie obciążenie systemu) numer może być nadany z niewielkim opóźnieniem.
+Proces przyjęcia faktury przez KSeF zazwyczaj przebiega natychmiastowo — numer KSeF generowany jest niezwłocznie po przesłaniu dokumentu. W wyjątkowych przypadkach (np. wysokie obciążenie systemu) numer może być nadany z niewielkim opóźnieniem.
 
 - **Jeżeli numer KSeF jest znany:** pod kodem QR umieszczany jest numer KSeF faktury (dotyczy faktur online oraz faktur offline już przesłanych do systemu).
 
@@ -82,7 +82,7 @@ byte[] labeledQr = qrSvc.addLabelToQrCode(qrCode, ksefNumber);
 
 ### 2. KOD II – Weryfikacja certyfikatu
 
-```KOD II``` jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, offline, tryb awaryjny) i pełni funkcję potwierdzenia autentyczności wystawcy oraz integralności faktury. Generowanie wymaga posiadania aktywnego [certyfikatu KSeF](\certyfikaty-KSeF.md); częścią linku jest podpis skrótu faktury kluczem prywatnym tego certyfikatu, co zabezpiecza przed sfałszowaniem linku przez podmioty nieposiadające dostępu do certyfikatu. Certyfikat KSeF jest wystawiany poprzez endpoint [`/certificates`](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post).
+```KOD II``` jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, offline-niedostępność systemu, tryb awaryjny) i pełni funkcję potwierdzenia autentyczności wystawcy oraz integralności faktury. Generowanie wymaga posiadania aktywnego [certyfikatu KSeF](\certyfikaty-KSeF.md); częścią linku jest podpis skrótu faktury kluczem prywatnym tego certyfikatu, co zabezpiecza przed sfałszowaniem linku przez podmioty nieposiadające dostępu do certyfikatu. Certyfikat KSeF jest wystawiany poprzez endpoint [`/certificates`](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post).
 
 #### Generowanie linku
 
