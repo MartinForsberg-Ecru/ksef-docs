@@ -15,6 +15,14 @@
         "description": "Zwraca listę aktywnych sesji uwierzytelnienia.",
         "parameters": [
           {
+            "name": "x-continuation-token",
+            "in": "header",
+            "description": "Token służący do pobrania kolejnej strony wyników.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "pageSize",
             "in": "query",
             "description": "Rozmiar strony wyników.",
