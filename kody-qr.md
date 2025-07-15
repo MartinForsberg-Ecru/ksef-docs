@@ -24,14 +24,14 @@ Po zeskanowaniu kodu QR lub kliknięciu w link użytkownik otrzyma uproszczoną 
 #### Generowanie linku
 Link składa się z:
 - adresu URL: `https://ksef.mf.gov.pl/client-app/invoice`,
-- daty wystawienia faktury (pole `P_1`),
+- daty wystawienia faktury (pole `P_1`) w formacie DD-MM-RRRR,
 - NIP-u sprzedawcy,
-- skrótu faktury obliczonego algorytmem SHA-256 (wyróżnik faktury).
+- skrótu pliku faktury obliczonego algorytmem SHA-256 (wyróżnik pliku faktury) w formacie base64.
 
 Przykładowo dla faktury:
-- data wystawienia: `01.02.2026`,
+- data wystawienia: `01-02-2026`,
 - NIP: `1111111111`,
-- skrót SHA-256: `12AF615AB46644A97B8261205AB5D4A62DD9E6321DCA27967DBE1066313CA027`
+- skrót SHA-256 w formacie base64: `KjUrcBrlJxBxPdRCV0gOuUmdm5dDEBbqkjN/C6dv2c8=`
 
 Wygenerowany link wygląda następująco:
 ```
@@ -90,13 +90,13 @@ Link składa się z:
 - adresu URL: `https://ksef.mf.gov.pl/client-app/certificate`,
 - NIP-u sprzedawcy,
 - numeru seryjnego certyfikatu KSeF,
-- skrótu faktury (SHA-256),
+- skrótu pliku faktury (SHA-256),
 - podpisu tego skrótu przy użyciu klucza prywatnego certyfikatu KSeF.
 
 Przykładowo dla faktury:
 - NIP: `1111111111`,
 - numer seryjny certyfikatu KSeF: `01635E98D9669239`,
-- skrót SHA-256: `UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=`,
+- skrót SHA-256 w formacie base64: `UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=`,
 - podpisu tego skrótu przy użyciu klucza prywatnego certyfikatu KSeF: `UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=/ijD7zYpvqY4%2b1HbIJ7YR8Cc0M0M5G80FH64fKHHyRBA%2bOcT5xnK8hJT6%2b1F1lLtcLMNEHM2MssAaxi1JimISg49K%2f476r%2b%2buYDUqrGRr2kTXOPxOIE47Wk8M0qoPd3U9UuQf3H59SsWLHATqtrpr1HrNYMOJDgNun%2bfKHCYTv7gPLqwRnaG7b5X2TExusLs4T2t73YMVIrBy4j3QKNRUXhNmrLtEZQlNsUieMy8g9jRF5lxdyE7HqF5ZnulVEQSxQj9R89nF083CDtBnKcs6OLeWH72MsPL17KJd6lB%2b2jLaVNfBI5kD84CEC1jNHcpHQ%2fv8LYIYqj0hDeNl5GHq6A%3d%3d`
 
 Wygenerowany link wygląda następująco:
@@ -146,9 +146,3 @@ byte[] labeledQr = qrSvc.addLabelToQrCode(qrCode, "CERTYFIKAT");
 ```
 
 ![QR  Certyfikat](qr/qr-cert.png)
-
-Przykład w języku ```C#```:
-```csharp
-var labeledQr = qrSvc.AddLabelToQrCode(qrCode, "CERTYFIKAT");
-```
-
