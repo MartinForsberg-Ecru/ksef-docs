@@ -37,7 +37,12 @@ Przykład w języku C#:
 
 Przykład w języku Java:
 ```java
-//TODO
+int pageSize = 10;
+String continuationToken = null;
+SessionsQueryRequest request = new SessionsQueryRequest();
+request.setSessionType(SessionType.ONLINE); // sesja interaktywna
+//request.setSessionType(SessionType.BATCH); // sesja batchowa
+SessionsQueryResponse sessionsQueryResponse = defaultKsefClient.getSessions(request, pageSize, continuationToken);
 ```
 
 ### 2. Sprawdzenie stanu sesji

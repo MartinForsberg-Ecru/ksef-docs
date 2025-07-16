@@ -725,5 +725,5 @@ var operationStatus = await ksefClient.OperationsStatusAsync(referenceNumber, ac
 
 Przykład w języku Java:
 ```java
-var permissionsOperationStatusResponse = ksefClient.operations(referenceNumber);
+var permissionStatusInfo = ksefClient.permissionOperationStatus(referenceNumber);
 ```

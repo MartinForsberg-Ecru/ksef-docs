@@ -78,9 +78,9 @@ do
 
 Przykład w języku Java:
 ```java
-List<AuthenticationTokenStatus> status = List.of(AuthenticationTokenStatus.ACTIVE);
+List<AuthenticationTokenStatus> statuses = List.of(AuthenticationTokenStatus.ACTIVE);
 Integer pageSize = 10;
-var tokens = ksefClient.queryKsefTokens(status, StringUtils.EMPTY, pageSize);
+var tokens = ksefClient.queryKsefTokens(statuses, StringUtils.EMPTY, pageSize);
 ```
 
 W odpowiedzi zwracane są metadane tokenów, między innymi informacja kto i w jakim kontekœcie wygenerował token KSef oraz uprawnienia do niego przypisane.

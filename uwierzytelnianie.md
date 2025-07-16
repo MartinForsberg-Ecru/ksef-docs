@@ -200,7 +200,7 @@ var authOperationInfo = await ksefClient
 Przykład w języku ```Java```:
 
 ```java
-var submitAuthTokenResponse = ksefClient.submitAuthTokenRequest(signedXml);
+var submitAuthTokenResponse = ksefClient.submitAuthTokenRequest(signedXml, false);
 ```
 
 ### 2.2. Uwierzytelnianie **tokenem KSeF**

@@ -44,7 +44,7 @@ var pagedInvoicesResponse = await ksefClient.QueryInvoicesAsync(body, accessToke
 
 Przykład w języku Java:
 ```java
-var pagedInvoicesResponse = ksefClient.getInvoiceMetadata(pageOffset, pageSize, invoicesQueryRequest);
+var queryInvoicesReponse = ksefClient.queryInvoices(pageOffset, pageSize, invoicesQueryRequest);
 ```
 
 ### Inicjalizuje asynchroniczne zapytanie o pobranie faktur

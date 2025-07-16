@@ -212,7 +212,7 @@ OpenBatchSessionRequest request = builder.endBatchFile()
         )
         .build();
 
-var response = ksefClient.batchOpen(request);
+var openBatchSessionResponse = ksefClient.openBatchSession(request);
 ```
 
 Metoda zwraca listę części paczki; dla każdej części podaje adres uploadu (URL), wymaganą metodę HTTP oraz komplet nagłówków, które należy przesłać razem z daną częścią.
@@ -228,7 +228,7 @@ await ksefClient.SendBatchPartsAsync(openBatchSessionResponse, BatchPartsDirecto
 
 Przykład w języku Java:
 ```java
-ksefClient.sendBatchParts(response, encryptedZipParts);
+ksefClient.sendBatchParts(openBatchSessionResponse, encryptedZipParts);
 ```
 
 ### 6. Zamknięcie sesji wsadowej

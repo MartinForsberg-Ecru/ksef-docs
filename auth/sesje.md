@@ -23,7 +23,9 @@ while (!string.IsNullOrWhiteSpace(continuactionToken));
 
 Przykład w języku ```Java```:
 ```java
-//TODO
+int pageSize = 10;
+String continuationToken = null;
+ksefClient.getActiveSessions(pageSize, continuationToken);
 ```
 
 ### Unieważnienie bieżącej sesji
@@ -41,7 +43,7 @@ await ksefClient.RevokeCurrentSessionAsync(token, cancellationToken);
 
 Przykład w języku ```Java```:
 ```java
-//TODO
+ksefClient.revokeCurrentSession();
 ```
 
 ### Unieważnienie wybranej sesji
@@ -59,5 +61,5 @@ await ksefClient.RevokeSessionAsync(referenceNumber, accessToken, cancellationTo
 
 Przykład w języku ```Java```:
 ```java
-//TODO
+ksefClient.revokeSession(referenceNumber);
 ```
