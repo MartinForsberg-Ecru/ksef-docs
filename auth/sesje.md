@@ -10,15 +10,15 @@ GET [/auth/sessions](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Aktywne-
 Przykład w języku ```C#```:
 ```csharp
 const int pageSize = 20;
-string? continuactionToken = null;
+string? continuationToken = null;
 var activeSessions = new List<Item>();
 do
 {
     var response = await ksefClient.GetActiveSessions(accessToken, pageSize, continuactionToken, cancellationToken);
-    continuactionToken = response.ContinuationToken;
+    continuationToken = response.ContinuationToken;
     activeSessions.AddRange(response.Items);
 }
-while (!string.IsNullOrWhiteSpace(continuactionToken));
+while (!string.IsNullOrWhiteSpace(continuationToken));
 ```
 
 Przykład w języku ```Java```:
