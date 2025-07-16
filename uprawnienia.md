@@ -462,12 +462,12 @@ POST [/permissions/eu-entities/administration/grants](https://ksef-test.mf.gov.p
 Przykład w języku C#:
 
 ```csharp
- var request = GrantEUEntityRepresentativePermissionsRequestBuilder
-              .Create()
-              .WithSubject(subjectIdentifier)
-              .WithPermissions(StandardPermissionType.InvoiceRead, StandardPermissionType.InvoiceWrite)
-              .WithDescription("Representative access")
-              .Build();
+ var request = GrantEUEntityPermissionsRequestBuilder
+            .Create()
+            .WithSubject(grantPermissionsRequest.SubjectIdentifier)
+            .WithContext(grantPermissionsRequest.ContextIdentifier)
+            .WithDescription("Access for quarterly review")
+            .Build();
 
  return await ksefClient.GrantsPermissionEUEntityAsync(request, accessToken, cancellationToken);
 ```
@@ -498,12 +498,12 @@ POST [/permissions/eu-entities/grants](https://ksef-test.mf.gov.pl/docs/v2/index
 
 Przykład w języku C#:
 ```csharp
-var request = GrantEUEntityPermissionsRequestBuilder
-            .Create()
-            .WithSubject(grantPermissionsRequest.SubjectIdentifier)
-            .WithContext(grantPermissionsRequest.ContextIdentifier)
-            .WithDescription("Access for quarterly review")
-            .Build();
+ var request = GrantEUEntityRepresentativePermissionsRequestBuilder
+              .Create()
+              .WithSubject(subjectIdentifier)
+              .WithPermissions(StandardPermissionType.InvoiceRead, StandardPermissionType.InvoiceWrite)
+              .WithDescription("Representative access")
+              .Build();
 
  return await ksefClient.GrantsPermissionEUEntityRepresentativeAsync(request, accessToken, cancellationToken);
 ```
