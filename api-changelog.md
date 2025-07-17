@@ -3,7 +3,7 @@
 Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
   Umożliwiają przeglądanie oraz unieważnianie aktywnych sesji uwierzytelniających.  
-  [Zarządzanie sesjami uwierzytelniania](uwierzytelnianie.md#zarządzanie-sesjami-uwierzytelniania)
+  [Zarządzanie sesjami uwierzytelniania](auth/sesje.md)
 
 - **Nowy endpoint do pobierania listy sesji wysyłki faktur**\
   `/sessions` – umożliwia pobranie metadanych dla sesji wysyłkowych (interaktywnych i wsadowych), z możliwością filtrowania m.in. po statusie, dacie zamknięcia i typie sesji.\
