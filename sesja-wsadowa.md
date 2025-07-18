@@ -197,7 +197,8 @@ Przykład w języku Java:
 ```java
 var builder = OpenBatchSessionRequestBuilder.create()
         .withFormCode("FA (2)", "1-0E", "FA")
-        .withBatchFile(zipMetadata.getFileSize(), zipMetadata.getHashSHA(), false);
+        .withOfflineMode(false)
+        .withBatchFile(zipMetadata.getFileSize(), zipMetadata.getHashSHA());
 
 for (int i = 0; i < encryptedZipParts.size(); i++) {
     var part = encryptedZipParts.get(i);
