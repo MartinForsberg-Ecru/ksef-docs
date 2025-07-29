@@ -284,6 +284,9 @@
           "content": {
             "application/json": {
               "schema": {
+                "required": [
+                  "certificateSerialNumbers"
+                ],
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/RetrieveCertificatesRequest"
@@ -7421,6 +7424,9 @@
         "additionalProperties": false
       },
       "RetrieveCertificatesRequest": {
+        "required": [
+          "certificateSerialNumbers"
+        ],
         "type": "object",
         "properties": {
           "certificateSerialNumbers": {
@@ -7428,8 +7434,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Numery seryjne certyfikatów do pobrania.",
-            "nullable": true
+            "description": "Numery seryjne certyfikatów do pobrania."
           }
         },
         "additionalProperties": false
