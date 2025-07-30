@@ -1,5 +1,5 @@
 ## Kody weryfikujące QR
-08.07.2025
+30.07.2025
 
 Kod QR (Quick Response) to graficzna reprezentacja tekstu, najczęściej adresu URL. W kontekście KSeF jest to zakodowany link zawierający dane identyfikujące fakturę — taki format pozwala na szybkie odczytanie informacji przy pomocy urządzeń końcowych (smartfonów lub skanerów optycznych). Dzięki temu link może być zeskanowany i przekierowany bezpośrednio do odpowiedniego zasobu systemu KSeF odpowiedzialnego za wizualizację i weryfikację faktury lub certyfikatu KSeF wystawcy.
 
@@ -23,19 +23,19 @@ Po zeskanowaniu kodu QR lub kliknięciu w link użytkownik otrzyma uproszczoną 
 
 #### Generowanie linku
 Link składa się z:
-- adresu URL: `https://ksef.mf.gov.pl/client-app/invoice`,
+- adresu URL: `https://ksef-test.mf.gov.pl/client-app/invoice`,
 - daty wystawienia faktury (pole `P_1`) w formacie DD-MM-RRRR,
 - NIP-u sprzedawcy,
-- skrótu pliku faktury obliczonego algorytmem SHA-256 (wyróżnik pliku faktury) w formacie base64.
+- skrótu pliku faktury obliczonego algorytmem SHA-256 (wyróżnik pliku faktury) w formacie Base64URL.
 
 Przykładowo dla faktury:
-- data wystawienia: `01-02-2026`,
-- NIP: `1111111111`,
-- skrót SHA-256 w formacie base64: `KjUrcBrlJxBxPdRCV0gOuUmdm5dDEBbqkjN/C6dv2c8=`
+- data wystawienia: "01-02-2026",
+- NIP sprzedawcy: "1111111111",
+- skrót SHA-256 w formacie Base64URL: "UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE"
 
 Wygenerowany link wygląda następująco:
 ```
-https://ksef.mf.gov.pl/client-app/invoice/1111111111/01-02-2026/KjUrcBrlJxBxPdRCV0gOuUmdm5dDEBbqkjN/C6dv2c8=
+https://ksef-test.mf.gov.pl/client-app/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE
 ```
 
 Przykład w języku ```C#```:
@@ -82,27 +82,41 @@ byte[] labeledQr = qrSvc.addLabelToQrCode(qrCode, ksefNumber);
 
 ### 2. KOD II – Weryfikacja certyfikatu
 
-```KOD II``` jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, offline-niedostępność systemu, tryb awaryjny) i pełni funkcję potwierdzenia autentyczności wystawcy oraz integralności faktury. Generowanie wymaga posiadania aktywnego [certyfikatu KSeF](\certyfikaty-KSeF.md); częścią linku jest podpis skrótu faktury kluczem prywatnym tego certyfikatu, co zabezpiecza przed sfałszowaniem linku przez podmioty nieposiadające dostępu do certyfikatu. Certyfikat KSeF jest wystawiany poprzez endpoint [`/certificates`](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post).
+```KOD II``` jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, offline-niedostępność systemu, tryb awaryjny) i pełni funkcję potwierdzenia autentyczności wystawcy oraz integralności faktury. Generowanie wymaga posiadania aktywnego [certyfikatu KSeF](\certyfikaty-KSeF.md) – link zawiera kryptograficzny podpis URL przy użyciu klucza prywatnego certyfikatu KSeF, co zapobiega sfałszowaniu linku przez podmioty nieposiadające dostępu do certyfikatu. Certyfikat KSeF można pozyskać za pomocą endpointu [`/certificates`](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post).
 
 #### Generowanie linku
 
-Link składa się z:
-- adresu URL: `https://ksef.mf.gov.pl/client-app/certificate`,
+Link weryfikacyjny składa się z:
+- adresu URL: `https://ksef-test.mf.gov.pl/client-app/certificate`,
+- typu identyfikatora kontekstu: "Nip", "InternalId", "NipVatUe", "PeppolId"
+- wartości identyfikatora kontekstu,
 - NIP-u sprzedawcy,
 - numeru seryjnego certyfikatu KSeF,
-- skrótu pliku faktury (SHA-256),
-- podpisu tego skrótu przy użyciu klucza prywatnego certyfikatu KSeF.
+- skrótu pliku faktury SHA-256 w formacie Base64URL,
+- podpisu linku przy użyciu klucza prywatnego certyfikatu KSeF (zakodowany w formacie Base64URL).
+
+**Format podpisu**  
+Do podpisu używany jest fragment ścieżki URL bez prefiksu protokołu (https://) i bez końcowego znaku /, np.:
+```
+ksef-test.mf.gov.pl/client-app/certificate/Nip/1111111111/1111111111/01F20A5D352AE590/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE
+```
+
+**Algorytmy podpisu:**  
+* RSA (RSASSA‑PSS): szyfruje się ciąg do podpisu kluczem prywatnym KSeF przy użyciu algorytmu RSA-OAEP z funkcją skrótu SHA-256 (MGF1). Otrzymany szyfrogram należy zakodować w formacie Base64URL.
+
 
 Przykładowo dla faktury:
-- NIP: `1111111111`,
-- numer seryjny certyfikatu KSeF: `01635E98D9669239`,
-- skrót SHA-256 w formacie base64: `UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=`,
-- podpisu tego skrótu przy użyciu klucza prywatnego certyfikatu KSeF: `UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=/ijD7zYpvqY4%2b1HbIJ7YR8Cc0M0M5G80FH64fKHHyRBA%2bOcT5xnK8hJT6%2b1F1lLtcLMNEHM2MssAaxi1JimISg49K%2f476r%2b%2buYDUqrGRr2kTXOPxOIE47Wk8M0qoPd3U9UuQf3H59SsWLHATqtrpr1HrNYMOJDgNun%2bfKHCYTv7gPLqwRnaG7b5X2TExusLs4T2t73YMVIrBy4j3QKNRUXhNmrLtEZQlNsUieMy8g9jRF5lxdyE7HqF5ZnulVEQSxQj9R89nF083CDtBnKcs6OLeWH72MsPL17KJd6lB%2b2jLaVNfBI5kD84CEC1jNHcpHQ%2fv8LYIYqj0hDeNl5GHq6A%3d%3d`
+- typ identyfikatora kontekstu: "Nip",
+- wartość identyfikatora kontekstu: "1111111111",
+- NIP sprzedawcy: "1111111111",
+- numer seryjny certyfikatu KSeF: "01F20A5D352AE590",
+- skrót SHA-256 w formacie Base64URL: "UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE",
+- podpisu linku przy użyciu klucza prywatnego certyfikatu KSeF: "KFoN1Z91HvySb2uqP2ZDFKubKftzWtWsQOjqTdLFXA3ZEoC1PB8sixNi1LLwgnndwL-MkDcpaCEZxBuVtjWcBpAUJEYlnmDQFOMQs-ueSsp5uuVbmNb-d8_yRTAQvSUdHNuIYfpy7Wpj1jTY0yghgOmdTQzpV5MrcHEReLKjpGONHj8lZtq7RpY43LlCfvctHbUWbqSYAC0C7zmNKz5ROK1LFE-QIi5qGqrRIdw1PCEEPW9tKcB94G3qAHXizNyp5TO6V_0qZ9eC1DXtftkCocQD_CEI3MY-nu7yk6LC7hF7yQ1t8GGRikhQP6w4OwBR-z048IdhCtWd-RYNnxiU6w"
 
 Wygenerowany link wygląda następująco:
 
 ```
-https://ksef.mf.gov.pl/client-app/certificate/1111111111/01635E98D9669239/UtQp9Gpc51y+u3xApZjIjgkpZ01js+J8KflSPW8WzIE=/ijD7zYpvqY4%2b1HbIJ7YR8Cc0M0M5G80FH64fKHHyRBA%2bOcT5xnK8hJT6%2b1F1lLtcLMNEHM2MssAaxi1JimISg49K%2f476r%2b%2buYDUqrGRr2kTXOPxOIE47Wk8M0qoPd3U9UuQf3H59SsWLHATqtrpr1HrNYMOJDgNun%2bfKHCYTv7gPLqwRnaG7b5X2TExusLs4T2t73YMVIrBy4j3QKNRUXhNmrLtEZQlNsUieMy8g9jRF5lxdyE7HqF5ZnulVEQSxQj9R89nF083CDtBnKcs6OLeWH72MsPL17KJd6lB%2b2jLaVNfBI5kD84CEC1jNHcpHQ%2fv8LYIYqj0hDeNl5GHq6A%3d%3d
+https://ksef-test.mf.gov.pl/client-app/certificate/Nip/1111111111/1111111111/01F20A5D352AE590/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE/KFoN1Z91HvySb2uqP2ZDFKubKftzWtWsQOjqTdLFXA3ZEoC1PB8sixNi1LLwgnndwL-MkDcpaCEZxBuVtjWcBpAUJEYlnmDQFOMQs-ueSsp5uuVbmNb-d8_yRTAQvSUdHNuIYfpy7Wpj1jTY0yghgOmdTQzpV5MrcHEReLKjpGONHj8lZtq7RpY43LlCfvctHbUWbqSYAC0C7zmNKz5ROK1LFE-QIi5qGqrRIdw1PCEEPW9tKcB94G3qAHXizNyp5TO6V_0qZ9eC1DXtftkCocQD_CEI3MY-nu7yk6LC7hF7yQ1t8GGRikhQP6w4OwBR-z048IdhCtWd-RYNnxiU6w
 ```
 
 Przykład w języku ```C#```:
