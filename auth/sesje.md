@@ -14,7 +14,7 @@ string? continuationToken = null;
 var activeSessions = new List<Item>();
 do
 {
-    var response = await ksefClient.GetActiveSessions(accessToken, pageSize, continuactionToken, cancellationToken);
+    var response = await ksefClient.GetActiveSessions(accessToken, pageSize, continuationToken, cancellationToken);
     continuationToken = response.ContinuationToken;
     activeSessions.AddRange(response.Items);
 }

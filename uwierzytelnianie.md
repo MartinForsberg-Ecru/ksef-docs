@@ -237,7 +237,7 @@ var tokenWithTimestamp = ksefToken.getToken() + "|" + challenge.getTimestamp().t
 var encryptedToken = new DefaultCryptographyService(defaultKsefClient).encryptKsefTokenWithRSAUsingPublicKey(tokenWithTimestamp.getBytes(StandardCharsets.UTF_8));
 ```
 
-#### 2. Wysłanie żądania uwierzytelnienia tokenem KSeF
+#### 2. Wysłanie żądania uwierzytelnienia [tokenem KSeF](tokeny-ksef.md)
 Zaszyfrowany token Ksef należy przesłać razem z
 
 |    Klucz     |           Wartość                                                                                                                              |
@@ -267,7 +267,7 @@ Przykład w języku ```C#```:
 
    // Wysłanie do KSeF
    var submissionRef = await ksefClient
-        .SubmitAuthKsefTokenRequestAsync(authKsefTokenRequest, cancellationToken);
+        .SubmitKsefTokenAuthRequestAsync(authKsefTokenRequest, cancellationToken);
 ```
 
 Przykład w języku ```Java```:
