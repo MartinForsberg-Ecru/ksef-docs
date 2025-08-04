@@ -2343,6 +2343,7 @@
           "Tokeny KSeF"
         ],
         "summary": "Wygenerowanie nowego tokena",
+        "description": "Zwraca token, który może być użyty do uwierzytelniania się w KSeF.\n\nToken jest zwracany tylko raz. Zaczyna być aktywny w momencie gdy jego status zmieni się na `Active`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2368,14 +2369,15 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "| ExceptionCode       | ExceptionDescription                                       | Details |\n|---------------------|------------------------------------------------------------|---------|\n| 26001               | Nie można nadać tokenowi uprawnień których nie posiadasz.  | Informacja o brakujących uprawnieniach. |",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
-            }
+            },
+            "x-summary": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
