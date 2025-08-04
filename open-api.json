@@ -2193,7 +2193,7 @@
               "schema": {
                 "type": "string"
               },
-              "example": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<AuthTokenRequest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://ksef.mf.gov.pl/auth/token/2.0\">\n    <Challenge>20250625-CR-20F5EE4000-DA48AE4124-46</Challenge>\n    <ContextIdentifier>\n        <Type>nip</Type>\n        <Value>5265877635</Value>\n    </ContextIdentifier>\n    <SubjectIdentifierType>certificateSubject</SubjectIdentifierType>\n    <ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"Signature-9707709\">\n        <!-- Tu powinien być podpis XAdES -->\n    </ds:Signature>\n</AuthTokenRequest>"
+              "example": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<AuthTokenRequest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://ksef.mf.gov.pl/auth/token/2.0\">\n    <Challenge>20250625-CR-20F5EE4000-DA48AE4124-46</Challenge>\n    <ContextIdentifier>\n        <Nip>5265877635</Nip>\n    </ContextIdentifier>\n    <SubjectIdentifierType>certificateSubject</SubjectIdentifierType>\n    <ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"Signature-9707709\">\n        <!-- Tu powinien być podpis XAdES -->\n    </ds:Signature>\n</AuthTokenRequest>"
             }
           },
           "required": true

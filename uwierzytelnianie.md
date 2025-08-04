@@ -60,8 +60,12 @@ Po uzyskaniu auth challenge należy przygotować dokument XML zgodny ze schemate
 |(opcjonalnie) IpAddressPolicy | `Reguły dotyczące walidacji adresu IP klienta podczas korzystania z wydanego tokena dostępu (accessTokenu).` |    
  
 
- * Przykładowy dokument XML z certificateSubject: [Tutaj](auth/xml-z-certificate-certificate-subject.md)<br>
- * Przykładowy dokument XML z certificateFingerprint: [Tutaj](auth/xml-z-certificate-fingerprint.md)
+ Przykładowy dokumenty XML:
+ * SubjectIdentifierType z [certificateSubject](auth/subject-identifier-type-certificate-subject.md)
+ * SubjectIdentifierType z [certificateFingerprint](auth/subject-identifier-type-certificate-fingerprint.md)
+ * ContextIdentifier z [NIP](auth/context-identifier-nip.md)
+ * ContextIdentifier z [InternalId](auth/context-identifier-internal-id.md)
+ * ContextIdentifier z [NipVatUe](auth/context-identifier-nip-vat-ue.md)
 
  W kolejnym kroku dokument zostanie podpisany z wykorzystaniem certyfikatu podmiotu.
 

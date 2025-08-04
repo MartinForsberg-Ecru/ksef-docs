@@ -3,9 +3,8 @@
 <AuthTokenRequest xmlns="http://ksef.mf.gov.pl/auth/token/2.0">
   <Challenge>20250604-CR-461EA5B000-537A6BA15D-D7</Challenge>
   <ContextIdentifier>
-    <Type>nip</Type>
-    <Value>1234563218</Value>
+    <Nip>5265877635</Nip>
   </ContextIdentifier>
-  <SubjectIdentifierType>certificateFingerprint</SubjectIdentifierType>
+  <SubjectIdentifierType>certificateSubject</SubjectIdentifierType>
 </AuthTokenRequest>
 ```

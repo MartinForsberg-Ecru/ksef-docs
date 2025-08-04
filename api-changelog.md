@@ -1,5 +1,9 @@
 ## Zmiany w API 2.0
 
+Wersja 2.0.0 RC3
+- **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
+  [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
+
 Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
   Umożliwiają przeglądanie oraz unieważnianie aktywnych sesji uwierzytelniających.  
