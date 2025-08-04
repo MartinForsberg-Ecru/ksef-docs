@@ -4680,12 +4680,21 @@
         "additionalProperties": false
       },
       "EntityAuthorizationGrant": {
+        "required": [
+          "authorizationScope",
+          "authorizedEntityIdentifier",
+          "authorizedEntityIdentifierType",
+          "authorizingEntityIdentifier",
+          "authorizingEntityIdentifierType",
+          "description",
+          "id",
+          "startDate"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Identyfikator uprawnienia.",
-            "nullable": true
+            "description": "Identyfikator uprawnienia."
           },
           "authorIdentifier": {
             "type": "string",
@@ -4708,8 +4717,7 @@
           },
           "authorizedEntityIdentifier": {
             "type": "string",
-            "description": "Identyfikator podmiotu uprawnionego.",
-            "nullable": true
+            "description": "Identyfikator podmiotu uprawnionego."
           },
           "authorizedEntityIdentifierType": {
             "enum": [
@@ -4724,8 +4732,7 @@
           },
           "authorizingEntityIdentifier": {
             "type": "string",
-            "description": "Identyfikator podmiotu uprawniającego.",
-            "nullable": true
+            "description": "Identyfikator podmiotu uprawniającego."
           },
           "authorizingEntityIdentifierType": {
             "enum": [
@@ -4753,8 +4760,7 @@
           },
           "description": {
             "type": "string",
-            "description": "Opis uprawnienia.",
-            "nullable": true
+            "description": "Opis uprawnienia."
           },
           "startDate": {
             "type": "string",
@@ -5102,6 +5108,11 @@
         "type": "string"
       },
       "EntityRole": {
+        "required": [
+          "description",
+          "role",
+          "startDate"
+        ],
         "type": "object",
         "properties": {
           "parentEntityIdentifier": {
@@ -5139,8 +5150,7 @@
           },
           "description": {
             "type": "string",
-            "description": "Opis.",
-            "nullable": true
+            "description": "Opis."
           },
           "startDate": {
             "type": "string",
@@ -5271,17 +5281,26 @@
         "type": "string"
       },
       "EuEntityPermission": {
+        "required": [
+          "authorIdentifier",
+          "authorIdentifierType",
+          "authorizedFingerprintIdentifier",
+          "description",
+          "euEntityName",
+          "id",
+          "permissionScope",
+          "startDate",
+          "vatUeIdentifier"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Identyfikator uprawnienia.",
-            "nullable": true
+            "description": "Identyfikator uprawnienia."
           },
           "authorIdentifier": {
             "type": "string",
-            "description": "Identyfikator uprawniającego.",
-            "nullable": true
+            "description": "Identyfikator uprawniającego."
           },
           "authorIdentifierType": {
             "enum": [
@@ -5298,18 +5317,15 @@
           },
           "vatUeIdentifier": {
             "type": "string",
-            "description": "Identyfikator podmiotu unijnego.",
-            "nullable": true
+            "description": "Identyfikator podmiotu unijnego."
           },
           "euEntityName": {
             "type": "string",
-            "description": "Nazwa podmiotu unijnego.",
-            "nullable": true
+            "description": "Nazwa podmiotu unijnego."
           },
           "authorizedFingerprintIdentifier": {
             "type": "string",
-            "description": "Uprawniony odcisk palca certyfikatu.",
-            "nullable": true
+            "description": "Uprawniony odcisk palca certyfikatu."
           },
           "permissionScope": {
             "enum": [
@@ -5327,8 +5343,7 @@
           },
           "description": {
             "type": "string",
-            "description": "Opis uprawnienia.",
-            "nullable": true
+            "description": "Opis uprawnienia."
           },
           "startDate": {
             "type": "string",
@@ -7287,17 +7302,27 @@
         "additionalProperties": false
       },
       "PersonPermission": {
+        "required": [
+          "authorIdentifier",
+          "authorIdentifierType",
+          "authorizedIdentifier",
+          "authorizedIdentifierType",
+          "canDelegate",
+          "description",
+          "id",
+          "permissionScope",
+          "permissionState",
+          "startDate"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Identyfikator uprawnienia.",
-            "nullable": true
+            "description": "Identyfikator uprawnienia."
           },
           "authorizedIdentifier": {
             "type": "string",
-            "description": "Identyfikator uprawnionego.",
-            "nullable": true
+            "description": "Identyfikator uprawnionego."
           },
           "authorizedIdentifierType": {
             "enum": [
@@ -7331,8 +7356,7 @@
           },
           "authorIdentifier": {
             "type": "string",
-            "description": "Identyfikator uprawniającego.",
-            "nullable": true
+            "description": "Identyfikator uprawniającego."
           },
           "authorIdentifierType": {
             "enum": [
@@ -7367,8 +7391,7 @@
           },
           "description": {
             "type": "string",
-            "description": "Opis uprawnienia.",
-            "nullable": true
+            "description": "Opis uprawnienia."
           },
           "permissionState": {
             "enum": [
@@ -7804,6 +7827,11 @@
         "additionalProperties": false
       },
       "QueryEntityAuthorizationPermissionsResponse": {
+        "required": [
+          "authorizationGrants",
+          "page",
+          "pageSize"
+        ],
         "type": "object",
         "properties": {
           "authorizationGrants": {
@@ -7811,8 +7839,7 @@
             "items": {
               "$ref": "#/components/schemas/EntityAuthorizationGrant"
             },
-            "description": "Lista uprawnień.",
-            "nullable": true
+            "description": "Lista uprawnień."
           },
           "page": {
             "type": "integer",
@@ -7828,6 +7855,11 @@
         "additionalProperties": false
       },
       "QueryEntityRolesResponse": {
+        "required": [
+          "page",
+          "pageSize",
+          "roles"
+        ],
         "type": "object",
         "properties": {
           "roles": {
@@ -7835,8 +7867,7 @@
             "items": {
               "$ref": "#/components/schemas/EntityRole"
             },
-            "description": "Lista ról.",
-            "nullable": true
+            "description": "Lista ról."
           },
           "page": {
             "type": "integer",
@@ -7852,6 +7883,11 @@
         "additionalProperties": false
       },
       "QueryEuEntityPermissionsResponse": {
+        "required": [
+          "page",
+          "pageSize",
+          "permissions"
+        ],
         "type": "object",
         "properties": {
           "permissions": {
@@ -7859,8 +7895,7 @@
             "items": {
               "$ref": "#/components/schemas/EuEntityPermission"
             },
-            "description": "Lista uprawnień.",
-            "nullable": true
+            "description": "Lista uprawnień."
           },
           "page": {
             "type": "integer",
@@ -7910,6 +7945,11 @@
         "additionalProperties": false
       },
       "QueryPersonPermissionsResponse": {
+        "required": [
+          "page",
+          "pageSize",
+          "permissions"
+        ],
         "type": "object",
         "properties": {
           "permissions": {
@@ -7917,8 +7957,7 @@
             "items": {
               "$ref": "#/components/schemas/PersonPermission"
             },
-            "description": "Lista uprawnień.",
-            "nullable": true
+            "description": "Lista uprawnień."
           },
           "page": {
             "type": "integer",
@@ -7934,6 +7973,11 @@
         "additionalProperties": false
       },
       "QuerySubordinateEntityRolesResponse": {
+        "required": [
+          "page",
+          "pageSize",
+          "roles"
+        ],
         "type": "object",
         "properties": {
           "roles": {
@@ -7941,8 +7985,7 @@
             "items": {
               "$ref": "#/components/schemas/SubordinateEntityRole"
             },
-            "description": "Lista ról.",
-            "nullable": true
+            "description": "Lista ról."
           },
           "page": {
             "type": "integer",
@@ -7958,6 +8001,11 @@
         "additionalProperties": false
       },
       "QuerySubunitPermissionsResponse": {
+        "required": [
+          "page",
+          "pageSize",
+          "permissions"
+        ],
         "type": "object",
         "properties": {
           "permissions": {
@@ -7965,8 +8013,7 @@
             "items": {
               "$ref": "#/components/schemas/SubunitPermission"
             },
-            "description": "Lista uprawnień.",
-            "nullable": true
+            "description": "Lista uprawnień."
           },
           "page": {
             "type": "integer",
@@ -8470,12 +8517,18 @@
         "type": "string"
       },
       "SubordinateEntityRole": {
+        "required": [
+          "description",
+          "role",
+          "startDate",
+          "subordinateEntityIdentifier",
+          "subordinateEntityIdentifierType"
+        ],
         "type": "object",
         "properties": {
           "subordinateEntityIdentifier": {
             "type": "string",
-            "description": "Identyfikator podmiotu podrzędnego.",
-            "nullable": true
+            "description": "Identyfikator podmiotu podrzędnego."
           },
           "subordinateEntityIdentifierType": {
             "enum": [
@@ -8502,8 +8555,7 @@
           },
           "description": {
             "type": "string",
-            "description": "Opis.",
-            "nullable": true
+            "description": "Opis."
           },
           "startDate": {
             "type": "string",
@@ -8560,17 +8612,27 @@
         "additionalProperties": false
       },
       "SubunitPermission": {
+        "required": [
+          "authorIdentifier",
+          "authorIdentifierType",
+          "authorizedIdentifier",
+          "authorizedIdentifierType",
+          "description",
+          "id",
+          "permissionScope",
+          "startDate",
+          "subunitIdentifier",
+          "subunitIdentifierType"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Identyfikator uprawnienia.",
-            "nullable": true
+            "description": "Identyfikator uprawnienia."
           },
           "authorizedIdentifier": {
             "type": "string",
-            "description": "Identyfikator uprawnionego.",
-            "nullable": true
+            "description": "Identyfikator uprawnionego."
           },
           "authorizedIdentifierType": {
             "enum": [
@@ -8587,8 +8649,7 @@
           },
           "subunitIdentifier": {
             "type": "string",
-            "description": "Identyfikator podmiotu podrzędnego.",
-            "nullable": true
+            "description": "Identyfikator podmiotu podrzędnego."
           },
           "subunitIdentifierType": {
             "enum": [
@@ -8604,8 +8665,7 @@
           },
           "authorIdentifier": {
             "type": "string",
-            "description": "Identyfikator uprawniającego.",
-            "nullable": true
+            "description": "Identyfikator uprawniającego."
           },
           "authorIdentifierType": {
             "enum": [
@@ -8633,8 +8693,7 @@
           },
           "description": {
             "type": "string",
-            "description": "Opis uprawnienia.",
-            "nullable": true
+            "description": "Opis uprawnienia."
           },
           "startDate": {
             "type": "string",
