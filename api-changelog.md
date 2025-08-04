@@ -18,6 +18,10 @@
 - **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
 
+- **Usunięcie endpointu do anonimowego pobierania faktury ```invoices/download```**  
+  - Funkcjonalność dostępna tylko w narzędziu webowym do weryfikacji i pobierania faktur.
+
+
 ### Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
   Umożliwiają przeglądanie oraz unieważnianie aktywnych sesji uwierzytelniających.  
@@ -34,6 +38,6 @@
 - **Obsługa nowej wersji schematu faktury FA(3)**  
   W ramach otwierania sesji interaktywnej i wsadowej możliwy jest wybór schemy FA(3).
 
--  **Dodanie pola invoiceFileName w odpowiedzi dla sesji wsadowej**\
+- **Dodanie pola invoiceFileName w odpowiedzi dla sesji wsadowej**\
   `/sessions/{referenceNumber}/invoices` – dodano pole invoiceFileName zawierające nazwę pliku faktury. Pole występuje tylko dla sesji wsadowych.
    [Pobranie informacji na temat przesłanych faktur](faktury/sesja-sprawdzenie-stanu-i-pobranie-upo.md#3-pobranie-informacji-na-temat-przesłanych-faktur)
