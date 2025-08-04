@@ -1,6 +1,10 @@
 ## Zmiany w API 2.0
 
 Wersja 2.0.0 RC3
+
+- **OpenAPI**
+  - Dodano wymagane uprawnienia (`x-required-permissions`) do chronionych endpointów.
+  - Dodano odpowiedzi `403 Forbidden` i `401 Unauthorized` w specyfikacji endpointów.
 - **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
 

@@ -53,8 +53,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/auth/sessions/current": {
@@ -77,8 +85,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/auth/sessions/{referenceNumber}": {
@@ -112,8 +128,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/limits": {
@@ -143,8 +167,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/enrollments/data": {
@@ -175,8 +207,16 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/enrollments": {
@@ -225,8 +265,16 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/enrollments/{referenceNumber}": {
@@ -268,8 +316,16 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/retrieve": {
@@ -316,8 +372,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/{certificateSerialNumber}/revoke": {
@@ -366,8 +430,16 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/certificates/query": {
@@ -433,8 +505,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/security/public-key-certificates": {
@@ -700,7 +780,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie osobom fizycznym uprawnień do pracy w KSeF",
-        "description": "Rozpoczyna asynchroniczną operację nadawania osobom fizycznym uprawnień do pracy w KSeF.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadawanie-uprawnie%C5%84-osobom-fizycznym-do-pracy-w-ksef)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania osobom fizycznym uprawnień do pracy w KSeF.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadawanie-uprawnie%C5%84-osobom-fizycznym-do-pracy-w-ksef)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -741,8 +821,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/entities/grants": {
@@ -751,7 +845,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie podmiotom uprawnień do obsługi faktur",
-        "description": "Rozpoczyna asynchroniczną operację nadawania podmiotom uprawnień do obsługi faktur.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-podmiotom-uprawnie%C5%84-do-obs%C5%82ugi-faktur)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania podmiotom uprawnień do obsługi faktur.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-podmiotom-uprawnie%C5%84-do-obs%C5%82ugi-faktur)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -792,8 +886,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/authorizations/grants": {
@@ -802,7 +910,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie uprawnień podmiotowych",
-        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień podmiotowych.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-podmiotowych)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień podmiotowych.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-podmiotowych)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -843,8 +951,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/indirect/grants": {
@@ -853,7 +975,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie uprawnień w sposób pośredni",
-        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień w sposób pośredni.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-w-spos%C3%B3b-po%C5%9Bredni)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień w sposób pośredni.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-w-spos%C3%B3b-po%C5%9Bredni)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -894,8 +1016,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/subunits/grants": {
@@ -904,7 +1040,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie uprawnień administratora podmiotu podrzędnego",
-        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu podrzędnego.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-administratora-podmiotu-podrz%C4%99dnego)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu podrzędnego.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-administratora-podmiotu-podrz%C4%99dnego)\n\nWymagane uprawnienia: `SubunitManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -945,8 +1081,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "SubunitManage"
+        ]
       }
     },
     "/api/v2/permissions/eu-entities/administration/grants": {
@@ -955,7 +1105,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie uprawnień administratora podmiotu unijnego",
-        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu unijnego.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-administratora-podmiotu-unijnego)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień administratora podmiotu unijnego.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-administratora-podmiotu-unijnego)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -996,8 +1146,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/eu-entities/grants": {
@@ -1006,7 +1170,7 @@
           "Nadawanie uprawnień"
         ],
         "summary": "Nadanie uprawnień reprezentanta podmiotu unijnego",
-        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień reprezentanta podmiotu unijnego.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-reprezentanta-podmiotu-unijnego)",
+        "description": "Rozpoczyna asynchroniczną operację nadawania uprawnień reprezentanta podmiotu unijnego.\n\n> Więcej informacji:\n> - [Nadawanie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#nadanie-uprawnie%C5%84-reprezentanta-podmiotu-unijnego)\n\nWymagane uprawnienia: `VatUeManage`.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1047,8 +1211,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "VatUeManage"
+        ]
       }
     },
     "/api/v2/permissions/common/grants/{permissionId}": {
@@ -1057,7 +1235,7 @@
           "Odbieranie uprawnień"
         ],
         "summary": "Odebranie uprawnień",
-        "description": "Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.\n\nTa metoda służy do odbierania uprawnień takich jak:\n- nadanych nadanych osobom fizycznym lub podmiotom do pracy w KSeF\n- nadanych podmiotom do obsługi faktur\n- nadanych w sposób pośredni\n- administratorów jednostek i podmiotów podrzędnych\n- administratorów podmiotów unijnych uprawnionych do samofakturowania\n- reprezentantów podmiotów unijnych\n\n> Więcej informacji:\n> - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-uprawnie%C5%84)",
+        "description": "Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.\n\nTa metoda służy do odbierania uprawnień takich jak:\n- nadanych nadanych osobom fizycznym lub podmiotom do pracy w KSeF\n- nadanych podmiotom do obsługi faktur\n- nadanych w sposób pośredni\n- administratorów jednostek i podmiotów podrzędnych\n- administratorów podmiotów unijnych uprawnionych do samofakturowania\n- reprezentantów podmiotów unijnych\n\n> Więcej informacji:\n> - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-uprawnie%C5%84)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "parameters": [
           {
             "name": "permissionId",
@@ -1090,8 +1268,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/authorizations/grants/{permissionId}": {
@@ -1100,7 +1292,7 @@
           "Odbieranie uprawnień"
         ],
         "summary": "Odebranie uprawnień podmiotowych",
-        "description": "Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.\nTa metoda służy do odbierania uprawnień podmiotowych.\n\n> Więcej informacji:\n> - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-uprawnie%C5%84-podmiotowych)",
+        "description": "Rozpoczyna asynchroniczną operacje odbierania uprawnienia o podanym identyfikatorze.\nTa metoda służy do odbierania uprawnień podmiotowych.\n\n> Więcej informacji:\n> - [Odbieranie uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#odebranie-uprawnie%C5%84-podmiotowych)\n\nWymagane uprawnienia: `CredentialsManage`.",
         "parameters": [
           {
             "name": "permissionId",
@@ -1133,8 +1325,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/permissions/operations/{operationReferenceNumber}": {
@@ -1176,8 +1382,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/invoices/ksef/{ksefNumber}": {
@@ -1186,7 +1400,7 @@
           "Pobieranie faktur"
         ],
         "summary": "Pobranie faktury po numerze KSeF",
-        "description": "Zwraca fakturę o podanym numerze KSeF.",
+        "description": "Zwraca fakturę o podanym numerze KSeF.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "ksefNumber",
@@ -1219,8 +1433,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/invoices/download": {
@@ -1335,9 +1563,24 @@
                   "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
-            }
+            },
+            "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/invoices/async-query": {
@@ -1346,7 +1589,7 @@
           "Pobieranie faktur"
         ],
         "summary": "[mock] Inicjalizuje asynchroniczne zapytanie o pobranie faktur",
-        "description": "Rozpoczyna asynchroniczny proces wyszukiwania faktur w systemie KSeF na podstawie przekazanych filtrów.\nWymagane jest przekazanie informacji o szyfrowaniu w polu `Encryption`, które służą do zaszyfrowania wygenerowanych paczek z fakturami.",
+        "description": "Rozpoczyna asynchroniczny proces wyszukiwania faktur w systemie KSeF na podstawie przekazanych filtrów.\nWymagane jest przekazanie informacji o szyfrowaniu w polu `Encryption`, które służą do zaszyfrowania wygenerowanych paczek z fakturami.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "requestBody": {
           "description": "Zestaw filtrów dla wyszukiwania faktur.",
           "content": {
@@ -1386,8 +1629,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/invoices/async-query/{operationReferenceNumber}": {
@@ -1396,7 +1653,7 @@
           "Pobieranie faktur"
         ],
         "summary": "[mock] Sprawdza status asynchronicznego zapytania o pobranie faktur",
-        "description": "Pobiera status wcześniej zainicjalizowanego zapytania asynchronicznego na podstawie identyfikatora operacji.\nUmożliwia śledzenie postępu przetwarzania zapytania oraz pobranie gotowych paczek z wynikami, jeśli są już dostępne.",
+        "description": "Pobiera status wcześniej zainicjalizowanego zapytania asynchronicznego na podstawie identyfikatora operacji.\nUmożliwia śledzenie postępu przetwarzania zapytania oraz pobranie gotowych paczek z wynikami, jeśli są już dostępne.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "operationReferenceNumber",
@@ -1428,8 +1685,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions": {
@@ -1438,7 +1709,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie listy sesji",
-        "description": "Zwraca listę sesji spełniających podane kryteria wyszukiwania.",
+        "description": "Zwraca listę sesji spełniających podane kryteria wyszukiwania.\n\nWymagane uprawnienia: `Introspection`.",
         "parameters": [
           {
             "name": "pageSize",
@@ -1573,8 +1844,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "Introspection"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}": {
@@ -1583,7 +1868,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie statusu sesji",
-        "description": "Sprawdza bieżący status sesji o podanym numerze referencyjnym.",
+        "description": "Sprawdza bieżący status sesji o podanym numerze referencyjnym.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -1617,8 +1902,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}/invoices": {
@@ -1627,7 +1926,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie faktur sesji",
-        "description": "Zwraca listę faktur przesłanych w sesji wraz z ich statusami, oraz informacje na temat ilości poprawnie i niepoprawnie przetworzonych faktur.",
+        "description": "Zwraca listę faktur przesłanych w sesji wraz z ich statusami, oraz informacje na temat ilości poprawnie i niepoprawnie przetworzonych faktur.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -1681,8 +1980,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}": {
@@ -1691,7 +2004,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie statusu faktury z sesji",
-        "description": "Zwraca fakturę przesłaną w sesji wraz ze statusem.",
+        "description": "Zwraca fakturę przesłaną w sesji wraz ze statusem.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -1733,8 +2046,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}/invoices/failed": {
@@ -1743,7 +2070,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie niepoprawnie przetworzonych faktur sesji",
-        "description": "Zwraca listę niepoprawnie przetworzonych faktur przesłanych w sesji wraz z ich statusami.",
+        "description": "Zwraca listę niepoprawnie przetworzonych faktur przesłanych w sesji wraz z ich statusami.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "x-continuation-token",
@@ -1795,8 +2122,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}/invoices/ksef/{ksefNumber}/upo": {
@@ -1805,7 +2146,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie UPO faktury z sesji na podstawie numeru KSeF",
-        "description": "Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.",
+        "description": "Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -1847,8 +2188,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}/upo": {
@@ -1857,7 +2212,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie UPO faktury z sesji na podstawie numeru referencyjnego faktury",
-        "description": "Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.",
+        "description": "Zwraca UPO faktury przesłanego w sesji na podstawie jego numeru KSeF.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -1898,8 +2253,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/sessions/{referenceNumber}/upo/{upoReferenceNumber}": {
@@ -1908,7 +2277,7 @@
           "Status wysyłki i UPO"
         ],
         "summary": "Pobranie UPO dla sesji",
-        "description": "Zwraca XML zawierający zbiorcze UPO dla sesji.",
+        "description": "Zwraca XML zawierający zbiorcze UPO dla sesji.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -1950,8 +2319,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceRead"
+        ]
       }
     },
     "/api/v2/tokens": {
@@ -1993,8 +2376,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       },
       "get": {
         "tags": [
@@ -2060,8 +2451,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/tokens/{referenceNumber}": {
@@ -2101,15 +2500,23 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Tokeny KSeF"
         ],
         "summary": "Unieważnienie tokena",
-        "description": "Unieważniony token nie pozwoli już na uwierzytelnienie się za jego pomocą. Unieważnienie nie może zostać cofnięte.",
+        "description": "Unieważniony token nie pozwoli już na uwierzytelnienie się za jego pomocą. Unieważnienie nie może zostać cofnięte.\n\nWymagane uprawnienia: `CredentialsManage`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -2134,8 +2541,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage"
+        ]
       }
     },
     "/api/v2/auth/challenge": {
@@ -2339,8 +2760,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/auth/token/redeem": {
@@ -2371,8 +2800,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/auth/token/refresh": {
@@ -2404,8 +2841,16 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/api/v2/sessions/online": {
@@ -2414,7 +2859,7 @@
           "Wysyłka interaktywna"
         ],
         "summary": "Otwarcie sesji interaktywnej",
-        "description": "Otwiera sesję do wysyłki pojedynczych faktur. Należy przekazać schemat wysyłanych faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Otwarcie sesji interaktywnej](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-interaktywna.md#1-otwarcie-sesji)\n> - [Klucz publiczny Ministersta Finansów](/public-keys/publicKey.pem)",
+        "description": "Otwiera sesję do wysyłki pojedynczych faktur. Należy przekazać schemat wysyłanych faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Otwarcie sesji interaktywnej](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-interaktywna.md#1-otwarcie-sesji)\n> - [Klucz publiczny Ministersta Finansów](/public-keys/publicKey.pem)\n\nWymagane uprawnienia: `InvoiceWrite`.",
         "operationId": "onlineSession.open",
         "requestBody": {
           "content": {
@@ -2455,8 +2900,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceWrite"
+        ]
       }
     },
     "/api/v2/sessions/online/{referenceNumber}/invoices": {
@@ -2465,7 +2924,7 @@
           "Wysyłka interaktywna"
         ],
         "summary": "Wysłanie faktury",
-        "description": "Przyjmuje zaszyfrowaną fakturę oraz jej metadane i rozpoczyna jej przetwarzanie.\n\n> Więcej informacji:\n> - [Wysłanie faktury](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-interaktywna.md#2-wys%C5%82anie-faktury)",
+        "description": "Przyjmuje zaszyfrowaną fakturę oraz jej metadane i rozpoczyna jej przetwarzanie.\n\n> Więcej informacji:\n> - [Wysłanie faktury](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-interaktywna.md#2-wys%C5%82anie-faktury)\n\nWymagane uprawnienia: `InvoiceWrite`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -2521,8 +2980,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceWrite"
+        ]
       }
     },
     "/api/v2/sessions/online/{referenceNumber}/close": {
@@ -2531,7 +3004,7 @@
           "Wysyłka interaktywna"
         ],
         "summary": "Zamknięcie sesji interaktywnej",
-        "description": "Zamyka sesję interaktywną i rozpoczyna generowanie zbiorczego UPO dla sesji.",
+        "description": "Zamyka sesję interaktywną i rozpoczyna generowanie zbiorczego UPO dla sesji.\n\nWymagane uprawnienia: `InvoiceWrite`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -2557,8 +3030,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceWrite"
+        ]
       }
     },
     "/api/v2/sessions/batch": {
@@ -2567,7 +3054,7 @@
           "Wysyłka wsadowa"
         ],
         "summary": "Otwarcie sesji wsadowej",
-        "description": "Otwiera sesję do wysyłki wsadowej faktur. Należy przekazać schemat wysyłanych faktur, informacje o paczce faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Przygotwanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)\n> - [Klucz publiczny Ministersta Finansów](/public-keys/publicKey.pem)",
+        "description": "Otwiera sesję do wysyłki wsadowej faktur. Należy przekazać schemat wysyłanych faktur, informacje o paczce faktur oraz informacje o kluczu używanym do szyfrowania.\n\n> Więcej informacji:\n> - [Przygotwanie paczki faktur](https://github.com/CIRFMF/ksef-docs/blob/main/sesja-wsadowa.md)\n> - [Klucz publiczny Ministersta Finansów](/public-keys/publicKey.pem)\n\nWymagane uprawnienia: `InvoiceWrite`.",
         "operationId": "batch.open",
         "requestBody": {
           "content": {
@@ -2608,9 +3095,24 @@
                   "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
-            }
+            },
+            "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceWrite"
+        ]
       }
     },
     "/api/v2/sessions/batch/{referenceNumber}/close": {
@@ -2619,7 +3121,7 @@
           "Wysyłka wsadowa"
         ],
         "summary": "Zamknięcie sesji wsadowej",
-        "description": "Zamyka sesję wsadową, rozpoczyna procesowanie paczki faktur i generowanie UPO dla prawidłowych faktur oraz zbiorczego UPO dla sesji.",
+        "description": "Zamyka sesję wsadową, rozpoczyna procesowanie paczki faktur i generowanie UPO dla prawidłowych faktur oraz zbiorczego UPO dla sesji.\n\nWymagane uprawnienia: `InvoiceWrite`.",
         "parameters": [
           {
             "name": "referenceNumber",
@@ -2645,8 +3147,22 @@
               }
             },
             "x-summary": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "InvoiceWrite"
+        ]
       }
     },
     "/api/v2/permissions/query/persons/grants": {
@@ -2655,7 +3171,7 @@
           "Wyszukiwanie nadanych uprawnień"
         ],
         "summary": "Pobranie listy uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom",
-        "description": "Zwraca listę uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-do-pracy-w-ksef-nadanych-osobom-fizycznym-lub-podmiotom)",
+        "description": "Zwraca listę uprawnień do pracy w KSeF nadanych osobom fizycznym lub podmiotom.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-do-pracy-w-ksef-nadanych-osobom-fizycznym-lub-podmiotom)\n\nWymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -2714,8 +3230,23 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage",
+          "CredentialsRead"
+        ]
       }
     },
     "/api/v2/permissions/query/subunits/grants": {
@@ -2724,7 +3255,7 @@
           "Wyszukiwanie nadanych uprawnień"
         ],
         "summary": "Pobranie listy uprawnień administratorów jednostek i podmiotów podrzędnych",
-        "description": "Zwraca listę uprawnień administratorów jednostek i podmiotów podrzędnych.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-jednostek-i-podmiot%C3%B3w-podrz%C4%99dnych)",
+        "description": "Zwraca listę uprawnień administratorów jednostek i podmiotów podrzędnych.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-jednostek-i-podmiot%C3%B3w-podrz%C4%99dnych)\n\nWymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -2780,8 +3311,24 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage",
+          "CredentialsRead",
+          "SubunitManage"
+        ]
       }
     },
     "/api/v2/permissions/query/entities/roles": {
@@ -2790,7 +3337,7 @@
           "Wyszukiwanie nadanych uprawnień"
         ],
         "summary": "Pobranie listy ról podmiotu",
-        "description": "Zwraca listę ról podmiotu.\n\n> Więcej informacji:\n> - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-r%C3%B3l-podmiotu)",
+        "description": "Zwraca listę ról podmiotu.\n\n> Więcej informacji:\n> - [Pobieranie listy ról](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-r%C3%B3l-podmiotu)\n\nWymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -2832,8 +3379,23 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage",
+          "CredentialsRead"
+        ]
       }
     },
     "/api/v2/permissions/query/subordinate-entities/roles": {
@@ -2842,7 +3404,7 @@
           "Wyszukiwanie nadanych uprawnień"
         ],
         "summary": "Pobranie listy podmiotów podrzędnych",
-        "description": "Zwraca liste podmiotów podrzędnych.\n\n> Więcej informacji:\n> - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-podmiot%C3%B3w-podrz%C4%99dnych)",
+        "description": "Zwraca liste podmiotów podrzędnych.\n\n> Więcej informacji:\n> - [Pobieranie listy podmiotów podrzędnych](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-podmiot%C3%B3w-podrz%C4%99dnych)\n\nWymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `SubunitManage`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -2898,8 +3460,24 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage",
+          "CredentialsRead",
+          "SubunitManage"
+        ]
       }
     },
     "/api/v2/permissions/query/authorizations/grants": {
@@ -2908,7 +3486,7 @@
           "Wyszukiwanie nadanych uprawnień"
         ],
         "summary": "Pobranie listy uprawnień podmiotowych do obsługi faktur",
-        "description": "Zwraca listę uprawnień podmiotowych do obsługi faktur.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-podmiotowych-do-obs%C5%82ugi-faktur)",
+        "description": "Zwraca listę uprawnień podmiotowych do obsługi faktur.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-podmiotowych-do-obs%C5%82ugi-faktur)\n\nWymagane uprawnienia: `CredentialsManage`, `CredentialsRead`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -2967,8 +3545,23 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage",
+          "CredentialsRead"
+        ]
       }
     },
     "/api/v2/permissions/query/eu-entities/grants": {
@@ -2977,7 +3570,7 @@
           "Wyszukiwanie nadanych uprawnień"
         ],
         "summary": "Pobranie listy uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do samofakturowania",
-        "description": "Zwraca listę uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do samofakturowania.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-lub-reprezentant%C3%B3w-podmiot%C3%B3w-unijnych-uprawnionych-do-samofakturowania)",
+        "description": "Zwraca listę uprawnień administratorów lub reprezentantów podmiotów unijnych uprawnionych do samofakturowania.\n\n> Więcej informacji:\n> - [Pobieranie listy uprawnień](https://github.com/CIRFMF/ksef-docs/blob/main/uprawnienia.md#pobranie-listy-uprawnie%C5%84-administrator%C3%B3w-lub-reprezentant%C3%B3w-podmiot%C3%B3w-unijnych-uprawnionych-do-samofakturowania)\n\nWymagane uprawnienia: `CredentialsManage`, `CredentialsRead`, `VatUeManage`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -3033,8 +3626,24 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ],
+        "x-required-permissions": [
+          "CredentialsManage",
+          "CredentialsRead",
+          "VatUeManage"
+        ]
       }
     }
   },
