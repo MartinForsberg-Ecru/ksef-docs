@@ -15,6 +15,9 @@
   - Dodawanie atrybutów ```required``` w odpowiedziach na zapytania o uprawnienia.
   - Aktualizacja opisu ```/api/v2/tokens```
 
+- **Status sesji**
+  - Dodano nowy status Sesji: 415 - "Brak możliwości wysyłania faktury z załącznikiem"
+
 - **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
 
