@@ -34,9 +34,9 @@
   - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) liczby faktur w sesji interaktywnej i wsadowej.
   - Zmieniono kod statusu „Trwa przetwarzanie” z 300 na 150.
 
-- **Poprawka ContextIdentifier w xsd AuthTokenRequest**  
-  Należy użyć poprawionej wersji [schematu XSD](https://ksef-test.mf.gov.pl/docs/v2/schemas/authv2.xsd).  
-  [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
+- **Uwierzytelnienie z wykorzystaniem podpisu XAdES**  
+  - Poprawka ContextIdentifier w xsd AuthTokenRequest. Należy użyć poprawionej wersji [schematu XSD](https://ksef-test.mf.gov.pl/docs/v2/schemas/authv2.xsd). [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
+  - Dodano kod błędu`21117` - „Nieprawidłowy identyfikator podmiotu dla wskazanego typu kontekstu”.
 
 - **Usunięcie endpointu do anonimowego pobierania faktury ```invoices/download```**  
   Funkcjonalność pobierania faktur bez uwierzytelnienia została usunięta; dostępna wyłącznie w webowym narzędziu KSeF do weryfikacji i pobierania faktur.
@@ -50,6 +50,7 @@
 
 - **Aktualizacja formatu certyfikatów publicznych**  
   `/security/public-key-certificates` – zwraca certyfikaty w formacie DER zakodowane w Base64.
+
 
 ### Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
