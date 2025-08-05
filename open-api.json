@@ -3116,7 +3116,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "| ExceptionCode       | ExceptionDescription                                | Details                                                                   | \n|---------------------|-----------------------------------------------------|---------------------------------------------------------------------------|\n| 21157               | Nieprawidłowy rozmiar części pakietu.               | {treść błędu walidacji}                                                   | \n| 21161               | Przekroczono dozwoloną ilość części pakietu.        | {treść błędu walidacji}                                                   | \n| 21401               | Dokument nie jest zgodny ze schemą (json).          | {treść błędu walidacji}                                                   |",
             "content": {
               "application/json": {
                 "schema": {
@@ -4058,7 +4058,7 @@
         "properties": {
           "fileSize": {
             "type": "integer",
-            "description": "Rozmiar pliku paczki.",
+            "description": "Rozmiar pliku paczki w bajtach. Maksymalny rozmiar paczki to 5GB (5_368_709_120 bajtów).",
             "format": "int64"
           },
           "fileHash": {
@@ -4070,7 +4070,7 @@
             "items": {
               "$ref": "#/components/schemas/BatchFilePartInfo"
             },
-            "description": "Informacje o częściach pliku paczki."
+            "description": "Informacje o częściach pliku paczki. Maksymalna ilość części to 50."
           }
         },
         "additionalProperties": false
@@ -4095,7 +4095,7 @@
           },
           "fileSize": {
             "type": "integer",
-            "description": "Rozmiar części pliku paczki.",
+            "description": "Rozmiar części pliku paczki w bajtach. Maksymalna dozwolona wartość to 100MB (104_857_600 bajtów).",
             "format": "int64"
           },
           "fileHash": {

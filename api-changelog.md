@@ -18,6 +18,9 @@
 - **Status sesji**
   - Dodano nowy status Sesji: 415 - "Brak możliwości wysyłania faktury z załącznikiem"
 
+- **Wysyłka faktur w sesji wsadowej**
+  - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) rozmiaru paczki zip (100 MB) i liczby paczek (50).
+
 - **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
 

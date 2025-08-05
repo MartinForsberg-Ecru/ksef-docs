@@ -21,7 +21,8 @@ Data wystawienia faktury (`P_1`) nie może być późniejsza niż data przyjęci
 - Maksymalny rozmiar faktury z załącznikami: **3 MB**
 
 ## Ograniczenia ilościowe
-Maksymalna liczba faktur w jednej sesji (zarówno interaktywnej, jak i wsadowej) wynosi 10 000 000.
+- Maksymalna liczba faktur w jednej sesji (zarówno interaktywnej, jak i wsadowej) wynosi 10 000 000.
+- W ramach wysyłki wsadowej można wysłać maksymalnie 50 paczek ZIP, każda o maksymalnym rozmiarze 100 MB.
 
 ## Poprawne szyfrowanie
 - Faktura powinna być zaszyfrowana algorytmem AES-256-CBC (klucz symetryczny 256 bit, IV 128 bit, PKCS#7).
