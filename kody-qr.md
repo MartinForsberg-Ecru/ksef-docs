@@ -14,7 +14,7 @@ W zależności od trybu wystawienia (online czy offline) na wizualizacji faktury
 - w trybie **online** — jeden kod QR (KOD I), umożliwiający weryfikację i pobranie faktury z KSeF,
 - w trybie **offline** — dwa kody QR:
   - **KOD I** do weryfikacji faktury po jej przesłaniu do KSeF,
-  - **KOD II** do potwierdzenia autentyczności wystawcy na podstawie [certyfikatu KSeF](\certyfikaty-KSeF.md).
+  - **KOD II** do potwierdzenia autentyczności wystawcy na podstawie [certyfikatu KSeF](/certyfikaty-KSeF.md).
 
 ### 1. KOD I – Weryfikacja i pobieranie faktury
 
@@ -82,7 +82,7 @@ byte[] labeledQr = qrSvc.addLabelToQrCode(qrCode, ksefNumber);
 
 ### 2. KOD II – Weryfikacja certyfikatu
 
-```KOD II``` jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, offline-niedostępność systemu, tryb awaryjny) i pełni funkcję potwierdzenia autentyczności wystawcy oraz integralności faktury. Generowanie wymaga posiadania aktywnego [certyfikatu KSeF](\certyfikaty-KSeF.md) – link zawiera kryptograficzny podpis URL przy użyciu klucza prywatnego certyfikatu KSeF, co zapobiega sfałszowaniu linku przez podmioty nieposiadające dostępu do certyfikatu. Certyfikat KSeF można pozyskać za pomocą endpointu [`/certificates`](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post).
+```KOD II``` jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, offline-niedostępność systemu, tryb awaryjny) i pełni funkcję potwierdzenia autentyczności wystawcy oraz integralności faktury. Generowanie wymaga posiadania aktywnego [certyfikatu KSeF](/certyfikaty-KSeF.md) – link zawiera kryptograficzny podpis URL przy użyciu klucza prywatnego certyfikatu KSeF, co zapobiega sfałszowaniu linku przez podmioty nieposiadające dostępu do certyfikatu. Certyfikat KSeF można pozyskać za pomocą endpointu [`/certificates`](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post).
 
 #### Generowanie linku
 
