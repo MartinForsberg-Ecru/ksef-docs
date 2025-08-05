@@ -36,7 +36,9 @@ Otwarcie sesji jest operacją lekką i synchroniczną – można równocześnie 
 
 POST [sessions/online](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Wysylka-interaktywna/operation/onlineSession.open)
 
-W odpowiedzi zwracany jest obiekt zawierający pole ```referenceNumber``` – unikalny identyfikator sesji interaktywnej, który należy przekazywać we wszystkich kolejnych wywołaniach API.
+W odpowiedzi zwracany jest obiekt zawierający: 
+ - ```referenceNumber``` – unikalny identyfikator sesji interaktywnej, który należy przekazywać we wszystkich kolejnych wywołaniach API.
+ - ```validUntil``` – Termin ważności sesji. Po jego upływie sesja zostanie automatycznie zamknięta. Czas życia sesji interaktywnej wynosi 12 godzin od momentu jej utworzenia.
 
 Przykład w języku C#:
 ```csharp

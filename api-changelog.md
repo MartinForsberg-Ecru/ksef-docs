@@ -17,7 +17,10 @@
   - Usunięto redundantne definicje enumów
 
 - **Status sesji**
-  - Dodano nowy status Sesji: 415 - "Brak możliwości wysyłania faktury z załącznikiem"
+  - Dodano nowy status Sesji: Cancelled - Sesja anulowania. Został przekroczony czas na wysyłkę w sesji wsadowej, lub nie przesłano żadnych faktur w sesji interaktywnej.
+  - Dodano nowy kod błędu dla sesji: 415 - "Brak możliwości wysyłania faktury z załącznikiem"
+  - Dodano nowy kod błędu dla sesji: 440 - "Sesja anulowana, przekroczono czas wysyłki"
+  - Dodano nowy kod błędu dla sesji: 445 - "Błąd weryfikacji, brak poprawnych faktur"
 
 - **Wysyłka faktur w sesji wsadowej**
   - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) rozmiaru paczki zip (100 MB) i liczby paczek (50).

@@ -1824,7 +1824,7 @@
           {
             "name": "statuses",
             "in": "query",
-            "description": "Statusy sesji.\n| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n",
+            "description": "Statusy sesji.\n| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n| Cancelled | Sesja anulowania.            Został przekroczony czas na wysyłkę w sesji wsadowej, lub nie przesłano żadnych faktur w sesji interaktywnej. |\n",
             "schema": {
               "type": "array",
               "items": {
@@ -4300,10 +4300,11 @@
         "enum": [
           "Succeeded",
           "InProgress",
-          "Failed"
+          "Failed",
+          "Cancelled"
         ],
         "type": "string",
-        "description": "| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n"
+        "description": "| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n| Cancelled | Sesja anulowania.            Został przekroczony czas na wysyłkę w sesji wsadowej, lub nie przesłano żadnych faktur w sesji interaktywnej. |\n"
       },
       "ContextIdentifier": {
         "required": [
@@ -6369,13 +6370,19 @@
       },
       "OpenOnlineSessionResponse": {
         "required": [
-          "referenceNumber"
+          "referenceNumber",
+          "validUntil"
         ],
         "type": "object",
         "properties": {
           "referenceNumber": {
             "type": "string",
             "description": "Numer referencyjny sesji."
+          },
+          "validUntil": {
+            "type": "string",
+            "description": "Termin ważności sesji. Po jego upływie sesja zostanie automatycznie zamknięta.",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -7364,7 +7371,14 @@
                 "$ref": "#/components/schemas/StatusInfo"
               }
             ],
-            "description": "Informacje o aktualnym statusie.\n            \nSesja wsadowa:\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Sesja wsadowa rozpoczęta | - |\n| 200 | Sesja wsadowa przetworzona pomyślnie | - |\n| 300 | Trwa przetwarzanie | - |\n| 405 | Błąd weryfikacji poprawności dostarczonych elementów paczki | - |\n| 415 | Błąd odszyfrowania dostarczonego klucza | - |\n| 430 | Błąd dekompresji pierwotnego archiwum | - |\n| 435 | Błąd odszyfrowania zaszyfrowanych części archiwum | - |\n| 500 | Nieznany błąd ({statusCode}) | - |\n\nSesja interaktywna:\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Sesja interaktywna otwarta | - |\n| 200 | Sesja interaktywna przetworzona pomyślnie | - |\n| 300 | Sesja interaktywna zamknięta | - |\n| 415 | Błąd odszyfrowania dostarczonego klucza | - |\n| * | description missing | - |"
+            "description": "Informacje o aktualnym statusie.\n            \nSesja wsadowa:\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Sesja wsadowa rozpoczęta | - |\n| 200 | Sesja wsadowa przetworzona pomyślnie | - |\n| 300 | Trwa przetwarzanie | - |\n| 405 | Błąd weryfikacji poprawności dostarczonych elementów paczki | - |\n| 415 | Błąd odszyfrowania dostarczonego klucza | - |\n| 430 | Błąd dekompresji pierwotnego archiwum | - |\n| 435 | Błąd odszyfrowania zaszyfrowanych części archiwum | - |\n| 440 | Sesja anulowana, przekroczono czas wysyłki | - |\n| 445 | Błąd weryfikacji, brak poprawnych faktur | - |\n| 500 | Nieznany błąd ({statusCode}) | - |\n\nSesja interaktywna:\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Sesja interaktywna otwarta | - |\n| 200 | Sesja interaktywna przetworzona pomyślnie | - |\n| 300 | Sesja interaktywna zamknięta | - |\n| 415 | Błąd odszyfrowania dostarczonego klucza | - |\n| 440 | Sesja anulowana, nie przesłano faktur | - |\n| 445 | Błąd weryfikacji, brak poprawnych faktur | - |\n| * | description missing | - |"
+          },
+          "validUntil": {
+            "type": "string",
+            "description": "Termin ważności sesji. Po jego upływie sesja zostanie automatycznie zamknięta.",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
           },
           "upo": {
             "required": [
@@ -7461,6 +7475,12 @@
             "type": "string",
             "description": "Data ostatniej aktywności w ramach sesji.",
             "format": "date-time"
+          },
+          "validUntil": {
+            "type": "string",
+            "description": "Termin ważności sesji. Po jego upływie sesja interaktywna zostanie automatycznie zamknięta.",
+            "format": "date-time",
+            "nullable": true
           },
           "totalInvoiceCount": {
             "type": "integer",
