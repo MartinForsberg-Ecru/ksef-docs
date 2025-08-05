@@ -535,7 +535,7 @@
                     "$ref": "#/components/schemas/PublicKeyCertificate"
                   }
                 },
-                "example": [{"certificatePem":"-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----","validFrom":"2024-07-11T12:23:56.0154302+00:00","usage":["KsefTokenEncryption","SymmetricKeyEncryption"]}]
+                "example": [{"certificate":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwocTwdNgt2+PXJ2fcB7k1kn5eFUTXBeep9pH...","validFrom":"2024-07-11T12:23:56.0154302+00:00","validTo":"2028-07-11T12:23:56.0154302+00:00","usage":["KsefTokenEncryption","SymmetricKeyEncryption"]}]
               }
             }
           },
@@ -6802,15 +6802,16 @@
       },
       "PublicKeyCertificate": {
         "required": [
-          "certificatePem",
+          "certificate",
           "usage",
-          "validFrom"
+          "validFrom",
+          "validTo"
         ],
         "type": "object",
         "properties": {
-          "certificatePem": {
+          "certificate": {
             "type": "string",
-            "description": "Certyfikat w formacie PEM."
+            "description": "Certyfikat klucza publicznego w formacie DER zakodowany w Base64."
           },
           "validFrom": {
             "type": "string",
@@ -6820,8 +6821,7 @@
           "validTo": {
             "type": "string",
             "description": "Data końca obowiązywania certyfikatu.",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           },
           "usage": {
             "type": "array",
