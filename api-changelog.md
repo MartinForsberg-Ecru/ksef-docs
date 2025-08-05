@@ -22,6 +22,10 @@
   - Dodano nowy kod błędu dla sesji: 440 - "Sesja anulowana, przekroczono czas wysyłki"
   - Dodano nowy kod błędu dla sesji: 445 - "Błąd weryfikacji, brak poprawnych faktur"
 
+- **Status wysyłki faktur w sesji**
+  - Dodano datę wygenerowania numeru KSeF (```AcquisitionDate```)
+  - Zmieniono nazwę ```ReceiveDate``` na ```InvoicingDate``` - Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).
+
 - **Wysyłka faktur w sesji wsadowej**
   - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) rozmiaru paczki zip (100 MB) i liczby paczek (50).
 

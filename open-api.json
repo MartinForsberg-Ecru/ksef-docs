@@ -1983,7 +1983,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/SessionInvoicesResponse"
                 },
-                "example": {"invoices":[{"ordinalNumber":1,"invoiceNumber":"FA/XPWIC-7900685789/06/2025","ksefNumber":"5265877635-20250626-010080DD2B5E-26","referenceNumber":"20250626-EE-2F15D39000-242207E5C4-1B","invoiceHash":"mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=","receiveDate":"2025-07-10T14:16:30.7315042+00:00","status":{"code":200,"description":"Sukces"}},{"ordinalNumber":2,"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","invoiceHash":"mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=","receiveDate":"2025-07-10T14:16:30.7315042+00:00","status":{"code":404,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}],"totalCount":2}
+                "example": {"invoices":[{"ordinalNumber":1,"invoiceNumber":"FA/XPWIC-7900685789/06/2025","ksefNumber":"5265877635-20250626-010080DD2B5E-26","referenceNumber":"20250626-EE-2F15D39000-242207E5C4-1B","invoiceHash":"mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=","invoicingDate":"2025-07-11T12:23:56.0154302+00:00","status":{"code":200,"description":"Sukces"}},{"ordinalNumber":2,"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","invoiceHash":"mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=","invoicingDate":"2025-07-11T12:23:56.0154302+00:00","status":{"code":404,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}],"totalCount":2}
               }
             }
           },
@@ -2050,7 +2050,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/InvoiceStatusResponse"
                 },
-                "example": {"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","ordinalNumber":2,"receiveDate":"2025-07-10T14:16:30.7321181+00:00","status":{"code":440,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}
+                "example": {"ordinalNumber":2,"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","invoicingDate":"2025-07-11T12:23:56.0154302+00:00","status":{"code":440,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}
               }
             }
           },
@@ -2125,7 +2125,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/SessionInvoicesResponse"
                 },
-                "example": {"invoices":[{"ordinalNumber":2,"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","invoiceHash":"mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=","receiveDate":"2025-07-10T14:16:30.7328969+00:00","status":{"code":404,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}],"totalCount":1}
+                "example": {"invoices":[{"ordinalNumber":2,"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","invoiceHash":"mkht+3m5trnfxlTYhq3QFn74LkEO69MFNlsMAkCDSPA=","invoicingDate":"2025-07-11T12:23:56.0154302+00:00","status":{"code":404,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}],"totalCount":1}
               }
             }
           },
@@ -7281,8 +7281,8 @@
       },
       "SessionInvoice": {
         "required": [
+          "invoicingDate",
           "ordinalNumber",
-          "receiveDate",
           "status"
         ],
         "type": "object",
@@ -7317,9 +7317,15 @@
             "description": "Nazwa pliku faktury (zwracana dla faktur wysyłanych wsadowo).",
             "nullable": true
           },
-          "receiveDate": {
+          "acquisitionDate": {
             "type": "string",
-            "description": "Data przyjęcia faktury.",
+            "description": "[Mock] Data nadania numeru KSeF.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "invoicingDate": {
+            "type": "string",
+            "description": "Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).",
             "format": "date-time"
           },
           "status": {
