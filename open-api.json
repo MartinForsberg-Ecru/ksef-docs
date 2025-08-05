@@ -1752,10 +1752,6 @@
             "description": "Typ sesji.\n| Wartość | Opis |\n| --- | --- |\n| Online | Wysyłka interaktywna (pojedyncze faktury). |\n| Batch | Wysyłka wsadowa (paczka faktur). |\n",
             "required": true,
             "schema": {
-              "enum": [
-                "Online",
-                "Batch"
-              ],
               "allOf": [
                 {
                   "$ref": "#/components/schemas/SessionType"
@@ -1830,11 +1826,6 @@
             "in": "query",
             "description": "Statusy sesji.\n| Wartość | Opis |\n| --- | --- |\n| Succeeded | Sesja przetworzona poprawnie.            W trakcie przetwarzania sesji nie wystąpiły żadne błędy, ale część faktur nadal mogła zostać odrzucona. |\n| InProgress | Sesja aktywna. |\n| Failed | Sesja nie przetworzona z powodu błędów.            Na etapie rozpoczynania lub kończenia sesji wystąpiły błędy, które nie pozwoliły na jej poprawne przetworzenie. |\n",
             "schema": {
-              "enum": [
-                "Succeeded",
-                "InProgress",
-                "Failed"
-              ],
               "type": "array",
               "items": {
                 "$ref": "#/components/schemas/CommonSessionStatus"
@@ -2426,13 +2417,6 @@
             "in": "query",
             "description": "Status tokenów do zwrócenia. W przypadku braku parametru zwracane są wszystkie tokeny. Parametr można przekazać wielokrotnie.\n| Wartość | Opis |\n| --- | --- |\n| Pending | Token został utworzony ale jest jeszcze w trakcie aktywacji i nadawania uprawnień. Nie może być jeszcze wykorzystywany do uwierzytelniania. |\n| Active | Token jest aktywny i może być wykorzystywany do uwierzytelniania. |\n| Revoking | Token jest w trakcie unieważniania. Nie może już być wykorzystywany do uwierzytelniania. |\n| Revoked | Token został unieważniony i nie może być wykorzystywany do uwierzytelniania. |\n| Failed | Nie udało się aktywować tokena. Należy wygenerować nowy token, obecny nie może być wykorzystywany do uwierzytelniania. |\n",
             "schema": {
-              "enum": [
-                "Pending",
-                "Active",
-                "Revoking",
-                "Revoked",
-                "Failed"
-              ],
               "type": "array",
               "items": {
                 "$ref": "#/components/schemas/AuthenticationTokenStatus"
@@ -3867,14 +3851,6 @@
             "format": "date-time"
           },
           "authenticationMethod": {
-            "enum": [
-              "Token",
-              "TrustedProfile",
-              "InternalCertificate",
-              "QualifiedSignature",
-              "QualifiedSeal",
-              "PersonalSignature"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/AuthenticationMethod"
@@ -3946,12 +3922,6 @@
             "nullable": true
           },
           "requestedPermissions": {
-            "enum": [
-              "InvoiceRead",
-              "InvoiceWrite",
-              "CredentialsRead",
-              "CredentialsManage"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TokenPermissionType"
@@ -3965,13 +3935,6 @@
             "format": "date-time"
           },
           "status": {
-            "enum": [
-              "Pending",
-              "Active",
-              "Revoking",
-              "Revoked",
-              "Failed"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/AuthenticationTokenStatus"
@@ -4280,12 +4243,6 @@
             "description": "Nazwa powszechna (CN) podmiotu, dla którego wystawiono certyfikat."
           },
           "status": {
-            "enum": [
-              "Active",
-              "Blocked",
-              "Revoked",
-              "Expired"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/CertificateListItemStatus"
@@ -4356,13 +4313,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "None",
-              "AllPartners",
-              "Nip",
-              "InternalId",
-              "NipVatUe"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/ContextIdentifierType"
@@ -4659,11 +4609,6 @@
             "nullable": true
           },
           "authorIdentifierType": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationsAuthorIdentifierType"
@@ -4677,9 +4622,6 @@
             "description": "Identyfikator podmiotu uprawnionego."
           },
           "authorizedEntityIdentifierType": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationsAuthorizedEntityIdentifierType"
@@ -4692,9 +4634,6 @@
             "description": "Identyfikator podmiotu uprawniającego."
           },
           "authorizingEntityIdentifierType": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationsAuthorizingEntityIdentifierType"
@@ -4703,11 +4642,6 @@
             "description": "Typ identyfikatora podmiotu uprawniającego."
           },
           "authorizationScope": {
-            "enum": [
-              "SelfInvoicing",
-              "TaxRepresentative",
-              "RRInvoicing"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/InvoicePermissionType"
@@ -4756,11 +4690,6 @@
             "description": "Identyfikator podmiotu.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |"
           },
           "permission": {
-            "enum": [
-              "SelfInvoicing",
-              "RRInvoicing",
-              "TaxRepresentative"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationPermissionType"
@@ -4808,10 +4737,6 @@
             "nullable": true
           },
           "queryType": {
-            "enum": [
-              "Granted",
-              "Received"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/QueryType"
@@ -4838,9 +4763,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationPermissionsSubjectIdentifierType"
@@ -4878,9 +4800,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationsAuthorizedEntityIdentifierType"
@@ -4910,9 +4829,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityAuthorizationsAuthorizingEntityIdentifierType"
@@ -4941,10 +4857,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "InvoiceWrite",
-              "InvoiceRead"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityPermissionType"
@@ -5008,9 +4920,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityPermissionsSubjectIdentifierType"
@@ -5040,9 +4949,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityPermissionsSubordinateEntityIdentifierType"
@@ -5078,9 +4984,6 @@
             "nullable": true
           },
           "parentEntityIdentifierType": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityRolesParentEntityIdentifierType"
@@ -5090,14 +4993,6 @@
             "nullable": true
           },
           "role": {
-            "enum": [
-              "CourtBailiff",
-              "EnforcementAuthority",
-              "LocalGovernmentUnit",
-              "LocalGovernmentSubUnit",
-              "VatGroupUnit",
-              "VatGroupSubUnit"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EntityRoleType"
@@ -5142,9 +5037,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "NipVatUe"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EuEntityAdministrationPermissionsContextIdentifierType"
@@ -5213,9 +5105,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EuEntityAdministrationPermissionsSubjectIdentifierType"
@@ -5260,11 +5149,6 @@
             "description": "Identyfikator uprawniającego."
           },
           "authorIdentifierType": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EuEntityPermissionsAuthorIdentifierType"
@@ -5285,12 +5169,6 @@
             "description": "Uprawniony odcisk palca certyfikatu."
           },
           "permissionScope": {
-            "enum": [
-              "VatUeManage",
-              "InvoiceWrite",
-              "InvoiceRead",
-              "Introspection"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EuEntityPermissionsQueryPermissionType"
@@ -5346,10 +5224,6 @@
             "description": "Identyfikator podmiotu.\n| Type | Value |\n| --- | --- |\n| Fingerprint | Odcisk palca certyfikatu |"
           },
           "permissions": {
-            "enum": [
-              "InvoiceWrite",
-              "InvoiceRead"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/EuEntityPermissionType"
@@ -5386,12 +5260,6 @@
             "nullable": true
           },
           "permissionTypes": {
-            "enum": [
-              "VatUeManage",
-              "InvoiceWrite",
-              "InvoiceRead",
-              "Introspection"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/EuEntityPermissionsQueryPermissionType"
@@ -5410,9 +5278,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/EuEntityPermissionsSubjectIdentifierType"
@@ -5530,12 +5395,6 @@
         "type": "object",
         "properties": {
           "permissions": {
-            "enum": [
-              "InvoiceRead",
-              "InvoiceWrite",
-              "CredentialsRead",
-              "CredentialsManage"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TokenPermissionType"
@@ -5608,10 +5467,6 @@
             "nullable": true
           },
           "permissions": {
-            "enum": [
-              "InvoiceRead",
-              "InvoiceWrite"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IndirectPermissionType"
@@ -5633,11 +5488,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/IndirectPermissionsSubjectIdentifierType"
@@ -5669,10 +5519,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "InternalId"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/IndirectPermissionsTargetIdentifierType"
@@ -6384,10 +6230,6 @@
         "type": "object",
         "properties": {
           "onClientIpChange": {
-            "enum": [
-              "Reject",
-              "Ignore"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/IpChangePolicy"
@@ -6654,11 +6496,6 @@
             "description": "Identyfikator uprawnionego."
           },
           "authorizedIdentifierType": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsAuthorizedIdentifierType"
@@ -6672,9 +6509,6 @@
             "nullable": true
           },
           "targetIdentifierType": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsTargetIdentifierType"
@@ -6688,11 +6522,6 @@
             "description": "Identyfikator uprawniającego."
           },
           "authorIdentifierType": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsAuthorIdentifierType"
@@ -6701,16 +6530,6 @@
             "description": "Typ identyfikatora uprawniającego."
           },
           "permissionScope": {
-            "enum": [
-              "CredentialsManage",
-              "CredentialsRead",
-              "InvoiceWrite",
-              "InvoiceRead",
-              "Introspection",
-              "SubunitManage",
-              "EnforcementOperations",
-              "Owner"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionScope"
@@ -6723,10 +6542,6 @@
             "description": "Opis uprawnienia."
           },
           "permissionState": {
-            "enum": [
-              "Active",
-              "Inactive"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PermissionState"
@@ -6779,11 +6594,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsAuthorIdentifierType"
@@ -6815,11 +6625,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsAuthorizedIdentifierType"
@@ -6864,15 +6669,6 @@
             "description": "Identyfikator osoby fizycznej.\n| Type | Value |\n| --- | --- |\n| Nip | 10 cyfrowy numer NIP |\n| Pesel | 11 cyfrowy numer PESEL |\n| Fingerprint | Odcisk palca certyfikatu |"
           },
           "permissions": {
-            "enum": [
-              "CredentialsManage",
-              "CredentialsRead",
-              "InvoiceWrite",
-              "InvoiceRead",
-              "Introspection",
-              "SubunitManage",
-              "EnforcementOperations"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PersonPermissionType"
@@ -6940,10 +6736,6 @@
             "nullable": true
           },
           "permissionState": {
-            "enum": [
-              "Active",
-              "Inactive"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PermissionState"
@@ -6953,10 +6745,6 @@
             "nullable": true
           },
           "queryType": {
-            "enum": [
-              "PermissionsInCurrentContext",
-              "PermissionsGrantedInCurrentContext"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsQueryType"
@@ -6982,11 +6770,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsSubjectIdentifierType"
@@ -7018,9 +6801,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/PersonPermissionsTargetIdentifierType"
@@ -7076,10 +6856,6 @@
             "nullable": true
           },
           "usage": {
-            "enum": [
-              "KsefTokenEncryption",
-              "SymmetricKeyEncryption"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PublicKeyCertificateUsage"
@@ -7111,12 +6887,6 @@
             "nullable": true
           },
           "status": {
-            "enum": [
-              "Active",
-              "Blocked",
-              "Revoked",
-              "Expired"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/CertificateListItemStatus"
@@ -7433,11 +7203,6 @@
         "type": "object",
         "properties": {
           "revocationReason": {
-            "enum": [
-              "Unspecified",
-              "Superseded",
-              "KeyCompromise"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/CertificateRevocationReason"
@@ -7751,11 +7516,6 @@
             "nullable": true
           },
           "subjectType": {
-            "enum": [
-              "EnforcementAuthority",
-              "VatGroup",
-              "JST"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubjectType"
@@ -7785,13 +7545,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "None",
-              "Nip",
-              "Pesel",
-              "Fingerprint",
-              "Token"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubjectIdentifierType"
@@ -7848,9 +7601,6 @@
             "description": "Identyfikator podmiotu podrzędnego."
           },
           "subordinateEntityIdentifierType": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubordinateRoleSubordinateEntityIdentifierType"
@@ -7859,10 +7609,6 @@
             "description": "Typ identyfikatora podmiotu podrzędnego."
           },
           "role": {
-            "enum": [
-              "LocalGovernmentSubUnit",
-              "VatGroupSubUnit"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubordinateEntityRoleType"
@@ -7952,11 +7698,6 @@
             "description": "Identyfikator uprawnionego."
           },
           "authorizedIdentifierType": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionsSubjectIdentifierType"
@@ -7969,10 +7710,6 @@
             "description": "Identyfikator podmiotu podrzędnego."
           },
           "subunitIdentifierType": {
-            "enum": [
-              "InternalId",
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionsSubunitIdentifierType"
@@ -7985,11 +7722,6 @@
             "description": "Identyfikator uprawniającego."
           },
           "authorIdentifierType": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionsAuthorIdentifierType"
@@ -7998,9 +7730,6 @@
             "description": "Typ identyfikatora uprawniającego."
           },
           "permissionScope": {
-            "enum": [
-              "CredentialsManage"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionScope"
@@ -8042,10 +7771,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "InternalId",
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionsContextIdentifierType"
@@ -8134,11 +7859,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionsSubjectIdentifierType"
@@ -8170,10 +7890,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "InternalId",
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/SubunitPermissionsSubunitIdentifierType"
@@ -8200,11 +7916,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip",
-              "Pesel",
-              "Fingerprint"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/TestDataAuthorizedIdentifierType"
@@ -8230,9 +7941,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Nip"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/TestDataContextIdentifierType"
@@ -8260,15 +7968,6 @@
             "nullable": true
           },
           "permissionType": {
-            "enum": [
-              "InvoiceRead",
-              "InvoiceWrite",
-              "Introspection",
-              "CredentialsRead",
-              "CredentialsManage",
-              "EnforcementOperations",
-              "SubunitManage"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/TestDataPermissionType"

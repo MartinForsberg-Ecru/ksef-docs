@@ -14,6 +14,7 @@
   - Dodano odpowiedzi `403 Forbidden` i `401 Unauthorized` w specyfikacji endpointów.
   - Dodawanie atrybutów ```required``` w odpowiedziach na zapytania o uprawnienia.
   - Aktualizacja opisu ```/api/v2/tokens```
+  - Usunięto redundantne definicje enumów
 
 - **Status sesji**
   - Dodano nowy status Sesji: 415 - "Brak możliwości wysyłania faktury z załącznikiem"
