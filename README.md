@@ -10,6 +10,7 @@ Krajowy System e-Faktur (KSeF) to centralny system teleinformatyczny służący 
 ## Spis treści
 Przewodnik został podzielony na tematyczne sekcje, odpowiadające kluczowym funkcjom i obszarom integracyjnym w API KSeF:
 * [Przegląd kluczowych zmian w KSeF 2.0](przeglad-kluczowych-zmian-ksef-api-2-0.md)
+* [Changelog](api-changelog.md)
 * Uwierzytelnianie
   * [Uzyskiwanie dostępu](uwierzytelnianie.md)
   * [Zarządzanie sesjami](auth/sesje.md)
