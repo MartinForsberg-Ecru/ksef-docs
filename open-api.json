@@ -2048,7 +2048,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/InvoiceStatusResponse"
+                  "$ref": "#/components/schemas/SessionInvoiceStatusResponse"
                 },
                 "example": {"ordinalNumber":2,"referenceNumber":"20250626-EE-2F20AD2000-242386DF86-52","invoicingDate":"2025-07-11T12:23:56.0154302+00:00","status":{"code":440,"description":"Duplikat faktury","details":["Duplikat faktury. Faktura o numerze KSeF: 5265877635-20250626-010080DD2B5E-26 została już prawidłowo przesłana do systemu w sesji: 20250626-SO-2F14610000-242991F8C9-B4"]}}
               }
@@ -6056,45 +6056,6 @@
         "type": "string",
         "description": "| Wartość | Opis |\n| --- | --- |\n| Subject1 | Podmiot 1. |\n| Subject2 | Podmiot 2. |\n| Subject3 | Podmiot 3. |\n| SubjectAuthorized | Podmiot upoważniony. |\n"
       },
-      "InvoiceStatusResponse": {
-        "type": "object",
-        "properties": {
-          "referenceNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "ordinalNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ksefNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "invoiceNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "invoiceFileName": {
-            "type": "string",
-            "nullable": true
-          },
-          "receiveDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StatusInfo"
-              }
-            ],
-            "description": "Status faktury.\n\n| Code | Description | Details |\n| --- | --- | --- |\n| 100 | Dokument faktury przyjęty | - |\n| 200 | Sukces | - |\n| 300 | Trwa przetwarzanie | - |\n| 410 | Nieprawidłowy zakres uprawnień | - |\n| 430 | Błąd weryfikacji pliku faktury | - |\n| 435 | Błąd odszyfrowania pliku | - |\n| 440 | Duplikat faktury | - |\n| 450 | Błąd weryfikacji semantyki dokumentu faktury | - |\n| 500 | Nieznany błąd ({statusCode}) | - |",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "InvoicesAsyncQueryRequest": {
         "required": [
           "dateRange",
@@ -7279,7 +7240,7 @@
         },
         "additionalProperties": false
       },
-      "SessionInvoice": {
+      "SessionInvoiceStatusResponse": {
         "required": [
           "invoicingDate",
           "ordinalNumber",
@@ -7352,7 +7313,7 @@
           "invoices": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SessionInvoice"
+              "$ref": "#/components/schemas/SessionInvoiceStatusResponse"
             },
             "description": "Lista pobranych faktur."
           },
