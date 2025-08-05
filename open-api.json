@@ -2983,7 +2983,7 @@
             }
           },
           "400": {
-            "description": "| ExceptionCode       | ExceptionDescription                                | Details                                                                    | \n|---------------------|-----------------------------------------------------|----------------------------------------------------------------------------|\n| 21173               | Brak sesji o wskazanym numerze referencyjnym.       | Sesja o numerze referencyjnym {referenceNumber} nie została odnaleziona.   |\n| 21154               | Sesja interaktywna zakończona.                      | Sesja o numerze referencyjnym {referenceNumber} jest zamknięta.            |",
+            "description": "| ExceptionCode       | ExceptionDescription                                | Details                                                                                                    | \n|---------------------|-----------------------------------------------------|------------------------------------------------------------------------------------------------------------|\n| 21173               | Brak sesji o wskazanym numerze referencyjnym.       | Sesja o numerze referencyjnym {referenceNumber} nie została odnaleziona.                                   |\n| 21154               | Sesja interaktywna zakończona.                      | Sesja o numerze referencyjnym {referenceNumber} jest zamknięta.                                            |\n| 21155               | Przekroczona dozwolona ilość faktur w sesji.        | Sesja o numerze referencyjnym {referenceNumber} osiągnęła dozwolony limit liczby faktur {invoiceLimit}.    |",
             "content": {
               "application/json": {
                 "schema": {

@@ -27,8 +27,9 @@
   - Dodano datę wygenerowania numeru KSeF (```AcquisitionDate```)
   - Zmieniono nazwę ```ReceiveDate``` na ```InvoicingDate``` - Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).
 
-- **Wysyłka faktur w sesji wsadowej**
-  - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) rozmiaru paczki zip (100 MB) i liczby paczek (50).
+- **Wysyłka faktur w sesji**
+  - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) rozmiaru paczki zip (100 MB) i liczby paczek (50) w sesji wsadowej
+  - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) liczby faktur w sesji interaktywnej i wsadowej.
 
 - **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
