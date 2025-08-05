@@ -1499,13 +1499,13 @@
         }
       }
     },
-    "/api/v2/invoices/query": {
+    "/api/v2/invoices/query/metadata": {
       "post": {
         "tags": [
           "Pobieranie faktur"
         ],
-        "summary": "[mock] Pobranie listy metadanych faktur",
-        "description": "Zwraca listę metadanych faktur spełniające podane kryteria wyszukiwania.",
+        "summary": "Pobranie listy metadanych faktur",
+        "description": "Zwraca listę metadanych faktur spełniające podane kryteria wyszukiwania.\n\nWymagane uprawnienia: `InvoiceRead`.",
         "parameters": [
           {
             "name": "pageOffset",
@@ -1537,7 +1537,7 @@
                 ],
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/InvoicesQueryRequest"
+                    "$ref": "#/components/schemas/InvoiceMetadataQueryRequest"
                   }
                 ]
               }
@@ -1550,13 +1550,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueryInvoicesReponse"
+                  "$ref": "#/components/schemas/QueryInvoiceMetadataReponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "| ExceptionCode       | ExceptionDescription                                | Details                                                       | \n|---------------------|-----------------------------------------------------|---------------------------------------------------------------|\n| 21405               | Dokument nie jest zgodny ze schemą (json).          | {treść błędu walidacji}                                       |",
             "content": {
               "application/json": {
                 "schema": {
@@ -5805,14 +5805,15 @@
           "currency",
           "formCode",
           "grossAmount",
-          "invoiceDate",
+          "hasAttachment",
           "invoiceNumber",
           "invoiceType",
-          "invoicingMode",
-          "isHidden",
+          "invoicingDate",
           "isSelfInvoicing",
+          "issueDate",
           "ksefNumber",
           "netAmount",
+          "permanentStorageDate",
           "seller",
           "vatAmount"
         ],
@@ -5826,14 +5827,24 @@
             "type": "string",
             "description": "Numer faktury nadany przez wystawcę."
           },
-          "invoiceDate": {
+          "issueDate": {
             "type": "string",
             "description": "Data wystawienia faktury.",
+            "format": "date"
+          },
+          "invoicingDate": {
+            "type": "string",
+            "description": "Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).",
             "format": "date-time"
           },
           "acquisitionDate": {
             "type": "string",
-            "description": "Data przyjęcia faktury do systemu KSeF.",
+            "description": "Data nadania numeru KSeF.",
+            "format": "date-time"
+          },
+          "permanentStorageDate": {
+            "type": "string",
+            "description": "Data trwałego zapisu faktury w repozytorium systemu KSeF.",
             "format": "date-time"
           },
           "seller": {
@@ -5874,224 +5885,25 @@
             "format": "double"
           },
           "currency": {
-            "enum": [
-              "AED",
-              "AFN",
-              "ALL",
-              "AMD",
-              "ANG",
-              "AOA",
-              "ARS",
-              "AUD",
-              "AWG",
-              "AZN",
-              "BAM",
-              "BBD",
-              "BDT",
-              "BGN",
-              "BHD",
-              "BIF",
-              "BMD",
-              "BND",
-              "BOB",
-              "BOV",
-              "BRL",
-              "BSD",
-              "BTN",
-              "BWP",
-              "BYN",
-              "BZD",
-              "CAD",
-              "CDF",
-              "CHE",
-              "CHF",
-              "CHW",
-              "CLF",
-              "CLP",
-              "CNY",
-              "COP",
-              "COU",
-              "CRC",
-              "CUC",
-              "CUP",
-              "CVE",
-              "CZK",
-              "DJF",
-              "DKK",
-              "DOP",
-              "DZD",
-              "EGP",
-              "ERN",
-              "ETB",
-              "EUR",
-              "FJD",
-              "FKP",
-              "GBP",
-              "GEL",
-              "GGP",
-              "GHS",
-              "GIP",
-              "GMD",
-              "GNF",
-              "GTQ",
-              "GYD",
-              "HKD",
-              "HNL",
-              "HRK",
-              "HTG",
-              "HUF",
-              "IDR",
-              "ILS",
-              "IMP",
-              "INR",
-              "IQD",
-              "IRR",
-              "ISK",
-              "JEP",
-              "JMD",
-              "JOD",
-              "JPY",
-              "KES",
-              "KGS",
-              "KHR",
-              "KMF",
-              "KPW",
-              "KRW",
-              "KWD",
-              "KYD",
-              "KZT",
-              "LAK",
-              "LBP",
-              "LKR",
-              "LRD",
-              "LSL",
-              "LYD",
-              "MAD",
-              "MDL",
-              "MGA",
-              "MKD",
-              "MMK",
-              "MNT",
-              "MOP",
-              "MRU",
-              "MUR",
-              "MVR",
-              "MWK",
-              "MXN",
-              "MXV",
-              "MYR",
-              "MZN",
-              "NAD",
-              "NGN",
-              "NIO",
-              "NOK",
-              "NPR",
-              "NZD",
-              "OMR",
-              "PAB",
-              "PEN",
-              "PGK",
-              "PHP",
-              "PKR",
-              "PLN",
-              "PYG",
-              "QAR",
-              "RON",
-              "RSD",
-              "RUB",
-              "RWF",
-              "SAR",
-              "SBD",
-              "SCR",
-              "SDG",
-              "SEK",
-              "SGD",
-              "SHP",
-              "SLL",
-              "SOS",
-              "SRD",
-              "SSP",
-              "STN",
-              "SVC",
-              "SYP",
-              "SZL",
-              "THB",
-              "TJS",
-              "TMT",
-              "TND",
-              "TOP",
-              "TRY",
-              "TTD",
-              "TWD",
-              "TZS",
-              "UAH",
-              "UGX",
-              "USD",
-              "USN",
-              "UYI",
-              "UYU",
-              "UYW",
-              "UZS",
-              "VES",
-              "VND",
-              "VUV",
-              "WST",
-              "XAF",
-              "XAG",
-              "XAU",
-              "XBA",
-              "XBB",
-              "XBC",
-              "XBD",
-              "XCD",
-              "XDR",
-              "XOF",
-              "XPD",
-              "XPF",
-              "XPT",
-              "XSU",
-              "XUA",
-              "XXX",
-              "YER",
-              "ZAR",
-              "ZMW",
-              "ZWL"
-            ],
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/CurrencyCode"
-              }
-            ],
+            "type": "string",
             "description": "Kod waluty."
           },
           "invoicingMode": {
-            "enum": [
-              "Online",
-              "Offline"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/InvoicingMode"
               }
             ],
-            "description": "Tryb fakturowania (online/offline)."
+            "description": "Tryb fakturowania (online/offline).",
+            "nullable": true
           },
           "invoiceType": {
-            "enum": [
-              "Vat",
-              "Kor",
-              "Zal",
-              "Roz",
-              "Upr",
-              "Kor_Zal",
-              "Kor_Roz"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/InvoiceMetadataInvoiceType"
               }
             ],
-            "description": "Rodzaj faktury."
+            "description": "Rodzaj faktury.\n| Wartość | Opis |\n| --- | --- |\n| Vat | Faktura podstawowa. |\n| Zal | Faktura zaliczkowa. |\n| Kor | Faktura korygująca. |\n| Roz | Faktura rozliczeniowa. |\n| Upr | Faktura uproszczona. |\n| KorZal | Faktura korygująca do faktury zaliczkowej. |\n| KorRoz | Faktura korygująca do faktury rozliczeniowej. |\n"
           },
           "formCode": {
             "required": [
@@ -6106,13 +5918,13 @@
             ],
             "description": "Struktura dokumentu faktury.\n\nObsługiwane schematy:\n| SystemCode | SchemaVersion | Value |\n| --- | --- | --- |\n| FA (2) | 1-0E | FA |\n| FA (3) | 1-0E | FA |\n"
           },
-          "isHidden": {
-            "type": "boolean",
-            "description": "Czy faktura została oznaczona jako ukryta."
-          },
           "isSelfInvoicing": {
             "type": "boolean",
             "description": "Czy faktura została wystawiona w trybie samofakturowania."
+          },
+          "hasAttachment": {
+            "type": "boolean",
+            "description": "Czy faktura posiada załącznik."
           }
         },
         "additionalProperties": false
@@ -6124,12 +5936,6 @@
         "type": "object",
         "properties": {
           "identifierType": {
-            "enum": [
-              "None",
-              "Other",
-              "Nip",
-              "VatUe"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/BuyerIdentifierType"
@@ -6153,20 +5959,127 @@
       "InvoiceMetadataInvoiceType": {
         "enum": [
           "Vat",
-          "Kor",
           "Zal",
+          "Kor",
           "Roz",
           "Upr",
-          "Kor_Zal",
-          "Kor_Roz"
+          "KorZal",
+          "KorRoz"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "| Wartość | Opis |\n| --- | --- |\n| Vat | Faktura podstawowa. |\n| Zal | Faktura zaliczkowa. |\n| Kor | Faktura korygująca. |\n| Roz | Faktura rozliczeniowa. |\n| Upr | Faktura uproszczona. |\n| KorZal | Faktura korygująca do faktury zaliczkowej. |\n| KorRoz | Faktura korygująca do faktury rozliczeniowej. |\n"
       },
-      "InvoiceMetadataSchema": {
-        "enum": [
-          "FA"
+      "InvoiceMetadataQueryRequest": {
+        "required": [
+          "dateRange",
+          "subjectType"
         ],
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "subjectType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceQuerySubjectType"
+              }
+            ],
+            "description": "Typ podmiotu, którego dotyczą kryteria filtrowania metadanych faktur.\nOkreśla kontekst, w jakim przeszukiwane są dane.\n| Wartość | Opis |\n| --- | --- |\n| Subject1 | Podmiot 1. |\n| Subject2 | Podmiot 2. |\n| Subject3 | Podmiot 3. |\n| SubjectAuthorized | Podmiot upoważniony. |\n"
+          },
+          "dateRange": {
+            "required": [
+              "dateType",
+              "from",
+              "to"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceQueryDateRange"
+              }
+            ],
+            "description": "Typ i zakres dat, według którego mają być filtrowane faktury."
+          },
+          "ksefNumber": {
+            "type": "string",
+            "description": "Numer KSeF faktury.",
+            "nullable": true
+          },
+          "invoiceNumber": {
+            "type": "string",
+            "description": "Numer faktury nadany przez wystawcę.",
+            "nullable": true
+          },
+          "amount": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceQueryAmount"
+              }
+            ],
+            "description": "Filtr kwotowy – brutto, netto lub VAT (z wartością).",
+            "nullable": true
+          },
+          "seller": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceQuerySeller"
+              }
+            ],
+            "description": "Dane sprzedawcy.",
+            "nullable": true
+          },
+          "buyer": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceQueryBuyer"
+              }
+            ],
+            "description": "Dane nabywcy.",
+            "nullable": true
+          },
+          "currencyCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurrencyCode"
+            },
+            "description": "Kody walut.",
+            "nullable": true
+          },
+          "invoicingMode": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoicingMode"
+              }
+            ],
+            "description": "Tryb wystawienia faktury: online lub offline.",
+            "nullable": true
+          },
+          "isSelfInvoicing": {
+            "type": "boolean",
+            "description": "Czy faktura została wystawiona w trybie samofakturowania.",
+            "nullable": true
+          },
+          "schemaType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceQuerySchemaType"
+              }
+            ],
+            "description": "Struktura dokumentu.",
+            "nullable": true
+          },
+          "invoiceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceMetadataInvoiceType"
+            },
+            "description": "Rodzaje faktur.\n| Wartość | Opis |\n| --- | --- |\n| Vat | Faktura podstawowa. |\n| Zal | Faktura zaliczkowa. |\n| Kor | Faktura korygująca. |\n| Roz | Faktura rozliczeniowa. |\n| Upr | Faktura uproszczona. |\n| KorZal | Faktura korygująca do faktury zaliczkowej. |\n| KorRoz | Faktura korygująca do faktury rozliczeniowej. |\n",
+            "nullable": true
+          },
+          "hasAttachment": {
+            "type": "boolean",
+            "description": "[mock] Czy faktura ma załącznik.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "InvoiceMetadataSeller": {
         "required": [
@@ -6234,11 +6147,6 @@
         "type": "object",
         "properties": {
           "type": {
-            "enum": [
-              "Brutto",
-              "Netto",
-              "Vat"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/AmountType"
@@ -6263,12 +6171,6 @@
         "type": "object",
         "properties": {
           "identifierType": {
-            "enum": [
-              "None",
-              "Other",
-              "Nip",
-              "VatUe"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/BuyerIdentifierType"
@@ -6280,11 +6182,6 @@
           "identifier": {
             "type": "string",
             "description": "Wartość identyfikatora nabywcy.",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "description": "Nazwa nabywcy.",
             "nullable": true
           }
         },
@@ -6299,18 +6196,12 @@
         "type": "object",
         "properties": {
           "dateType": {
-            "enum": [
-              "Issue",
-              "Invoicing",
-              "Acquisition",
-              "Hidden"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/InvoiceQueryDateType"
               }
             ],
-            "description": "Typ daty, według której ma być zastosowany zakres.\n| Wartość | Opis |\n| --- | --- |\n| Issue | Data wystawienia faktury. |\n| Invoicing | Data przyjęcia faktury w systemie KSeF. |\n| Acquisition | Data nadania numeru KSeF. |\n| Hidden | Data ukrycia faktury w systemie KSeF. |\n"
+            "description": "Typ daty, według której ma być zastosowany zakres.\n| Wartość | Opis |\n| --- | --- |\n| Issue | Data wystawienia faktury. |\n| Invoicing | Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania). |\n| PermanentStorage | Data trwałego zapisu faktury w repozytorium systemu KSeF. |\n"
           },
           "from": {
             "type": "string",
@@ -6329,11 +6220,18 @@
         "enum": [
           "Issue",
           "Invoicing",
-          "Acquisition",
-          "Hidden"
+          "PermanentStorage"
         ],
         "type": "string",
-        "description": "| Wartość | Opis |\n| --- | --- |\n| Issue | Data wystawienia faktury. |\n| Invoicing | Data przyjęcia faktury w systemie KSeF. |\n| Acquisition | Data nadania numeru KSeF. |\n| Hidden | Data ukrycia faktury w systemie KSeF. |\n"
+        "description": "| Wartość | Opis |\n| --- | --- |\n| Issue | Data wystawienia faktury. |\n| Invoicing | Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania). |\n| PermanentStorage | Data trwałego zapisu faktury w repozytorium systemu KSeF. |\n"
+      },
+      "InvoiceQuerySchemaType": {
+        "enum": [
+          "FA1",
+          "FA2",
+          "FA3"
+        ],
+        "type": "string"
       },
       "InvoiceQuerySeller": {
         "type": "object",
@@ -6341,11 +6239,6 @@
           "identifier": {
             "type": "string",
             "description": "Identyfikator sprzedawcy.",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "description": "Nazwa sprzedawcy.",
             "nullable": true
           }
         },
@@ -6358,7 +6251,8 @@
           "Subject3",
           "SubjectAuthorized"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "| Wartość | Opis |\n| --- | --- |\n| Subject1 | Podmiot 1. |\n| Subject2 | Podmiot 2. |\n| Subject3 | Podmiot 3. |\n| SubjectAuthorized | Podmiot upoważniony. |\n"
       },
       "InvoiceStatusResponse": {
         "type": "object",
@@ -6420,18 +6314,12 @@
             "description": "Informacje wymagane do zaszyfrowania wyniku zapytania."
           },
           "subjectType": {
-            "enum": [
-              "Subject1",
-              "Subject2",
-              "Subject3",
-              "SubjectAuthorized"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/InvoiceQuerySubjectType"
               }
             ],
-            "description": "Typ podmiotu, którego dotyczą kryteria filtrowania metadanych faktur.\nOkreśla kontekst, w jakim przeszukiwane są dane."
+            "description": "Typ podmiotu, którego dotyczą kryteria filtrowania metadanych faktur.\nOkreśla kontekst, w jakim przeszukiwane są dane.\n| Wartość | Opis |\n| --- | --- |\n| Subject1 | Podmiot 1. |\n| Subject2 | Podmiot 2. |\n| Subject3 | Podmiot 3. |\n| SubjectAuthorized | Podmiot upoważniony. |\n"
           },
           "dateRange": {
             "required": [
@@ -6484,189 +6372,6 @@
             "nullable": true
           },
           "currencyCodes": {
-            "enum": [
-              "AED",
-              "AFN",
-              "ALL",
-              "AMD",
-              "ANG",
-              "AOA",
-              "ARS",
-              "AUD",
-              "AWG",
-              "AZN",
-              "BAM",
-              "BBD",
-              "BDT",
-              "BGN",
-              "BHD",
-              "BIF",
-              "BMD",
-              "BND",
-              "BOB",
-              "BOV",
-              "BRL",
-              "BSD",
-              "BTN",
-              "BWP",
-              "BYN",
-              "BZD",
-              "CAD",
-              "CDF",
-              "CHE",
-              "CHF",
-              "CHW",
-              "CLF",
-              "CLP",
-              "CNY",
-              "COP",
-              "COU",
-              "CRC",
-              "CUC",
-              "CUP",
-              "CVE",
-              "CZK",
-              "DJF",
-              "DKK",
-              "DOP",
-              "DZD",
-              "EGP",
-              "ERN",
-              "ETB",
-              "EUR",
-              "FJD",
-              "FKP",
-              "GBP",
-              "GEL",
-              "GGP",
-              "GHS",
-              "GIP",
-              "GMD",
-              "GNF",
-              "GTQ",
-              "GYD",
-              "HKD",
-              "HNL",
-              "HRK",
-              "HTG",
-              "HUF",
-              "IDR",
-              "ILS",
-              "IMP",
-              "INR",
-              "IQD",
-              "IRR",
-              "ISK",
-              "JEP",
-              "JMD",
-              "JOD",
-              "JPY",
-              "KES",
-              "KGS",
-              "KHR",
-              "KMF",
-              "KPW",
-              "KRW",
-              "KWD",
-              "KYD",
-              "KZT",
-              "LAK",
-              "LBP",
-              "LKR",
-              "LRD",
-              "LSL",
-              "LYD",
-              "MAD",
-              "MDL",
-              "MGA",
-              "MKD",
-              "MMK",
-              "MNT",
-              "MOP",
-              "MRU",
-              "MUR",
-              "MVR",
-              "MWK",
-              "MXN",
-              "MXV",
-              "MYR",
-              "MZN",
-              "NAD",
-              "NGN",
-              "NIO",
-              "NOK",
-              "NPR",
-              "NZD",
-              "OMR",
-              "PAB",
-              "PEN",
-              "PGK",
-              "PHP",
-              "PKR",
-              "PLN",
-              "PYG",
-              "QAR",
-              "RON",
-              "RSD",
-              "RUB",
-              "RWF",
-              "SAR",
-              "SBD",
-              "SCR",
-              "SDG",
-              "SEK",
-              "SGD",
-              "SHP",
-              "SLL",
-              "SOS",
-              "SRD",
-              "SSP",
-              "STN",
-              "SVC",
-              "SYP",
-              "SZL",
-              "THB",
-              "TJS",
-              "TMT",
-              "TND",
-              "TOP",
-              "TRY",
-              "TTD",
-              "TWD",
-              "TZS",
-              "UAH",
-              "UGX",
-              "USD",
-              "USN",
-              "UYI",
-              "UYU",
-              "UYW",
-              "UZS",
-              "VES",
-              "VND",
-              "VUV",
-              "WST",
-              "XAF",
-              "XAG",
-              "XAU",
-              "XBA",
-              "XBB",
-              "XBC",
-              "XBD",
-              "XCD",
-              "XDR",
-              "XOF",
-              "XPD",
-              "XPF",
-              "XPT",
-              "XSU",
-              "XUA",
-              "XXX",
-              "YER",
-              "ZAR",
-              "ZMW",
-              "ZWL"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CurrencyCode"
@@ -6674,16 +6379,7 @@
             "description": "Kody walut.",
             "nullable": true
           },
-          "isHidden": {
-            "type": "boolean",
-            "description": "Czy faktura została oznaczona jako ukryta.",
-            "nullable": true
-          },
           "invoicingMode": {
-            "enum": [
-              "Online",
-              "Offline"
-            ],
             "allOf": [
               {
                 "$ref": "#/components/schemas/InvoicingMode"
@@ -6697,350 +6393,26 @@
             "description": "Czy faktura została wystawiona w trybie samofakturowania.",
             "nullable": true
           },
-          "invoiceSchema": {
-            "enum": [
-              "FA"
-            ],
+          "schemaType": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/InvoiceMetadataSchema"
+                "$ref": "#/components/schemas/InvoiceQuerySchemaType"
               }
             ],
-            "description": "Typ schematu dokumentu.",
+            "description": "Struktura dokumentu.",
             "nullable": true
           },
           "invoiceTypes": {
-            "enum": [
-              "Vat",
-              "Kor",
-              "Zal",
-              "Roz",
-              "Upr",
-              "Kor_Zal",
-              "Kor_Roz"
-            ],
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/InvoiceMetadataInvoiceType"
             },
-            "description": "Rodzaje faktur.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "InvoicesQueryRequest": {
-        "required": [
-          "dateRange",
-          "subjectType"
-        ],
-        "type": "object",
-        "properties": {
-          "subjectType": {
-            "enum": [
-              "Subject1",
-              "Subject2",
-              "Subject3",
-              "SubjectAuthorized"
-            ],
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoiceQuerySubjectType"
-              }
-            ],
-            "description": "Typ podmiotu, którego dotyczą kryteria filtrowania metadanych faktur.\nOkreśla kontekst, w jakim przeszukiwane są dane."
-          },
-          "dateRange": {
-            "required": [
-              "dateType",
-              "from",
-              "to"
-            ],
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoiceQueryDateRange"
-              }
-            ],
-            "description": "Typ i zakres dat, według którego mają być filtrowane faktury."
-          },
-          "ksefNumber": {
-            "type": "string",
-            "description": "Numer KSeF faktury.",
+            "description": "Rodzaje faktur.\n| Wartość | Opis |\n| --- | --- |\n| Vat | Faktura podstawowa. |\n| Zal | Faktura zaliczkowa. |\n| Kor | Faktura korygująca. |\n| Roz | Faktura rozliczeniowa. |\n| Upr | Faktura uproszczona. |\n| KorZal | Faktura korygująca do faktury zaliczkowej. |\n| KorRoz | Faktura korygująca do faktury rozliczeniowej. |\n",
             "nullable": true
           },
-          "invoiceNumber": {
-            "type": "string",
-            "description": "Numer faktury nadany przez wystawcę.",
-            "nullable": true
-          },
-          "amount": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoiceQueryAmount"
-              }
-            ],
-            "description": "Filtr kwotowy – brutto, netto lub VAT (z wartością).",
-            "nullable": true
-          },
-          "seller": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoiceQuerySeller"
-              }
-            ],
-            "description": "Dane sprzedawcy.",
-            "nullable": true
-          },
-          "buyer": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoiceQueryBuyer"
-              }
-            ],
-            "description": "Dane nabywcy.",
-            "nullable": true
-          },
-          "currencyCodes": {
-            "enum": [
-              "AED",
-              "AFN",
-              "ALL",
-              "AMD",
-              "ANG",
-              "AOA",
-              "ARS",
-              "AUD",
-              "AWG",
-              "AZN",
-              "BAM",
-              "BBD",
-              "BDT",
-              "BGN",
-              "BHD",
-              "BIF",
-              "BMD",
-              "BND",
-              "BOB",
-              "BOV",
-              "BRL",
-              "BSD",
-              "BTN",
-              "BWP",
-              "BYN",
-              "BZD",
-              "CAD",
-              "CDF",
-              "CHE",
-              "CHF",
-              "CHW",
-              "CLF",
-              "CLP",
-              "CNY",
-              "COP",
-              "COU",
-              "CRC",
-              "CUC",
-              "CUP",
-              "CVE",
-              "CZK",
-              "DJF",
-              "DKK",
-              "DOP",
-              "DZD",
-              "EGP",
-              "ERN",
-              "ETB",
-              "EUR",
-              "FJD",
-              "FKP",
-              "GBP",
-              "GEL",
-              "GGP",
-              "GHS",
-              "GIP",
-              "GMD",
-              "GNF",
-              "GTQ",
-              "GYD",
-              "HKD",
-              "HNL",
-              "HRK",
-              "HTG",
-              "HUF",
-              "IDR",
-              "ILS",
-              "IMP",
-              "INR",
-              "IQD",
-              "IRR",
-              "ISK",
-              "JEP",
-              "JMD",
-              "JOD",
-              "JPY",
-              "KES",
-              "KGS",
-              "KHR",
-              "KMF",
-              "KPW",
-              "KRW",
-              "KWD",
-              "KYD",
-              "KZT",
-              "LAK",
-              "LBP",
-              "LKR",
-              "LRD",
-              "LSL",
-              "LYD",
-              "MAD",
-              "MDL",
-              "MGA",
-              "MKD",
-              "MMK",
-              "MNT",
-              "MOP",
-              "MRU",
-              "MUR",
-              "MVR",
-              "MWK",
-              "MXN",
-              "MXV",
-              "MYR",
-              "MZN",
-              "NAD",
-              "NGN",
-              "NIO",
-              "NOK",
-              "NPR",
-              "NZD",
-              "OMR",
-              "PAB",
-              "PEN",
-              "PGK",
-              "PHP",
-              "PKR",
-              "PLN",
-              "PYG",
-              "QAR",
-              "RON",
-              "RSD",
-              "RUB",
-              "RWF",
-              "SAR",
-              "SBD",
-              "SCR",
-              "SDG",
-              "SEK",
-              "SGD",
-              "SHP",
-              "SLL",
-              "SOS",
-              "SRD",
-              "SSP",
-              "STN",
-              "SVC",
-              "SYP",
-              "SZL",
-              "THB",
-              "TJS",
-              "TMT",
-              "TND",
-              "TOP",
-              "TRY",
-              "TTD",
-              "TWD",
-              "TZS",
-              "UAH",
-              "UGX",
-              "USD",
-              "USN",
-              "UYI",
-              "UYU",
-              "UYW",
-              "UZS",
-              "VES",
-              "VND",
-              "VUV",
-              "WST",
-              "XAF",
-              "XAG",
-              "XAU",
-              "XBA",
-              "XBB",
-              "XBC",
-              "XBD",
-              "XCD",
-              "XDR",
-              "XOF",
-              "XPD",
-              "XPF",
-              "XPT",
-              "XSU",
-              "XUA",
-              "XXX",
-              "YER",
-              "ZAR",
-              "ZMW",
-              "ZWL"
-            ],
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CurrencyCode"
-            },
-            "description": "Kody walut.",
-            "nullable": true
-          },
-          "isHidden": {
+          "hasAttachment": {
             "type": "boolean",
-            "description": "Czy faktura została oznaczona jako ukryta.",
-            "nullable": true
-          },
-          "invoicingMode": {
-            "enum": [
-              "Online",
-              "Offline"
-            ],
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoicingMode"
-              }
-            ],
-            "description": "Tryb wystawienia faktury: online lub offline.",
-            "nullable": true
-          },
-          "isSelfInvoicing": {
-            "type": "boolean",
-            "description": "Czy faktura została wystawiona w trybie samofakturowania.",
-            "nullable": true
-          },
-          "invoiceSchema": {
-            "enum": [
-              "FA"
-            ],
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/InvoiceMetadataSchema"
-              }
-            ],
-            "description": "Typ schematu dokumentu.",
-            "nullable": true
-          },
-          "invoiceTypes": {
-            "enum": [
-              "Vat",
-              "Kor",
-              "Zal",
-              "Roz",
-              "Upr",
-              "Kor_Zal",
-              "Kor_Roz"
-            ],
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InvoiceMetadataInvoiceType"
-            },
-            "description": "Rodzaje faktur.",
+            "description": "Czy faktura ma załącznik.",
             "nullable": true
           }
         },
@@ -7912,25 +7284,13 @@
         },
         "additionalProperties": false
       },
-      "QueryInvoicesReponse": {
+      "QueryInvoiceMetadataReponse": {
         "required": [
           "invoices",
-          "pageOffset",
-          "pageSize",
           "totalCount"
         ],
         "type": "object",
         "properties": {
-          "pageOffset": {
-            "type": "integer",
-            "description": "Indeks pierwszej strony wyników.",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "description": "Liczba rekordów na stronie.",
-            "format": "int32"
-          },
           "totalCount": {
             "type": "integer",
             "description": "Całkowita liczba pasujących rekordów w repozytorium.",

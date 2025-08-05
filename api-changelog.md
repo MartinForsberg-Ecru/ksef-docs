@@ -1,16 +1,24 @@
 ## Zmiany w API 2.0
 
-Wersja 2.0.0 RC3
+### Wersja 2.0.0 RC3
+
+- **Dodanie endpointu do pobierania listy metadanych faktur**  
+  - `/invoices/query` (mock) zastąpiony przez `/invoices/query/metadata` – produkcyjny endpoint do pobierania metadanych faktur
+  - Aktualizacja powiązanych modeli danych.
+
+- **Aktualizacja mockowego endpointu `invoices/async-query` do inicjalizacji zapytania o pobranie faktur**
+  - Zaktualizowano powiązane modele danych.
 
 - **OpenAPI**
   - Dodano wymagane uprawnienia (`x-required-permissions`) do chronionych endpointów.
   - Dodano odpowiedzi `403 Forbidden` i `401 Unauthorized` w specyfikacji endpointów.
   - Dodawanie atrybutów ```required``` w odpowiedziach na zapytania o uprawnienia.
   - Aktualizacja opisu ```/api/v2/tokens```
+
 - **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
 
-Wersja 2.0.0 RC2
+### Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
   Umożliwiają przeglądanie oraz unieważnianie aktywnych sesji uwierzytelniających.  
   [Zarządzanie sesjami uwierzytelniania](auth/sesje.md)
