@@ -81,6 +81,12 @@ Aby złożyć wniosek o certyfikat KSeF, należy przygotować tzw. żądanie pod
 * informacje identyfikujące podmiot (DN – Distinguished Name),
 * klucz publiczny, który zostanie powiązany z certyfikatem.
 
+Wymagania dotyczące klucza prywatnego użytego do podpisu CSR:
+* Typy dozwolone:
+  * RSA (OID: 1.2.840.113549.1.1.1), minimalna długość: 2048 bitów,
+  * EC (klucze eliptyczne, OID: 1.2.840.10045.2.1), minimalna długość: 256 bitów.
+* Zalecane jest stosowanie kluczy EC.
+
 Wszystkie dane identyfikacyjne (atrybuty X.509) powinny być zgodne z wartościami zwróconymi przez system w poprzednim kroku (/certificates/enrollment/data). Zmodyfikowanie tych danych spowoduje odrzucenie wniosku.
 
 Przykład w języku C# (z użyciem ```ICryptographyService```):

@@ -225,7 +225,7 @@
           "Certyfikaty"
         ],
         "summary": "Wysyłka wniosku certyfikacyjnego",
-        "description": "Przyjmuje wniosek certyfikacyjny i rozpoczyna jego przetwarzanie.\n\n> Więcej informacji:\n> - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)",
+        "description": "Przyjmuje wniosek certyfikacyjny i rozpoczyna jego przetwarzanie.\n\nDozwolone typy kluczy prywatnych używanych do podpisu wniosku (CSR):\n- RSA (OID: 1.2.840.113549.1.1.1), długość klucza co najmniej 2048 bitów,\n- EC (klucze oparte na krzywych eliptycznych, OID: 1.2.840.10045.2.1), długość klucza co najmniej 256 bitów.\n\nRekomendowane jest wykorzystywanie kluczy EC.\n\n> Więcej informacji:\n> - [Wysłanie wniosku certyfikacyjnego](https://github.com/CIRFMF/ksef-client-docs/blob/main/certyfikaty-wewn%C4%99trzne-KSeF.md#4-wys%C5%82anie-wniosku-certyfikacyjnego)",
         "requestBody": {
           "description": "",
           "content": {
@@ -256,7 +256,7 @@
             }
           },
           "400": {
-            "description": "| ExceptionCode       | ExceptionDescription                                                                           | Details |\n|---------------------|------------------------------------------------------------------------------------------------|---------|\n| 25002               | Brak możliwości złożenia wniosku certyfikacyjnego dla wykorzystanego sposobu uwierzytelnienia. |         |\n| 25003               | Dane w CSR nie zgadzają się z danymi w użytym wektorze uwierzytelniającym.                     |         |\n| 25004               | Niepoprawny format CSR lub niepoprawny podpis CSR.                                             |         |\n| 25006               | Osiągnięto limit możliwych do złożenia wniosków certyfikacyjnych.                              |         |\n| 25007               | Osiągnięto limit dopuszczalnej liczby posiadanych certyfikatów.                                |         |",
+            "description": "| ExceptionCode       | ExceptionDescription                                                                           | Details |\n|---------------------|------------------------------------------------------------------------------------------------|---------|\n| 25002               | Brak możliwości złożenia wniosku certyfikacyjnego dla wykorzystanego sposobu uwierzytelnienia. |         |\n| 25003               | Dane w CSR nie zgadzają się z danymi w użytym wektorze uwierzytelniającym.                     |         |\n| 25004               | Niepoprawny format CSR lub niepoprawny podpis CSR.                                             |         |\n| 25006               | Osiągnięto limit możliwych do złożenia wniosków certyfikacyjnych.                              |         |\n| 25007               | Osiągnięto limit dopuszczalnej liczby posiadanych certyfikatów.                                |         |\n| 25010               | Nieprawidłowy typ lub długość klucza.                                                          |         |",
             "content": {
               "application/json": {
                 "schema": {

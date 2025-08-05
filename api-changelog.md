@@ -27,6 +27,10 @@
 - **Dane testowe - obsługa faktur z załącznikami**  
   Dodano dwa nowe endpointy w obszarze Dane testowe, umożliwiające zarządzanie opcją wysyłania faktur z załącznikami.
 
+- **Certificaty KSeF - Walidacja typu i długości klucza w CSR**  
+  - Uzupełniono opis endpointu POST /certificates/enrollments o wymagania dotyczące typów kluczy prywatnych w CSR (RSA, EC),
+  - Dodano nowy kod błędu 25010 w odpowiedzi 400: „Nieprawidłowy typ lub długość klucza.”
+
 ### Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
   Umożliwiają przeglądanie oraz unieważnianie aktywnych sesji uwierzytelniających.  
