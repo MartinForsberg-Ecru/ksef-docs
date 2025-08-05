@@ -774,6 +774,80 @@
         }
       }
     },
+    "/api/v2/testdata/attachment": {
+      "post": {
+        "tags": [
+          "Dane testowe"
+        ],
+        "summary": "Umożliwienie wysyłania faktur z załącznikiem",
+        "description": "Dodaje możliwość wysyłania faktur z załącznikiem przez wskazany podmiot",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AttachmentPermissionGrantRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/testdata/attachment/revoke": {
+      "post": {
+        "tags": [
+          "Dane testowe"
+        ],
+        "summary": "Odebranie możliwości wysyłania faktur z załącznikiem",
+        "description": "Odbiera możliwość wysyłania faktur z załącznikiem przez wskazany podmiot",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AttachmentPermissionRevokeRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/permissions/persons/grants": {
       "post": {
         "tags": [
@@ -3666,6 +3740,26 @@
               "$ref": "#/components/schemas/InvoicePackagePart"
             },
             "description": "Lista plików dostępnych do pobrania.\nWypełniana tylko, gdy wynik zapytania jest gotowy.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttachmentPermissionGrantRequest": {
+        "type": "object",
+        "properties": {
+          "nip": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttachmentPermissionRevokeRequest": {
+        "type": "object",
+        "properties": {
+          "nip": {
+            "type": "string",
             "nullable": true
           }
         },

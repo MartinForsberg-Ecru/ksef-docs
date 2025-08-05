@@ -24,6 +24,8 @@
 - **Usunięcie endpointu do anonimowego pobierania faktury ```invoices/download```**  
   - Funkcjonalność dostępna tylko w narzędziu webowym do weryfikacji i pobierania faktur.
 
+- **Dane testowe - obsługa faktur z załącznikami**  
+  Dodano dwa nowe endpointy w obszarze Dane testowe, umożliwiające zarządzanie opcją wysyłania faktur z załącznikami.
 
 ### Wersja 2.0.0 RC2
 - **Nowe endpointy do zarządzania sesjami uwierzytelniania**  
