@@ -16,6 +16,7 @@
   - Aktualizacja opisu ```/api/v2/tokens```
   - Usunięto redundantne definicje enumów
   - Użycie tego samego modelu ```SessionInvoiceStatusResponse``` dla ```sessions/{referenceNumber}/invoices``` i ```sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}```
+  - Dodano nowy status walidacji przy uwierzytelnieniu: 400 - "Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień"
 
 - **Status sesji**
   - Dodano nowy status Sesji: Cancelled - Sesja anulowania. Został przekroczony czas na wysyłkę w sesji wsadowej, lub nie przesłano żadnych faktur w sesji interaktywnej.
