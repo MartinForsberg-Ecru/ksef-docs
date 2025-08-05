@@ -6,44 +6,46 @@
   - `/invoices/query` (mock) zastąpiony przez `/invoices/query/metadata` – produkcyjny endpoint do pobierania metadanych faktur
   - Aktualizacja powiązanych modeli danych.
 
-- **Aktualizacja mockowego endpointu `invoices/async-query` do inicjalizacji zapytania o pobranie faktur**
-  - Zaktualizowano powiązane modele danych.
+- **Aktualizacja mockowego endpointu `invoices/async-query` do inicjalizacji zapytania o pobranie faktur**  
+  Zaktualizowano powiązane modele danych.
 
 - **OpenAPI**
-  - Dodano wymagane uprawnienia (`x-required-permissions`) do chronionych endpointów.
+  - Uzupełniono specyfikację endpointów o wymagane uprawnienia (`x-required-permissions`).
   - Dodano odpowiedzi `403 Forbidden` i `401 Unauthorized` w specyfikacji endpointów.
-  - Dodawanie atrybutów ```required``` w odpowiedziach na zapytania o uprawnienia.
-  - Aktualizacja opisu ```/api/v2/tokens```
-  - Usunięto redundantne definicje enumów
-  - Użycie tego samego modelu ```SessionInvoiceStatusResponse``` dla ```sessions/{referenceNumber}/invoices``` i ```sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}```
-  - Dodano nowy status walidacji przy uwierzytelnieniu: 400 - "Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień"
+  - Dodano atrybut ```required``` w odpowiedziach zapytań o uprawnienia.
+  - Zaktualizowano opis endpointu  ```/tokens```
+  - Usunięto zduplikowane definicje ```enum```
+  - Ujednolicono model odpowiedzi SessionInvoiceStatusResponse w ```/sessions/{referenceNumber}/invoices``` oraz ```/sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}```.
+  - Dodano status walidacji 400: „Uwierzytelnianie zakończone niepowodzeniem | Brak przypisanych uprawnień”.
 
 - **Status sesji**
-  - Dodano nowy status Sesji: Cancelled - Sesja anulowania. Został przekroczony czas na wysyłkę w sesji wsadowej, lub nie przesłano żadnych faktur w sesji interaktywnej.
-  - Dodano nowy kod błędu dla sesji: 415 - "Brak możliwości wysyłania faktury z załącznikiem"
-  - Dodano nowy kod błędu dla sesji: 440 - "Sesja anulowana, przekroczono czas wysyłki"
-  - Dodano nowy kod błędu dla sesji: 445 - "Błąd weryfikacji, brak poprawnych faktur"
+  - Dodano status ```Cancelled``` - "Sesja anulowania. Został przekroczony czas na wysyłkę w sesji wsadowej, lub nie przesłano żadnych faktur w sesji interaktywnej."
+  - Dodano nowe kody błedów:
+    - 415 - "Brak możliwości wysyłania faktury z załącznikiem"
+    - 440 - "Sesja anulowana, przekroczono czas wysyłki"
+    - 445 - "Błąd weryfikacji, brak poprawnych faktur"
 
-- **Status wysyłki faktur w sesji**
-  - Dodano datę wygenerowania numeru KSeF (```AcquisitionDate```)
-  - Zmieniono nazwę ```ReceiveDate``` na ```InvoicingDate``` - Data przyjęcia faktury w systemie KSeF (do dalszego przetwarzania).
+- **Status wysyłki faktur**
+  - Dodano datę ```AcquisitionDate``` - data nadania numeru KSeF.
+  - Pole ```ReceiveDate``` zastąpiono ```InvoicingDate``` – data przyjęcia faktury do systemu KSeF.  
 
 - **Wysyłka faktur w sesji**
   - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) rozmiaru paczki zip (100 MB) i liczby paczek (50) w sesji wsadowej
   - Dodano [walidację](faktury/weryfikacja-faktury.md#ograniczenia-ilo%C5%9Bciowe) liczby faktur w sesji interaktywnej i wsadowej.
-  - Zmiana statusu faktury: "Trwa przetwarzanie" z 300 na 150.
+  - Zmieniono kod statusu „Trwa przetwarzanie” z 300 na 150.
 
-- **Poprawka ContextIdentifier w AuthTokenRequest.xsd**  
+- **Poprawka ContextIdentifier w xsd AuthTokenRequest**  
+  Należy użyć poprawionej wersji [schematu XSD](https://ksef-test.mf.gov.pl/docs/v2/schemas/authv2.xsd).  
   [Przygotowanie dokumentu XML](uwierzytelnianie.md#1-przygotowanie-dokumentu-xml-authtokenrequest)
 
 - **Usunięcie endpointu do anonimowego pobierania faktury ```invoices/download```**  
-  - Funkcjonalność dostępna tylko w narzędziu webowym do weryfikacji i pobierania faktur.
+  Funkcjonalność pobierania faktur bez uwierzytelnienia została usunięta; dostępna wyłącznie w webowym narzędziu KSeF do weryfikacji i pobierania faktur.
 
 - **Dane testowe - obsługa faktur z załącznikami**  
-  Dodano dwa nowe endpointy w obszarze Dane testowe, umożliwiające zarządzanie opcją wysyłania faktur z załącznikami.
+  Dodano nowe endpointy umożliwiające testowanie wysyłki faktur z załącznikami.
 
 - **Certificaty KSeF - Walidacja typu i długości klucza w CSR**  
-  - Uzupełniono opis endpointu POST /certificates/enrollments o wymagania dotyczące typów kluczy prywatnych w CSR (RSA, EC),
+  - Uzupełniono opis endpointu POST ```/certificates/enrollments``` o wymagania dotyczące typów kluczy prywatnych w CSR (RSA, EC),
   - Dodano nowy kod błędu 25010 w odpowiedzi 400: „Nieprawidłowy typ lub długość klucza.”
 
 ### Wersja 2.0.0 RC2
