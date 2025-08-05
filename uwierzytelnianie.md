@@ -86,9 +86,9 @@ Przykład w języku ```C#```:
       OnClientIpChange = IpChangePolicy.Reject, // Odrzuć, jeśli IP się zmieni
       AllowedIps = new AllowedIps
       {
-          IpAddress = ["192.168.0.1, 192.222.111"],
+          IpAddress = ["192.168.0.1", "192.222.111.1"],
           IpMask = ["192.168.1.0/24"], // Przykładowa maska
-          IpRange = ["222.1111.0-222.1111.255"] // Przykładowy zakres IP
+          IpRange = ["222.1111.0.1-222.1111.0.255"] // Przykładowy zakres IP
       }
   };
 var authTokenRequest = AuthTokenRequestBuilder
