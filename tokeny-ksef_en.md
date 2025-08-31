@@ -2,7 +2,7 @@
 
 **June 29, 2025**
 
-A KSeF token is a unique authentication identifier that — alongside a [qualified electronic signature](uwierzytelnianie.md#21-uwierzytelnianie-kwalifikowanym-podpisem-elektronicznym) — allows you to [authenticate](uwierzytelnianie.md#22-uwierzytelnianie-tokenem-ksef) with the KSeF API.
+A KSeF token is a unique authentication identifier that — alongside a [qualified electronic signature](uwierzytelnianie_en.md#21-uwierzytelnianie-kwalifikowanym-podpisem-elektronicznym) — allows you to [authenticate](uwierzytelnianie_en.md#22-uwierzytelnianie-tokenem-ksef) with the KSeF API.
 
 A `KSeF token` is issued with a fixed set of permissions specified at creation. Any changes to permissions require generating a new token.
 
@@ -13,7 +13,7 @@ A `KSeF token` is issued with a fixed set of permissions specified at creation. 
 
 ### Prerequisites
 
-To generate a `KSeF token`, a one-time authentication using a [qualified electronic signature (XAdES)](uwierzytelnianie.md#21-uwierzytelnianie-kwalifikowanym-podpisem-elektronicznym) is required.
+To generate a `KSeF token`, a one-time authentication using a [qualified electronic signature (XAdES)](uwierzytelnianie_en.md#21-uwierzytelnianie-kwalifikowanym-podpisem-elektronicznym) is required.
 
 ---
 
