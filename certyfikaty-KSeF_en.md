@@ -1,62 +1,76 @@
 ## KSeF Certificates
 
-21.08.2025
+31.08.2025
 
 ### Introduction
 
-A KSeF certificate is a digital proof of entity identity, issued by the KSeF system upon user request.
+A KSeF certificate is a digital credential confirming an entity's identity, issued by the KSeF system upon user request.
 
-There are two types of certificates available:
+A certificate request can only be submitted for the identity data found in the certificate used for [authentication](uwierzytelnianie_en.md). Based on this data, the endpoint [/certificates/enrollments/data](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments~1data/get) returns identification information that must be used in the certificate request.
 
-| Type               | Description                                                                                                                                                                                  |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Authentication** | Certificate intended for authentication in the KSeF system.                                                                                                                                  |
-| **Offline**        | Certificate intended exclusively for issuing offline invoices. Used to confirm issuer authenticity and invoice integrity via [QR Code II](kody-qr_en.md). Cannot be used for authentication. |
+> The system does not allow requesting a certificate on behalf of another entity.
 
-#### Certificate Issuance Process
+Two types of certificates are available – each certificate can have **only one type** (`Authentication` or `Offline`). It is not possible to issue a certificate combining both functions.
 
-The application process for a certificate consists of several steps:
+| Type             | Description                                                                                                                                                                                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Authentication` | Certificate intended for authentication in the KSeF system.<br/>**keyUsage:** Digital Signature (80)                                                                                                                             |
+| `Offline`        | Certificate intended only for issuing invoices in offline mode. Used to confirm issuer authenticity and invoice integrity via [QR Code II](kody-qr.md). It does not allow authentication.<br/>**keyUsage:** Non-Repudiation (40) |
+
+#### Certificate Request Process
+
+The certificate request process includes several steps:
 
 1. Checking available limits,
-2. Retrieving certificate request data,
-3. Submitting the application,
+2. Downloading certificate enrollment data,
+3. Submitting the request,
 4. Retrieving the issued certificate.
+
+---
 
 ### 1. Checking Limits
 
-Before submitting a new certificate request, it's recommended to verify the certificate limits.
+Before an API client submits a new certificate request, it's recommended to verify the certificate limits.
 
-The API provides information about:
+The API provides information on:
 
-* the maximum number of allowed certificates,
+* the maximum number of certificates allowed,
 * the number of currently active certificates,
-* whether a new request can be submitted.
+* whether another request can be submitted.
 
 GET [/certificates/limits](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1limits/get)
 
-C# Example:
+#### Example in C#:
 
 ```csharp
 var limits = await ksefClient.GetCertificateLimitsAsync(accessToken, cancellationToken);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 var limits = ksefClient.getCertificateLimits();
 ```
 
+---
+
 ### 2. Retrieving Certificate Enrollment Data
 
-To begin the certificate application process, retrieve the identification data used to generate the Certificate Signing Request (CSR).
-
+To begin the certificate request process, you must retrieve the identity data set by calling:
 GET [/certificates/enrollments/data](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments~1data/get)
 
-This data is returned based on the certificate used for authentication and reflects the identity of the applicant entity.
+This data is read from the certificate used for authentication, which can be:
 
-**Note**: Retrieving certificate data is only possible using signature-based authentication (XAdES). Authentication with a KSeF system token does not allow certificate application.
+* a qualified certificate of a natural person – containing PESEL or NIP,
+* a qualified organization certificate (a.k.a. company seal) – containing NIP,
+* Trusted Profile (ePUAP) – used by individuals, contains PESEL,
+* an internal KSeF certificate – issued by KSeF, not qualified but accepted for authentication.
 
-C# Example:
+The system returns the full X.500 Distinguished Name (DN) attributes, which must be used to build the CSR. Modifying this data will cause the request to be rejected.
+
+**Note**: Certificate data retrieval is only possible when authenticating using a digital signature (XAdES). Authentication using a KSeF system token does not allow certificate requests.
+
+#### Example in C#:
 
 ```csharp
 var enrollmentData = await ksefClient
@@ -64,90 +78,93 @@ var enrollmentData = await ksefClient
     .ConfigureAwait(false);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 CertificateEnrollmentsInfoResponse enrollmentData = ksefClient.getCertificateEnrollmentInfo();
 ```
 
-The following table shows all returned fields with OIDs:
+#### Table of possible returned fields (OID-based):
 
-| OID      | Name (EN)              | Description                         |
-| -------- | ---------------------- | ----------------------------------- |
-| 2.5.4.3  | commonName             | Common name                         |
-| 2.5.4.4  | surname                | Surname                             |
-| 2.5.4.5  | serialNumber           | Serial number (e.g., PESEL, NIP)    |
-| 2.5.4.6  | countryName            | Country code (e.g., PL)             |
-| 2.5.4.10 | organizationName       | Organization name                   |
-| 2.5.4.42 | givenName              | First name(s)                       |
-| 2.5.4.45 | uniqueIdentifier       | Unique identifier (optional)        |
-| 2.5.4.97 | organizationIdentifier | Organization identifier (e.g., NIP) |
+| OID      | Field Name             | Description                         | Natural Person | Company Seal |
+| -------- | ---------------------- | ----------------------------------- | -------------- | ------------ |
+| 2.5.4.3  | commonName             | Common Name                         | ✔️             | ✔️           |
+| 2.5.4.4  | surname                | Surname                             | ✔️             | ❌            |
+| 2.5.4.5  | serialNumber           | Serial Number (e.g. PESEL, NIP)     | ✔️             | ❌            |
+| 2.5.4.6  | countryName            | Country Code (e.g., PL)             | ✔️             | ✔️           |
+| 2.5.4.10 | organizationName       | Organization / Company Name         | ❌              | ✔️           |
+| 2.5.4.42 | givenName              | Given Name(s)                       | ✔️             | ❌            |
+| 2.5.4.45 | uniqueIdentifier       | Unique Identifier (optional)        | ✔️             | ✔️           |
+| 2.5.4.97 | organizationIdentifier | Organization Identifier (e.g., NIP) | ❌              | ✔️           |
 
-The `givenName` attribute may appear multiple times and is returned as a list of values.
+`givenName` can appear multiple times and is returned as a list.
 
-### 3. Preparing CSR (Certificate Signing Request)
+---
 
-To apply for a KSeF certificate, you must prepare a Certificate Signing Request (CSR) in PKCS#10 format, containing:
+### 3. Preparing the CSR (Certificate Signing Request)
 
-* subject identification data (DN – Distinguished Name),
-* the public key to be bound to the certificate.
+To request a KSeF certificate, prepare a Certificate Signing Request (CSR) in PKCS#10 standard, DER format, Base64-encoded. The CSR must include:
+
+* identity information (DN – Distinguished Name),
+* public key to bind to the certificate.
 
 Private key requirements:
 
 * Allowed types:
 
-  * RSA (OID: 1.2.840.113549.1.1.1), minimum length: 2048 bits,
-  * EC (Elliptic Curve, OID: 1.2.840.10045.2.1), minimum length: 256 bits.
+  * RSA (OID: 1.2.840.113549.1.1.1), minimum length: 2048 bits
+  * EC (OID: 1.2.840.10045.2.1), minimum length: 256 bits
 * EC keys are recommended.
 
-All X.509 attributes must exactly match the values returned by the system in the previous step (/certificates/enrollment/data). Any modification will cause the request to be rejected.
+All X.509 identity data must exactly match values returned by `/certificates/enrollments/data`. Any changes will result in rejection.
 
-C# Example using `ICryptographyService`:
+#### Example in C# (with `ICryptographyService`):
 
 ```csharp
-(var csrBase64encoded, var privateKeyBase64Encoded) = cryptographyService.GenerateCsr(enrollmentData);
+(var csrBase64Encoded, var privateKeyBase64Encoded) = cryptographyService.GenerateCsr(enrollmentData);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 CsrResult csr = cryptographyService.generateCsr(enrollmentData);
 ```
 
-* `csrBase64Encoded` – Base64-encoded CSR, ready to send to KSeF.
-* `privateKeyBase64Encoded` – Base64-encoded private key linked to the generated CSR. Needed for signing and authentication.
+* `csrBase64Encoded` – CSR in Base64 format, ready to send to KSeF
+* `privateKeyBase64Encoded` – corresponding private key in Base64, needed for signing
 
-**Note**: The private key must be stored securely according to the organization's security policy.
+**Note**: The private key should be securely stored according to your organization’s security policy.
+
+---
 
 ### 4. Submitting the Certificate Request
 
-After preparing the CSR, submit it to KSeF using:
-
+Send the Base64-encoded CSR to:
 POST [/certificates/enrollments](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments/post)
 
-Request must include:
+Include:
 
-* **certificate name** – visible in metadata, helps identify the certificate,
+* **certificate name** – appears in metadata for identification,
 * **certificate type** – `Authentication` or `Offline`,
-* **CSR** in PKCS#10 (DER), Base64-encoded,
-* (optional) **validFrom** – certificate validity start date. If omitted, the certificate is valid from the issuance moment.
+* **CSR** – Base64 encoded,
+* (optional) **validFrom** – start date of validity. If omitted, validity starts at issuance.
 
-Ensure the CSR contains exactly the data returned from /certificates/enrollments/data.
+Ensure CSR matches exactly the data from `/certificates/enrollments/data`.
 
-C# Example:
+#### Example in C#:
 
 ```csharp
 var request = SendCertificateEnrollmentRequestBuilder.Create()
-    .WithCertificateName("Testowy certyfikat")
+    .WithCertificateName("Test Certificate")
     .WithCertificateType(CertificateType.Authentication)
-    .WithCsr(csrBase64encoded)
+    .WithCsr(csrBase64Encoded)
     .WithValidFrom(DateTimeOffset.UtcNow.AddDays(1))
     .Build();
 
 var certificateEnrollmentResponse = await ksefClient.SendCertificateEnrollmentAsync(request, accessToken, cancellationToken);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 var request = new SendCertificateEnrollmentRequestBuilder()
@@ -159,80 +176,87 @@ var request = new SendCertificateEnrollmentRequestBuilder()
 return ksefClient.sendCertificateEnrollment(request);
 ```
 
-The response returns a `referenceNumber` used to check request status and later retrieve the certificate.
+Response contains a `referenceNumber` for tracking and retrieving the certificate.
 
-### 5. Checking the Request Status
+---
 
-Certificate issuance is asynchronous. The system does not return the certificate immediately but allows for later retrieval after processing.
+### 5. Checking Certificate Request Status
 
-Status should be checked periodically using the `referenceNumber` returned from the submission.
+Certificate issuance is asynchronous. Use the `referenceNumber` to check status:
 
 GET [/certificates/enrollments/{referenceNumber}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1enrollments~1%7BreferenceNumber%7D/get)
 
-If the request is rejected, the response will contain an error message.
+If rejected, the response will include error details.
 
-C# Example:
+#### Example in C#:
 
 ```csharp
-await ksefClient.GetCertificateEnrollmentStatusAsync(certificateEnrollmentResponse.ReferenceNumber, accessToken, cancellationToken);
+await ksefClient.GetCertificateEnrollmentStatusAsync(
+    certificateEnrollmentResponse.ReferenceNumber, 
+    accessToken, 
+    cancellationToken);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 ksefClient.getCertificateEnrollmentStatus(referenceNumber);
 ```
 
-After obtaining the `certificateSerialNumber`, you can retrieve its content and metadata in the next steps.
+Once you receive the `certificateSerialNumber`, you can retrieve the certificate and metadata.
 
-## 6. Retrieving Certificates List
+---
 
-KSeF allows retrieving the content of previously issued internal certificates using their serial numbers. Each certificate is returned in DER format, Base64-encoded.
+### 6. Retrieving Certificates
+
+Use serial numbers to retrieve issued internal certificates. Returned in DER format, Base64-encoded.
 
 POST [/certificates/retrieve](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1retrieve/post)
 
-C# Example:
+#### Example in C#:
 
 ```csharp
-var certificates = await ksefClient.GetCertificateListAsync(new CertificateListRequest { CertificateSerialNumbers = certificateSerialNumbers }, accessToken, cancellationToken);
+var certificates = await ksefClient.GetCertificateListAsync(
+    new CertificateListRequest { CertificateSerialNumbers = certificateSerialNumbers }, 
+    accessToken, 
+    cancellationToken);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 var certificates = ksefClient.getCertificateList(new CertificateListRequest(List.of(certificateSerialNumber)))
-        .getCertificates();
+    .getCertificates();
 ```
 
-Response structure:
-Each item contains:
+Each response element includes:
 
-| Field                     | Description                                    |
-| ------------------------- | ---------------------------------------------- |
-| `certificateSerialNumber` | Serial number of the certificate               |
-| `certificateName`         | Name assigned during registration              |
-| `certificate`             | Base64-encoded certificate (DER)               |
-| `certificateType`         | Certificate type (`Authentication`, `Offline`) |
+| Field                     | Description                                   |
+| ------------------------- | --------------------------------------------- |
+| `certificateSerialNumber` | Certificate's serial number                   |
+| `certificateName`         | Certificate name assigned during registration |
+| `certificate`             | Base64-encoded certificate (DER format)       |
+| `certificateType`         | `Authentication` or `Offline`                 |
 
-These certificates can be used for [authentication](uwierzytelnianie_en.md) in KSeF.
+---
 
-## 7. Retrieving Certificate Metadata
+### 7. Retrieving Certificate Metadata
 
-You can retrieve metadata of internal certificates submitted by the entity, including both active and historical records with status, validity, and identifiers.
+You can retrieve metadata for internal certificates submitted by the entity. Includes both active and historical certificates.
 
-GET [/certificates/query](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1query/post)
+POST [/certificates/query](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1query/post)
 
-#### Optional filtering parameters:
+Optional filters:
 
-* `status` – certificate status (`Active`, `Blocked`, `Revoked`, `Expired`)
-* `expiresAfter` – expiry date (optional)
-* `name` – certificate name (optional)
-* `type` – certificate type (`Authentication`, `Offline`) (optional)
-* `certificateSerialNumber` – serial number (optional)
-* `pageSize` – page size (default 10)
-* `pageOffset` – page offset (default 0)
+* `status` – (`Active`, `Blocked`, `Revoked`, `Expired`)
+* `expiresAfter` – certificate expiration date
+* `name` – certificate name
+* `type` – `Authentication` or `Offline`
+* `certificateSerialNumber` – serial number
+* `pageSize` – default 10
+* `pageOffset` – default 0
 
-C# Example:
+#### Example in C#:
 
 ```csharp
 var request = GetCertificateMetadataListRequestBuilder
@@ -241,46 +265,33 @@ var request = GetCertificateMetadataListRequestBuilder
     .WithName(name)
     .Build();
 
-var metadataList = await kSeFClient.GetCertificateMetadataListAsync(accessToken, request, 20, 0, cancellationToken);
+var metadataList = await ksefClient.GetCertificateMetadataListAsync(accessToken, request, 20, 0, cancellationToken);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 var request = new CertificateMetadataListRequestBuilder()
-        .withName("name")
-        .withCertificateSerialNumber("certificateSerialNumber")
-        .withStatus(CertificateListItemStatus.ACTIVE)
-        .build();
+    .withName("name")
+    .withCertificateSerialNumber("certificateSerialNumber")
+    .withStatus(CertificateListItemStatus.ACTIVE)
+    .build();
 
 ksefClient.getCertificateMetadataList(request, 10, 0)
-        .getCertificates();
+    .getCertificates();
 ```
 
-Sample response metadata:
+Returns metadata for certificates.
 
-| Field                     | Example Value          |
-| ------------------------- | ---------------------- |
-| `certificateSerialNumber` | `00035434535`          |
-| `name`                    | `Certyfikat 1`         |
-| `type`                    | `Authentication`       |
-| `commonName`              | `Jan Kowalski`         |
-| `status`                  | `Active`               |
-| `subjectIdentifier`       | `1234445678`           |
-| `subjectIdentifierType`   | `Nip`                  |
-| `validFrom`               | `2019-08-24T14:15:22Z` |
-| `validTo`                 | `2019-08-24T14:15:22Z` |
-| `lastUseDate`             | `2019-08-24T14:15:22Z` |
+---
 
-## 8. Revoking a Certificate
+### 8. Revoking Certificates
 
-A KSeF certificate can only be revoked by its owner in case of private key compromise, end of use, or organizational change. Once revoked, it cannot be used for authentication or operations in KSeF.
-
-Revocation is based on the certificate's `certificateSerialNumber` and an optional revocation reason.
+Certificates can only be revoked by the owner, e.g., in case of key compromise, termination of use, or organizational change. Once revoked, they cannot be used for further authentication or operations.
 
 POST [/certificates/{certificateSerialNumber}/revoke](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1api~1v2~1certificates~1%7BcertificateSerialNumber%7D~1revoke/post)
 
-C# Example:
+#### Example in C#:
 
 ```csharp
 var request = RevokeCertificateRequestBuilder.Create()
@@ -288,17 +299,19 @@ var request = RevokeCertificateRequestBuilder.Create()
     .Build();
 
 await ksefClient.RevokeCertificateAsync(request, certificateSerialNumber, accessToken, cancellationToken)
-     .ConfigureAwait(false);
+    .ConfigureAwait(false);
 ```
 
-Java Example:
+#### Example in Java:
 
 ```java
 var request = new RevokeCertificateRequestBuilder()
-        .withRevocationReason(CertificateRevocationReason.KEYCOMPROMISE)
-        .build();
+    .withRevocationReason(CertificateRevocationReason.KEYCOMPROMISE)
+    .build();
 
 ksefClient.revokeCertificate(request, certificateSerialNumber);
 ```
 
-Once revoked, the certificate cannot be reused. To continue using KSeF, a new certificate must be obtained.
+Revoked certificates cannot be reused. To continue use, a new certificate must be requested.
+
+

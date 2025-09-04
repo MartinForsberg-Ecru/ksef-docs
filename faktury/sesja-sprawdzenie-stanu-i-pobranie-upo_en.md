@@ -1,42 +1,39 @@
 ## Session – Status Check and UPO Retrieval
-
 10.07.2025
 
-This document describes operations for monitoring the status of a session (interactive or batch) and retrieving the UPO for invoices and the entire session.
+This document describes operations for monitoring the status of a session (interactive or batch) and retrieving UPOs for invoices and the entire session.
 
-### 1. Retrieve the list of sessions
-
-Returns a list of sessions matching the given search criteria.
+### 1. Retrieving the List of Sessions
+Returns a list of sessions matching the provided search criteria.
 
 GET [sessions](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions/get)
 
-Returns the current session status along with aggregated data on the number of submitted, successfully and unsuccessfully processed invoices; after session closure, it additionally provides a list of references to the summary UPO.
+Returns the current session status along with aggregated data on the number of submitted, correctly and incorrectly processed invoices; after the session is closed, it additionally provides a list of references to the aggregate UPO.
 
 Example in C#:
-
 ```csharp
 // Retrieving batch sessions
- var sessions = new List<Session>();
- const int pageSize = 20;
- string? continuationToken = null;
- do
- {
-     var response = await ksefClient.GetSessionsAsync(SessionType.Batch, accessToken, pageSize, continuationToken, sessionsFilter, cancellationToken);
-     continuationToken = response.ContinuationToken;
-     sessions.AddRange(response.Sessions);
- } while (!string.IsNullOrEmpty(continuationToken));
+var sessions = new List<Session>();
+const int pageSize = 20;
+string? continuationToken = null;
+do
+{
+    var response = await ksefClient.GetSessionsAsync(SessionType.Batch, accessToken, pageSize, continuationToken, sessionsFilter, cancellationToken);
+    continuationToken = response.ContinuationToken;
+    sessions.AddRange(response.Sessions);
+} while (!string.IsNullOrEmpty(continuationToken));
 
 // Retrieving interactive sessions
- var sessions = new List<Session>();
- const int pageSize = 20;
- string? continuationToken = null;
- do
- {
-     var response = await ksefClient.GetSessionsAsync(SessionType.Online, accessToken, pageSize, continuationToken, sessionsFilter, cancellationToken);
-     continuationToken = response.ContinuationToken;
-     sessions.AddRange(response.Sessions);
- } while (!string.IsNullOrEmpty(continuationToken)); 
-```
+var sessions = new List<Session>();
+const int pageSize = 20;
+string? continuationToken = null;
+do
+{
+    var response = await ksefClient.GetSessionsAsync(SessionType.Online, accessToken, pageSize, continuationToken, sessionsFilter, cancellationToken);
+    continuationToken = response.ContinuationToken;
+    sessions.AddRange(response.Sessions);
+} while (!string.IsNullOrEmpty(continuationToken));
+````
 
 Example in Java:
 
@@ -49,13 +46,13 @@ request.setSessionType(SessionType.ONLINE); // interactive session
 SessionsQueryResponse sessionsQueryResponse = defaultKsefClient.getSessions(request, pageSize, continuationToken);
 ```
 
-### 2. Check session status
+### 2. Checking Session Status
 
 Checks the current status of a session.
 
 GET [sessions/{referenceNumber}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D/get)
 
-Returns the current session status along with aggregated data on the number of submitted, successfully and unsuccessfully processed invoices; after session closure, it additionally provides a list of references to the summary UPO.
+Returns the current status of the session along with aggregated data on the number of submitted, successfully and unsuccessfully processed invoices; after the session is closed, a list of references to the aggregate UPO is also provided.
 
 Example in C#:
 
@@ -75,11 +72,11 @@ var successfulInvoiceCount = openSessionResult.getSuccessfulInvoiceCount();
 var failedInvoiceCount = openSessionResult.getFailedInvoiceCount();
 ```
 
-### 3. Retrieve sent invoice information
+### 3. Retrieving Information About Submitted Invoices
 
 GET [sessions/{referenceNumber}/invoices](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices/get)
 
-Returns a list of metadata for all submitted invoices along with their statuses and the total number of invoices in the session.
+Returns metadata for all submitted invoices in the session along with their statuses and the total number of invoices in the session.
 
 Example in C#:
 
@@ -116,11 +113,11 @@ sessionInvoices.getInvoices().forEach(invoice -> {
 });
 ```
 
-### 4. Retrieve information about a single invoice
+### 4. Retrieving Information About a Single Invoice
 
-Allows retrieval of detailed information about a single invoice in a session, including its status and metadata.
+Allows retrieving detailed information about a single invoice in the session, including its status and metadata.
 
-You must provide the session reference number `referenceNumber` and the invoice reference number `invoiceReferenceNumber`.
+You must provide the session `referenceNumber` and the invoice `invoiceReferenceNumber`.
 
 GET [sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1%7BinvoiceReferenceNumber%7D/get)
 
@@ -141,11 +138,11 @@ Example in Java:
 SessionInvoice sessionInvoiceStatus = ksefClient.getSessionInvoiceStatus(referenceNumber, invoiceReferenceNumber);
 ```
 
-### 5. Retrieve the UPO for an invoice
+### 5. Retrieving UPO for an Invoice
 
-Allows retrieval of the UPO for a single successfully accepted invoice.
+Allows retrieving a UPO for a single correctly accepted invoice.
 
-#### 5.1 Using the invoice reference number
+#### 5.1 Based on the invoice reference number
 
 GET [sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}/upo](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1%7BinvoiceReferenceNumber%7D~1upo/get)
 
@@ -166,7 +163,7 @@ Example in Java:
 var upo = ksefClient.getSessionInvoiceUpoByReferenceNumber(referenceNumber, invoiceReferenceNumber);
 ```
 
-#### 5.2 Using the KSeF number
+#### 5.2 Based on the KSeF invoice number
 
 GET [sessions/{referenceNumber}/invoices/{ksefNumber}/upo](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1ksef~1%7BksefNumber%7D~1upo/get)
 
@@ -189,14 +186,14 @@ var upo = ksefClient.getSessionInvoiceUpoByKsefNumber(referenceNumber, ksefNumbe
 
 The returned XML document is:
 
-* digitally signed in XADES format by the Ministry of Finance,
-* compliant with the [XSD schema](/faktury/upo-faktura_en.xsd) for a single invoice.
+* signed in XADES format by the Ministry of Finance
+* compliant with the [XSD schema](/faktury/upo-faktura.xsd) for single invoices.
 
-### 6. Retrieve the list of rejected invoices
+### 6. Retrieving List of Rejected Invoices
 
 GET [sessions/{referenceNumber}/invoices/failed](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1invoices~1failed/get)
 
-Returns the total number of rejected invoices in the session and detailed information (status and error details) for each incorrectly processed invoice.
+Returns the total number of rejected invoices in the session along with detailed information (status and error details) for each rejected invoice.
 
 Example in C#:
 
@@ -231,18 +228,38 @@ sessionFailedInvoices.getInvoices().forEach(invoice->{
 
 This endpoint allows selective retrieval of only rejected invoices, which simplifies error analysis in sessions containing a large number of invoices.
 
-### 7. Retrieve session UPO
+### 7. Retrieving Session UPO
 
-Provides a summary UPO confirming the acceptance of all invoices submitted in the given session.
+A session UPO is an aggregate acknowledgment of receipt for all correctly submitted invoices in the session.
 
+After the session is closed, the response to the [status check](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D/get) (step 2 – Checking Session Status) includes not only invoice statistics but also a list of references to session UPOs.
+
+Each `upo.pages[]` array element contains a UPO reference number (`referenceNumber`) and a link (`downloadUrl`) to retrieve it:
+
+```json
+"upo": {
+    "pages": [
+        {
+            "referenceNumber": "20250901-EU-47FDBE3000-5961A5D232-BF",
+            "downloadUrl": "/api/v2/sessions/20250901-SB-47FA636000-5960B49115-9D/upo/20250901-EU-47FDBE3000-5961A5D232-BF"
+        },
+        {
+            "referenceNumber": "20250901-EU-48D8488000-59667BB54C-C8",
+            "downloadUrl": "/api/v2/sessions/20250901-SB-47FA636000-5960B49115-9D/upo/20250901-EU-48D8488000-59667BB54C-C8"
+        }        
+    ]
+}
+```
+
+Using this list, the API client can fetch each UPO individually via the `downloadUrl`:
 GET [/sessions/{referenceNumber}/upo/{upoReferenceNumber}](https://ksef-test.mf.gov.pl/docs/v2/index.html#tag/Status-wysylki-i-UPO/paths/~1api~1v2~1sessions~1%7BreferenceNumber%7D~1upo~1%7BupoReferenceNumber%7D/get)
 
-The returned XML document complies with the [XSD schema](/faktury/upo-sesja_en.xsd).
+The returned XML is compliant with the [XSD schema](/faktury/upo-sesja.xsd) and may include up to 10,000 invoice entries.
 
 Example in C#:
 
 ```csharp
- var upo = await ksefClient.GetSessionUpoAsync(
+var upo = await ksefClient.GetSessionUpoAsync(
             sessionReferenceNumber,
             upoReferenceNumber,
             accesToken,
@@ -259,3 +276,6 @@ var upo = ksefClient.getSessionUpo(referenceNumber, upoReferenceNumber);
 ## Related Documents
 
 * [KSeF Number – Structure and Validation](numer-ksef_en.md)
+
+```
+```
